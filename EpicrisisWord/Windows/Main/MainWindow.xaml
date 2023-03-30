@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:EpicrisisWord.Windows.Main"
-        xmlns:home="clr-namespace:EpicrisisWord.Windows.Main.Views.Home"
+        xmlns:start="clr-namespace:EpicrisisWord.Windows.Main.Views.Start"
         xmlns:work="clr-namespace:EpicrisisWord.Windows.Main.Views.Work"
         mc:Ignorable="d"
         Title="{Binding Path=Title}"
@@ -22,7 +22,7 @@
     <DockPanel>
         
         <Menu DockPanel.Dock="Top">
-            <MenuItem Command="{Binding GoToHomeViewCommand}" Header="HomeView" />
+            <MenuItem Command="{Binding GoToStartViewCommand}" Header="HomeView" />
             <MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />
         </Menu>
 

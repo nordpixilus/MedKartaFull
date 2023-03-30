@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Shared.Models;
 using EpicrisisWord.Shared.Navigations;
-using EpicrisisWord.Windows.Main.Views.Home;
+using EpicrisisWord.Windows.Main.Views.Start;
 using EpicrisisWord.Windows.Main.Views.Work;
 
 namespace EpicrisisWord.Windows.Main
@@ -19,13 +19,13 @@ namespace EpicrisisWord.Windows.Main
         public MainWindowViewModel()
         {
             WeakReferenceMessenger.Default.Register(this);
-            GoToHomeView();
+            GoToStartView();
         }
 
         [RelayCommand]
-        private void GoToHomeView()
+        private void GoToStartView()
         {
-            ChildContent = new HomeViewModel();
+            ChildContent = new StartViewModel();
             Title = "Open HomeView";
         }
 
@@ -41,7 +41,7 @@ namespace EpicrisisWord.Windows.Main
             switch (message.Value)
             {
                 case nameof(WorkViewModel): GoToWorkView(); break;
-                case nameof(HomeViewModel): GoToHomeView(); break;
+                case nameof(StartViewModel): GoToStartView(); break;
             }
         }
     }
