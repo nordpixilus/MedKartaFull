@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="EpicrisisWord.Windows.Main.Views.PersonForm.PersonFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EpicrisisWord.Windows.Main.Views.PersonForm"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Orientation="Vertical">
+
+        <StackPanel Orientation="Horizontal">
+
+            <Label Content="Ф.И.О:" Margin="115,0,0,0"
+                                       Style="{StaticResource Form}"/>
+
+            <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         Width="400"/>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                                        Style="{StaticResource Line}">
+
+            <Label Content="Дата рождения:" Margin="35,0,0,0"
+                                       Style="{StaticResource Form}"/>
+
+            <TextBox Text="{Binding BirthDateFull, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         Width="200" />
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                                        Style="{StaticResource Line}">
+
+            <Label Content="Адрес регистрации:" Margin="6,0,0,0"
+                                       Style="{StaticResource Form}"/>
+
+            <TextBox Text="{Binding Reg, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         Width="750" />
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                                        Style="{StaticResource Line}">
+
+            <Label Content="Адрес проживания:" Margin="6,0,0,0"
+                                       Style="{StaticResource Form}"/>
+
+            <TextBox Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         Width="750" />
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                                        Style="{StaticResource Line}">
+
+            <Label Content="Занятость:" Margin="75,0,0,0"
+                                       Style="{StaticResource Form}"/>
+
+            <TextBox Text="{Binding Work, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                         Width="750" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Center"                                        >
+
+            <StackPanel Orientation="Vertical"
+                                            Margin="0, 0, 3, 0">
+
+                <Label Content="Дата начала:"/>
+
+                <DatePicker SelectedDate="{Binding DateStart, Mode=TwoWay}"
+                                            Validation.ErrorTemplate = "{x:Null}"
+                                            Width="150" />
+
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="3, 0, 3, 0">
+
+                <Label Content="Дата окончания:"/>
+
+                <DatePicker SelectedDate="{Binding DateEnd, Mode=TwoWay}"
+                                            Validation.ErrorTemplate = "{x:Null}"
+                                            Width="150" />
+
+            </StackPanel>
+
+        </StackPanel>
+    </StackPanel>
+</UserControl>
