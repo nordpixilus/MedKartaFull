@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace EpicrisisWord.Shared.Models;
 
+// https://github.com/CommunityToolkit/WindowsCommunityToolkit/issues/3804
 internal abstract class BaseViewModel : ObservableValidator
 {
     protected BaseViewModel() : this(WeakReferenceMessenger.Default) { }

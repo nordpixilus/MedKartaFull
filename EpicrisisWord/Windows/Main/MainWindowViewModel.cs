@@ -1,23 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using EpicrisisWord.Shared.Models;
 using EpicrisisWord.Shared.Navigations;
 using EpicrisisWord.Windows.Main.Views.Home;
 using EpicrisisWord.Windows.Main.Views.Work;
 
 namespace EpicrisisWord.Windows.Main
 {
-    internal partial class MainWindowViewModel : ObservableRecipient, IRecipient<NavigationMessage>
+    internal partial class MainWindowViewModel : BaseViewModel, IRecipient<NavigationMessage>
     {
         [ObservableProperty]
         private string? _Title;
 
         [ObservableProperty]
-        private ObservableRecipient? _ChildContent;
+        private BaseViewModel? _ChildContent;
 
         public MainWindowViewModel()
         {
-            this.IsActive = true;
+            WeakReferenceMessenger.Default.Register(this);
             GoToHomeView();
         }
 
