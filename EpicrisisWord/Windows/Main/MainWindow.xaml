@@ -14,17 +14,11 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type home:HomeViewModel}">
-            <home:HomeView DataContext="{Binding}" />
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type work:WorkViewModel}">
-            <work:WorkView DataContext="{Binding}" />
-        </DataTemplate>
+    <Window.Resources>
+        <ResourceDictionary Source="../../Shared/Navigations/UserControlResourse.xaml"/>
     </Window.Resources>
-    
+
     <DockPanel>
         
         <Menu DockPanel.Dock="Top">

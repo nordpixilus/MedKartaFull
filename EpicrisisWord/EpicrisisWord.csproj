@@ -11,4 +11,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Windows\Main\Views\Новая папка\" />
+  </ItemGroup>
+
 </Project>
