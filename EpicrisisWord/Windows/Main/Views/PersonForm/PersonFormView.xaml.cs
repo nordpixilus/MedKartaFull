@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EpicrisisWord.Windows.Main.Views.Home
+namespace EpicrisisWord.Windows.Main.Views.PersonForm
 {
     /// <summary>
-    /// Логика взаимодействия для HomeView.xaml
+    /// Логика взаимодействия для PersonFormView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class PersonFormView : UserControl
     {
-        public HomeView()
+        public PersonFormView()
         {
             InitializeComponent();
         }
