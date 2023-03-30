@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using EpicrisisWord.Shared.Models;
-using EpicrisisWord.Shared.Navigations;
+using EpicrisisWord.Core.Models;
+using EpicrisisWord.Core.Navigations;
 using EpicrisisWord.Windows.Main.Views.Start;
 
 namespace EpicrisisWord.Windows.Main.Views.Work

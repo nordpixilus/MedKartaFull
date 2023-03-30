@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace EpicrisisWord.Shared.Models;
+namespace EpicrisisWord.Core.Models;
 
 // https://github.com/CommunityToolkit/WindowsCommunityToolkit/issues/3804
 internal abstract class BaseViewModel : ObservableValidator

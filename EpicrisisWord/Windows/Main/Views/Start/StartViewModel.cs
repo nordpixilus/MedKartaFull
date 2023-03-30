@@ -1,4 +1,4 @@
-﻿using EpicrisisWord.Shared.Models;
+﻿using EpicrisisWord.Core.Models;
 
 namespace EpicrisisWord.Windows.Main.Views.Start;
 

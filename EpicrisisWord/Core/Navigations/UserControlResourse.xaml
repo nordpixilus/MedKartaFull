@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:convert="clr-namespace:EpicrisisWord.Shared.Navigations"
-                    xmlns:vm="clr-namespace:EpicrisisWord.Shared.Models">
+                    xmlns:convert="clr-namespace:EpicrisisWord.Core.Navigations"
+                    xmlns:vm="clr-namespace:EpicrisisWord.Core.Models">
 
     <convert:ViewModelConverter x:Key="ViewModelConverter"/>
     <DataTemplate DataType="{x:Type vm:BaseViewModel}">

@@ -16,7 +16,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <ResourceDictionary Source="../../Shared/Navigations/UserControlResourse.xaml"/>
+        <ResourceDictionary Source="../../Core/Navigations/UserControlResourse.xaml"/>
     </Window.Resources>
 
     <DockPanel>

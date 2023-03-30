@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace EpicrisisWord.Shared.Navigations
+namespace EpicrisisWord.Core.Navigations
 {
     internal class NavigationMessage : ValueChangedMessage<string>
     {

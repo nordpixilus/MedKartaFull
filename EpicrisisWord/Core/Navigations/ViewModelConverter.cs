@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System;
 
-namespace EpicrisisWord.Shared.Navigations;
+namespace EpicrisisWord.Core.Navigations;
 
 internal class ViewModelConverter : IValueConverter
 {
