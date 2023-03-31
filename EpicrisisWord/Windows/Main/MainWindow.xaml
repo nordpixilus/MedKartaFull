@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:EpicrisisWord.Windows.Main"
         xmlns:start="clr-namespace:EpicrisisWord.Windows.Main.Views.Start"
-        xmlns:work="clr-namespace:EpicrisisWord.Windows.Main.Views.Work"
         mc:Ignorable="d"
         Title="{Binding Path=Title}"
         Height="450"
@@ -23,7 +22,7 @@
         
         <Menu DockPanel.Dock="Top">
             <MenuItem Command="{Binding GoToStartViewCommand}" Header="HomeView" />
-            <MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />
+            <!--<MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />-->
         </Menu>
 
         <ContentControl Content="{Binding Path=ChildContent}" />
