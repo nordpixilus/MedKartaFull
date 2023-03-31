@@ -66,25 +66,19 @@ namespace EpicrisisWord.Windows.Main
             else
             {
                 GoToStartView();
+                SetFiedsPersonAsync();
             }
         }
 
-        /// <summary>
-        /// Получение и заполнение полей с личными данными.
-        /// </summary>
-        //private async void SetFiedsPersonAsync()
-        //{
-        //    (string text, bool isText) = ClipBoardMonitor.GetTextPersonClipBoard();
-        //    if (isText)
-        //    {
-        //        ExctraxtFieldsPerson(text);
-
-        //    }
-        //    else
-        //    {
-        //        ExctraxtFieldsPerson(await ClipBoardMonitor.StartTextPerson());
-        //    }
-        //}
+       
+        private async void SetFiedsPersonAsync()
+        {
+            string? fieldsText = await ClipoardHelper.StartMoninitorFieldsPersonAsync();
+            if (fieldsText != null)
+            {
+                GoToWorkView(fieldsText);
+            }
+        }
 
         #endregion
     }
