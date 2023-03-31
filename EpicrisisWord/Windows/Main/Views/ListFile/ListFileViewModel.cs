@@ -17,7 +17,7 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMes
     /// Коллекция для отобращение в ListView
     /// </summary>
     [ObservableProperty]
-    public ObservableCollection<DocumentName> _Files = new();    
+    private ObservableCollection<DocumentName> _Files = new();
 
     /// <summary>
     /// Выбранный документ в ListView.
@@ -25,16 +25,16 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMes
     [ObservableProperty]
     private DocumentName? _SelectedItemListViewFile;
 
-    partial void OnSelectedItemListViewFileChanged(DocumentName? value)
-    {
-        if (value != null)
-        {
-            //FileHelper.OpenDocumentWord(value.PathFile!);
-            //GetTextProblemClipBoard();
+    //partial void OnSelectedItemListViewFileChanged(DocumentName? value)
+    //{
+    //    if (value != null)
+    //    {
+    //        //FileHelper.OpenDocumentWord(value.PathFile!);
+    //        //GetTextProblemClipBoard();
 
-            // послать сообщение
-        }
-    }
+    //        // послать сообщение
+    //    }
+    //}
 
     public ListFileViewModel()
     {
@@ -43,11 +43,8 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMes
 
     public void Receive(ListFileMessage? message)
     {
-        if (message == null)
-        {
-           Files.Clear();
-        }
-        else
+        Files.Clear();
+        if (message != null)
         {
             Files.Clear();
             AddListPath(message.Value!);

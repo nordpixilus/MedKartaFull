@@ -19,8 +19,10 @@ internal partial class WorkViewModel : BaseViewModel
 
     public WorkViewModel(string fieldsText)
     {
+        // Важна очерёдность подключений
+        ListContent = new ListFileViewModel();
         PersonFormContent = new PersonFormViewModel(fieldsText);
         DateContent = new DateViewModel();
-        ListContent = new ListFileViewModel();
+        
     }
 }

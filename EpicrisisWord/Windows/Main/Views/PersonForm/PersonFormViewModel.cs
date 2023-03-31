@@ -105,7 +105,7 @@ internal partial class PersonFormViewModel : BaseViewModel
     {
         // Проверяет все свойства в текущем экземпляре и обновляет все отслеживаемые ошибки
         ValidateAllProperties();
-        //if (!HasErrors) { Messenger.Send<string>(new ListFileMessage(FullName)); }
+        if (!HasErrors) { Messenger.Send(new ListFileMessage(FullName)); }
         //if (!HasErrors) { Messenger.Send }
         //IsError = hasErrors;
     }
