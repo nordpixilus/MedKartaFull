@@ -4,8 +4,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Models;
 using EpicrisisWord.Core.Navigations;
-using EpicrisisWord.Windows.Main.Views.PersonForm;
 using EpicrisisWord.Windows.Main.Views.Start;
+using EpicrisisWord.Windows.Main.Views.Work;
 
 namespace EpicrisisWord.Windows.Main
 {
@@ -33,11 +33,11 @@ namespace EpicrisisWord.Windows.Main
         }
 
         [RelayCommand]
-        private void GoToPersonFormView(string? fieldsText)
+        private void GoToWorkView(string? fieldsText)
         {
             if (fieldsText != null)
             {
-                ChildContent = new PersonFormViewModel(fieldsText);
+                ChildContent = new WorkViewModel(fieldsText);
                 Title = "Open WorkView";
             }
             
@@ -47,7 +47,7 @@ namespace EpicrisisWord.Windows.Main
         {
             switch (message.Value)
             {
-                case nameof(PersonFormViewModel): GoToPersonFormView(null); break;
+                case nameof(WorkViewModel): GoToWorkView(null); break;
                 case nameof(StartViewModel): GoToStartView(); break;
             }
         }
@@ -61,7 +61,7 @@ namespace EpicrisisWord.Windows.Main
             string? fieldsText = ClipoardHelper.GetFieldsPersonClipBoard();
             if (fieldsText != null)
             {
-                GoToPersonFormView(fieldsText);
+                GoToWorkView(fieldsText);
             }
             else
             {
