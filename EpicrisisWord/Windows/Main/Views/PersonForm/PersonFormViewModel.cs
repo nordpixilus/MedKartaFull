@@ -1,8 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Core.Helpers;
+using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
+using EpicrisisWord.Core.Navigations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.PersonForm;
 
@@ -101,7 +105,9 @@ internal partial class PersonFormViewModel : BaseViewModel
     {
         // Проверяет все свойства в текущем экземпляре и обновляет все отслеживаемые ошибки
         ValidateAllProperties();
-        IsError = !hasErrors;
+        //if (!HasErrors) { Messenger.Send<string>(new ListFileMessage(FullName)); }
+        //if (!HasErrors) { Messenger.Send }
+        //IsError = hasErrors;
     }
 
     public void SetFiedsPerson(string? fieldsText)
