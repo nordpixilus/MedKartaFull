@@ -25,16 +25,17 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMes
     [ObservableProperty]
     private DocumentName? _SelectedItemListViewFile;
 
-    //partial void OnSelectedItemListViewFileChanged(DocumentName? value)
-    //{
-    //    if (value != null)
-    //    {
-    //        //FileHelper.OpenDocumentWord(value.PathFile!);
-    //        //GetTextProblemClipBoard();
+    partial void OnSelectedItemListViewFileChanged(DocumentName? value)
+    {
+        if (value != null)
+        {
+            Messenger.Send(new PathFileMessage(value.PathFile!));
+            //FileHelper.OpenDocumentWord(value.PathFile!);
+            //GetTextProblemClipBoard();
 
-    //        // послать сообщение
-    //    }
-    //}
+            // послать сообщение
+        }
+    }
 
     public ListFileViewModel()
     {

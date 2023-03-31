@@ -96,9 +96,9 @@ internal partial class PersonFormViewModel : BaseViewModel
     [ObservableProperty]
     private string _OldWork = string.Empty;
 
-    public PersonFormViewModel(string? fieldsText)
+    public PersonFormViewModel()
     {
-        SetFiedsPerson(fieldsText);
+        //SetFiedsPerson(fieldsText);
     }
 
     private void SetError(bool hasErrors)
@@ -107,20 +107,20 @@ internal partial class PersonFormViewModel : BaseViewModel
         ValidateAllProperties();
         if (!HasErrors) { Messenger.Send(new ListFileMessage(FullName)); }
         //if (!HasErrors) { Messenger.Send }
-        //IsError = hasErrors;
+        //IsErrorDate = hasErrors;
     }
 
-    public void SetFiedsPerson(string? fieldsText)
-    {
-        ExctraxtFieldsPerson(fieldsText);
+    //public void SetFiedsPerson(string? fieldsText)
+    //{
+    //    ExctraxtFieldsPerson(fieldsText);
 
-    }
+    //}
 
     /// <summary>
     /// Выборка из текста нужных значений.
     /// </summary>
     /// <param name="fieldsText"></param>
-    private void ExctraxtFieldsPerson(string? fieldsText)
+    public void SetFiedsPerson(string? fieldsText)
     {
         (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExctraxtFieldsPerson(fieldsText);
         if (isFields)
@@ -132,7 +132,7 @@ internal partial class PersonFormViewModel : BaseViewModel
             OldWork = boardFields["work"];
             Work = StringHelper.SetDefautValueWork(OldWork);
 
-           
+
         }
     }
 
