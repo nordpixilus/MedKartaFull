@@ -19,7 +19,9 @@ namespace EpicrisisWord.Windows.Main
 
         public MainWindowViewModel()
         {
-            WeakReferenceMessenger.Default.Register(this);
+            WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
+            //WeakReferenceMessenger.Default.Register(this);
+            //WeakReferenceMessenger.Default.RegisterAll(this);
             SetFiedsPerson();
         }
 

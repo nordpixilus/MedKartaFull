@@ -2,7 +2,7 @@
 
 namespace EpicrisisWord.Core.Messages;
 
-internal class PathFileMessage : ValueChangedMessage<string>
+internal class OpenDocumentMessage : ValueChangedMessage<string>
 {
-    internal PathFileMessage(string value) : base(value) { }
+    internal OpenDocumentMessage(string value) : base(value) { }
 }

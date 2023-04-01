@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
-internal partial class WorkViewModel : BaseViewModel, IRecipient<PathFileMessage>
+internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMessage>, IRecipient<ChangeFieldBlockMessege>
 {
     // Важна очерёдность подключений
     [ObservableProperty]
@@ -25,14 +25,19 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<PathFileMessage
 
     public WorkViewModel(string fieldsText)
     {
-        WeakReferenceMessenger.Default.Register(this);
+        //WeakReferenceMessenger.Default.Register(this);
+
         PersonFormContent.SetFiedsPerson(fieldsText);
+        WeakReferenceMessenger.Default.RegisterAll(this);
+        CheckValidationBlock();
+        //WeakReferenceMessenger.Default.Register<OpenDocumentMessage>(this);        
+        //WeakReferenceMessenger.Default.Register<ChangeFieldBlockMessege>(this);
 
     }
 
-    public void Receive(PathFileMessage message)
+    public void Receive(OpenDocumentMessage message)
     {
-        MessageBox.Show(DateContent.HasErrors.ToString());
+        //MessageBox.Show(DateContent.HasErrors.ToString());
         //if (DateContent.IsErrorDate)
         //{
         //    MessageBox.Show("ggg");
@@ -41,5 +46,28 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<PathFileMessage
         //{
         //    MessageBox.Show("111");
         //}
+    }
+
+    public void Receive(ChangeFieldBlockMessege message)
+    {
+        CheckValidationBlock();
+        //MessageBox.Show(PersonFormContent.HasErrors.ToString());
+    }
+
+    private void CheckValidationBlock()
+    {
+        if (PersonFormContent.HasErrors == false)
+        {
+            Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
+        }
+
+        if (PersonFormContent.HasErrors == false && DateContent.HasErrors == false)
+        {
+            ListContent.IsEnabled = true;
+        }
+        else
+        {
+            ListContent.IsEnabled = false;
+        }
     }
 }

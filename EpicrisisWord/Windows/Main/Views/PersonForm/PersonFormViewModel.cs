@@ -14,6 +14,7 @@ namespace EpicrisisWord.Windows.Main.Views.PersonForm;
 internal partial class PersonFormViewModel : BaseViewModel
 {
     #region Поля Form
+
     // Поле FullName. Полное имя Ф.И.О
     #region Поле FullName
 
@@ -25,7 +26,7 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     partial void OnFullNameChanged(string value)
     {
-        SetError(HasErrors);
+        ActionChangeField();
     }
 
     #endregion
@@ -39,7 +40,7 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     partial void OnBirthDateFullChanged(string value)
     {
-        SetError(HasErrors);
+        ActionChangeField();
     }
 
     #endregion
@@ -53,7 +54,7 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     partial void OnRegChanged(string value)
     {
-        SetError(HasErrors);
+        ActionChangeField();
     }
 
     #endregion
@@ -67,7 +68,7 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     partial void OnResChanged(string value)
     {
-        SetError(HasErrors);
+        ActionChangeField();
     }
 
     #endregion
@@ -82,30 +83,27 @@ internal partial class PersonFormViewModel : BaseViewModel
     private string _Work = string.Empty;
     partial void OnWorkChanged(string value)
     {
-        SetError(HasErrors);
+        ActionChangeField();
     }
 
     #endregion
 
     #endregion
-
-    //[ObservableProperty]
-    //private bool _IsError = true;
 
     [ObservableProperty]
     private string _OldWork = string.Empty;
 
     public PersonFormViewModel()
     {
-        //SetFiedsPerson(fieldsText);
         ValidateAllProperties();
     }
 
-    private void SetError(bool hasErrors)
+    private void ActionChangeField()
     {
+        Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
         // Проверяет все свойства в текущем экземпляре и обновляет все отслеживаемые ошибки
         //ValidateAllProperties();
-        if (!HasErrors) { Messenger.Send(new UpdateListFileMessage(FullName)); }
+        //if (!HasErrors) { Messenger.Send(new UpdateListFileMessage(FullName)); }
         //if (!HasErrors) { Messenger.Send }
         //IsErrorDate = hasErrors;
     }

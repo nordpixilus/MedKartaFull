@@ -14,6 +14,8 @@ namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
 internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListFileMessage>
 {
+    [ObservableProperty]
+    private bool _IsEnabled = false;
     /// <summary>
     /// Коллекция для отобращение в ListView
     /// </summary>
@@ -26,15 +28,11 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     [ObservableProperty]
     private DocumentName? _SelectedItemListViewFile;
 
-    partial void OnSelectedItemListViewFileChanged(DocumentName? value)
+    partial void OnSelectedItemListViewFileChanging(DocumentName? value)
     {
         if (value != null)
         {
-            Messenger.Send(new PathFileMessage(value.PathFile!));
-            //FileHelper.OpenDocumentWord(value.PathFile!);
-            //GetTextProblemClipBoard();
-
-            // послать сообщение
+            Messenger.Send(new OpenDocumentMessage(value.PathFile!));
         }
     }
 
@@ -69,8 +67,5 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
                 Files.Add(new DocumentName() { PathFile = file, NameFile = Path.GetFileName(file) });
             }
         }
-
     }
-
-
 }
