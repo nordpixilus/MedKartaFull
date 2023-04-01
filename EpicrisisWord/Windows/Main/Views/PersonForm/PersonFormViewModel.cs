@@ -101,18 +101,7 @@ internal partial class PersonFormViewModel : BaseViewModel
     private void ActionChangeField()
     {
         Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
-        // Проверяет все свойства в текущем экземпляре и обновляет все отслеживаемые ошибки
-        //ValidateAllProperties();
-        //if (!HasErrors) { Messenger.Send(new UpdateListFileMessage(FullName)); }
-        //if (!HasErrors) { Messenger.Send }
-        //IsErrorDate = hasErrors;
     }
-
-    //public void SetFiedsPerson(string? fieldsText)
-    //{
-    //    ExctraxtFieldsPerson(fieldsText);
-
-    //}
 
     /// <summary>
     /// Выборка из текста нужных значений.
@@ -120,7 +109,7 @@ internal partial class PersonFormViewModel : BaseViewModel
     /// <param name="fieldsText"></param>
     public void SetFiedsPerson(string? fieldsText)
     {
-        (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExctraxtFieldsPerson(fieldsText);
+        (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractFieldsPerson(fieldsText);
         if (isFields)
         {
             BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
@@ -132,6 +121,15 @@ internal partial class PersonFormViewModel : BaseViewModel
 
 
         }
+    }
+
+    public void AddDictionaryFielsPerson(ref Dictionary<string, string> dict)
+    {
+        dict["birth_date_full"] = BirthDateFull;
+        dict["full_name"] = FullName;
+        dict["reg"] = Reg;
+        dict["res"] = Res;
+        dict["work"] = Work;
     }
 
 }

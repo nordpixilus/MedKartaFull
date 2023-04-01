@@ -5,13 +5,16 @@ namespace EpicrisisWord.Core.Helpers;
 
 internal static class RegexHelper
 {
-    internal static (Dictionary<string, string>, bool) ExctraxtFieldsPerson(string text)
+    internal static (Dictionary<string, string>, bool) ExtractFieldsPerson(string textProblem)
     {
+        Dictionary<string, string> fields = new();
+        
+
         string pattern = @"  +|(\r+\n+)+";
         Regex regex = new(pattern);
-        text = regex.Replace(text, " ");
+        textProblem = regex.Replace(textProblem, " ");
 
-        Dictionary<string, string> fields = new();
+        
 
         Dictionary<string, string> patterns = new()
         {
@@ -30,7 +33,7 @@ internal static class RegexHelper
 
         foreach (KeyValuePair<string, string> entry in patterns)
         {
-            fields[entry.Key] = ParseText(entry.Key, entry.Value, text);
+            fields[entry.Key] = ParseText(entry.Key, entry.Value, textProblem);
         }
 
         return (fields, true);
@@ -79,7 +82,7 @@ internal static class RegexHelper
         }
     }
 
-    internal static (Dictionary<string, string> boardFields, bool isFields) ExctraxtTextProblem(string text)
+    internal static (Dictionary<string, string> boardFields, bool isFields) ExtractTextProblem(string text)
     {
         string pattern = @"  +|(\r+\n+)+";
         Regex regex = new(pattern);
@@ -102,4 +105,24 @@ internal static class RegexHelper
 
         return (fields, true);
     }
+
+    //https://www.cyberforum.ru/csharp-beginners/thread1230635.html
+    internal static string ExtractIni(string full_name)
+    {
+        string pattern = "(?<F>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<I>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<O>[а-яА-Я]+))?)?";
+
+        Regex regex = new(pattern);
+
+        var match = regex.Match(full_name);
+
+        if (!match.Success)
+            return string.Empty; //подсунули дрянь :)
+
+        var inits = match.Groups;
+        if (inits["O"].Success)
+            return string.Format("{0} {1}. {2}.", inits["F"], inits["I"].Value[0], inits["O"].Value[0]);
+        if (inits["I"].Success)
+            return string.Format("{0} {1}. ", inits["F"], inits["I"].Value[0]);
+        return inits["F"].Value;
+    }    
 }

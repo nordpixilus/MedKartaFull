@@ -1,25 +1,26 @@
 ﻿using System;
 using System.IO;
+using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
 
 internal static class StringHelper
 {
-    internal static (string fileName, string pathFile) GetFileName(string ini)
+    internal static (string fileName, string pathFile) GetNewNameFile(string ini, string shortMedicftion)
     {
 
 
-        string fileName = $"{ini} Эпикриз.docx";
+        string newNameFile = $"{ini} Эпикриз {shortMedicftion}.docx";
         string specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string? pathFile = Path.Combine(specialFolder, $"{fileName}");
-        if (File.Exists(pathFile))
+        string? specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
+        if (File.Exists(specialFolderPathFile))
         {
             string currentYear = DateTime.Now.Year.ToString();
-            fileName = $"{ini} Эпикриз {currentYear}.docx";
-            pathFile = Path.Combine(specialFolder, $"{fileName}");
+            newNameFile = $"{ini} Эпикриз {shortMedicftion} {currentYear}.docx";
+            specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
         }
 
-        return (fileName, pathFile);
+        return (newNameFile, specialFolderPathFile);
     }
 
     /// <summary>
@@ -57,5 +58,30 @@ internal static class StringHelper
             "Не указано" => string.Empty,
             _ => value,
         };
+    }
+
+    internal static string ExtractMedication(string medication)
+    {
+        if (string.IsNullOrEmpty(medication))
+        {
+            return string.Empty;
+        }
+        else if(medication.Contains(" шейного "))
+        {
+            return "ШОП";
+        }
+        else if (medication.Contains("  грудного "))
+        {
+            return "ГОП";
+        }
+        else if (medication.Contains("  пояснично "))
+        {
+            return "ПОП";
+        }
+        else
+        {
+            MessageBox.Show("Не смог разобрать тип заболевания");
+            return string.Empty;
+        }
     }
 }

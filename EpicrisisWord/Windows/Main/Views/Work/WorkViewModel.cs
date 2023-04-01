@@ -7,6 +7,7 @@ using EpicrisisWord.Core.Navigations;
 using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
@@ -36,18 +37,24 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMes
 
     }
 
-    public void Receive(OpenDocumentMessage message)
+    public async void Receive(OpenDocumentMessage message)
     {
         DocumentHelper.OpenDocumentToPath(message.Value);
-        //MessageBox.Show(DateContent.HasErrors.ToString());
-        //if (DateContent.IsErrorDate)
-        //{
-        //    MessageBox.Show("ggg");
-        //}
-        //else
-        //{
-        //    MessageBox.Show("111");
-        //}
+        string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();
+        if (textProblem != null)
+        {
+            (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
+            if(isFields)
+            {
+                PersonFormContent.AddDictionaryFielsPerson(ref boardFields);
+                DateContent.AddDictionaryFielsDate(ref boardFields);
+                var helper = new WordHelper(boardFields);
+                helper.ProcessAdd();
+                DocumentHelper.OpenDocumentToPath(helper.specialFolderPathFile);
+
+            }
+        }
+        
     }
 
     public void Receive(ChangeFieldBlockMessege message)
