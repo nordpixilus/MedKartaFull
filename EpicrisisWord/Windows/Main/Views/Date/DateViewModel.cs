@@ -6,6 +6,7 @@ using System.Windows.Documents;
 using System.Windows;
 using EpicrisisWord.Core.Messages;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.Generic;
 
 namespace EpicrisisWord.Windows.Main.Views.Date;
 
@@ -47,5 +48,12 @@ internal partial class DateViewModel : BaseViewModel
     private void ActionChangeField()
     {
         Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
+    }
+
+    public void AddDictionaryFielsDate(ref Dictionary<string, string> dict)
+    {
+        dict["date_start"] = DateStart!.Value.ToShortDateString();
+        dict["date_end"] = DateEnd!.Value.ToShortDateString();
+        dict["date_end2"] = DateEnd!.Value.ToShortDateString();
     }
 }
