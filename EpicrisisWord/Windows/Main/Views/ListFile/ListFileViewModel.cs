@@ -7,11 +7,12 @@ using EpicrisisWord.Core.Navigations;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
-internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMessage>
+internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListFileMessage>
 {
     /// <summary>
     /// Коллекция для отобращение в ListView
@@ -42,7 +43,7 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<ListFileMes
         WeakReferenceMessenger.Default.Register(this);
     }
 
-    public void Receive(ListFileMessage? message)
+    public void Receive(UpdateListFileMessage? message)
     {
         Files.Clear();
         if (message != null)

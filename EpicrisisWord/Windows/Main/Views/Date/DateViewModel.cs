@@ -11,20 +11,20 @@ internal partial class DateViewModel : BaseViewModel
 {
     #region Поле DateStart Дата начала
 
-    public bool IsErrorDate { get; set; } = true;
+    //public bool IsErrorDate { get; set; } = true;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required]
-    private DateTime? _DateStart;// = (DateTime.Today).Subtract(TimeSpan.FromDays(30));
+    private DateTime? _DateStart = null;// = (DateTime.Today).Subtract(TimeSpan.FromDays(30));
 
-    partial void OnDateStartChanged(DateTime? value)
-    {
-        ValidateAllProperties();
-        IsErrorDate = HasErrors;
-        
-        //ButtonCreateDocumentChangedEnabled(HasErrors);
-    }
+    //partial void OnDateStartChanged(DateTime? value)
+    //{
+    //    ValidateAllProperties();
+    //    IsErrorDate = HasErrors;
+
+    //    //ButtonCreateDocumentChangedEnabled(HasErrors);
+    //}
 
     #endregion
 
@@ -33,21 +33,20 @@ internal partial class DateViewModel : BaseViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required]
-    private DateTime? _DateEnd;
+    private DateTime? _DateEnd = null;
 
-    partial void OnDateEndChanged(DateTime? value)
-    {
-        ValidateAllProperties();
-        IsErrorDate = HasErrors;
-        
-        //ButtonCreateDocumentChangedEnabled(HasErrors);
-    }
+    //partial void OnDateEndChanged(DateTime? value)
+    //{
+    //    ValidateAllProperties();
+    //    IsErrorDate = HasErrors;
+
+    //    //ButtonCreateDocumentChangedEnabled(HasErrors);
+    //}
 
     #endregion
 
     public DateViewModel()
     {
-        DateStart = null;
-        DateEnd = null;
+        ValidateAllProperties();
     }
 }

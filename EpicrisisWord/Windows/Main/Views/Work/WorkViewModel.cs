@@ -12,33 +12,27 @@ namespace EpicrisisWord.Windows.Main.Views.Work;
 
 internal partial class WorkViewModel : BaseViewModel, IRecipient<PathFileMessage>
 {
+    // Важна очерёдность подключений
     [ObservableProperty]
-    private DateViewModel _DateContent;
-
-    [ObservableProperty]
-    private ListFileViewModel _ListContent;
+    private DateViewModel _DateContent = new();
 
     [ObservableProperty]
-    private PersonFormViewModel _PersonFormContent;
+    private ListFileViewModel _ListContent = new();
 
-    
+    [ObservableProperty]
+    private PersonFormViewModel _PersonFormContent = new();
 
-   
 
     public WorkViewModel(string fieldsText)
     {
         WeakReferenceMessenger.Default.Register(this);
-        // Важна очерёдность подключений
-        DateContent = new DateViewModel();
-        ListContent = new ListFileViewModel();
-        PersonFormContent = new PersonFormViewModel();
         PersonFormContent.SetFiedsPerson(fieldsText);
 
     }
 
     public void Receive(PathFileMessage message)
     {
-        MessageBox.Show(DateContent.IsErrorDate.ToString());
+        MessageBox.Show(DateContent.HasErrors.ToString());
         //if (DateContent.IsErrorDate)
         //{
         //    MessageBox.Show("ggg");

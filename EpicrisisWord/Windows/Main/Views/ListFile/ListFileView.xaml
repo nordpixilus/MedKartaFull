@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <ListView ItemsSource="{Binding Path=Files}" SelectedItem="{Binding SelectedItemListViewFile, Mode=OneWayToSource}">
+        <ListView ItemsSource="{Binding Path=Files}" SelectedItem="{Binding SelectedItemListViewFile, Mode=OneWayToSource}" IsEnabled="False">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>

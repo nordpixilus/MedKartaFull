@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
@@ -23,10 +24,8 @@ internal partial class PersonFormViewModel : BaseViewModel
     private string _FullName = string.Empty;
 
     partial void OnFullNameChanged(string value)
-    {        
+    {
         SetError(HasErrors);
-        //ButtonCreateDocumentChangedEnabled(HasErrors);
-        //UpdateProperty();
     }
 
     #endregion
@@ -63,7 +62,7 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required]
+    [Required]   
     private string _Res = string.Empty;
 
     partial void OnResChanged(string value)
@@ -90,8 +89,8 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     #endregion
 
-    [ObservableProperty]
-    private bool _IsError = true;
+    //[ObservableProperty]
+    //private bool _IsError = true;
 
     [ObservableProperty]
     private string _OldWork = string.Empty;
@@ -99,13 +98,14 @@ internal partial class PersonFormViewModel : BaseViewModel
     public PersonFormViewModel()
     {
         //SetFiedsPerson(fieldsText);
+        ValidateAllProperties();
     }
 
     private void SetError(bool hasErrors)
     {
         // Проверяет все свойства в текущем экземпляре и обновляет все отслеживаемые ошибки
-        ValidateAllProperties();
-        if (!HasErrors) { Messenger.Send(new ListFileMessage(FullName)); }
+        //ValidateAllProperties();
+        if (!HasErrors) { Messenger.Send(new UpdateListFileMessage(FullName)); }
         //if (!HasErrors) { Messenger.Send }
         //IsErrorDate = hasErrors;
     }
