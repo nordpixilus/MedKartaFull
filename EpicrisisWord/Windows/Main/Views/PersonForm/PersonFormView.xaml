@@ -17,6 +17,7 @@
         <Style TargetType="StackPanel" x:Key="Line">
             <Setter Property="Margin" Value="10, 10, 0, 0" />
         </Style>
+        
     </UserControl.Resources>
     <StackPanel Orientation="Vertical">
 

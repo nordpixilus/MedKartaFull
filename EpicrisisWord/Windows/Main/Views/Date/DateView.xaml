@@ -7,6 +7,7 @@
              d:DataContext="{d:DesignInstance Type=local:DateViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid Margin="10">
 
         <Grid.ColumnDefinitions >
@@ -14,7 +15,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 0, 3, 0">
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 0, 3, 0">            
 
             <Label Content="Дата начала:"/>
 

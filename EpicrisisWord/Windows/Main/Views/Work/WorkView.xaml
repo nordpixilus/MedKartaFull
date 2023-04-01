@@ -7,6 +7,21 @@
              d:DataContext="{d:DesignInstance Type=local:WorkViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="ContentControl">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border BorderBrush="{x:Null}" BorderThickness="0">
+                                <AdornedElementPlaceholder x:Name="AdornedElementPlaceholder" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
 
         <Grid.ColumnDefinitions>
