@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
 using EpicrisisWord.Core.Navigations;
@@ -37,6 +38,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMes
 
     public void Receive(OpenDocumentMessage message)
     {
+        DocumentHelper.OpenDocumentToPath(message.Value);
         //MessageBox.Show(DateContent.HasErrors.ToString());
         //if (DateContent.IsErrorDate)
         //{

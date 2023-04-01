@@ -28,8 +28,8 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     [ObservableProperty]
     private DocumentName? _SelectedItemListViewFile;
 
-    partial void OnSelectedItemListViewFileChanging(DocumentName? value)
-    {
+    partial void OnSelectedItemListViewFileChanged(DocumentName? value)
+    {        
         if (value != null)
         {
             Messenger.Send(new OpenDocumentMessage(value.PathFile!));

@@ -28,10 +28,6 @@ internal static class RegexHelper
             //{ "date_end", "" }
         };
 
-        //var fieldsKey = new List<string> { "full_name", "birth_date", "age_int", "age_str", "gender", "cod", "reg", "res", "work", "date_start", "date_end" };
-
-
-
         foreach (KeyValuePair<string, string> entry in patterns)
         {
             fields[entry.Key] = ParseText(entry.Key, entry.Value, text);
@@ -81,5 +77,29 @@ internal static class RegexHelper
         {
             return false;
         }
+    }
+
+    internal static (Dictionary<string, string> boardFields, bool isFields) ExctraxtTextProblem(string text)
+    {
+        string pattern = @"  +|(\r+\n+)+";
+        Regex regex = new(pattern);
+        text = regex.Replace(text, " ");
+
+        Dictionary<string, string> fields = new();
+
+        Dictionary<string, string> patterns = new()
+        {
+            { "problem", @"^.*Диагноз основной(:|,|.) ?(?<problem>.*) Осложнения:" },
+            { "super_problem", @"^.*Осложнения(:|,|.) ?(?<super_problem>.*) Сопутствующие заболевания:" },
+            { "parallel_problem", @"^.*Сопутствующие заболевания(:|,|.) ?(?<parallel_problem>.*) План обследования:" },
+            { "medication", @"^.*План лечения(:|,|.) ?(?<medication>.*)( Врач| ?$)" },
+        };
+
+        foreach (KeyValuePair<string, string> entry in patterns)
+        {
+            fields[entry.Key] = ParseText(entry.Key, entry.Value, text);
+        }
+
+        return (fields, true);
     }
 }

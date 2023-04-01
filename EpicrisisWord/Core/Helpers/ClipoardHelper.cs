@@ -34,22 +34,22 @@ internal static class ClipoardHelper
     /// <returns>
     /// Возвращает srting или null.
     /// </returns>
-    async internal static Task<string?> StartTextProblem()
+    async internal static Task<string?> StartMoninitorTextProblemAsync()
     {
-        string? text = null;
+        string? textProblem = null;
         bool x = true;
         while (x)
         {
             await Task.Delay(1000);
             if (Clipboard.ContainsText() == true)
             {
-                text = Clipboard.GetText();
+                textProblem = Clipboard.GetText();
                 Clipboard.Clear();
                 x = false;
             }
         }
 
-        return text;
+        return textProblem;
     }
 
     /// <summary>
