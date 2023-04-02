@@ -10,14 +10,14 @@ internal static class StringHelper
     {
 
 
-        string fileName = $"{ini} Эпикриз.docx";
+        string newNameFile = $"{ini} Эпикриз {shortMedicftion}.docx";
         string specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string? specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
         if (File.Exists(specialFolderPathFile))
         {
             string currentYear = DateTime.Now.Year.ToString();
-            fileName = $"{ini} Эпикриз {currentYear}.docx";
-            pathFile = Path.Combine(specialFolder, $"{fileName}");
+            newNameFile = $"{ini} Эпикриз {shortMedicftion} {currentYear}.docx";
+            specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
         }
 
         return (newNameFile, specialFolderPathFile);
