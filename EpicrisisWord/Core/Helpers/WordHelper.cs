@@ -89,3 +89,6 @@ internal class WordHelper
         }
     }
 }
+// http://nullpro.info/2012/rabotaem-s-ms-word-iz-c-chast-1-otkryvaem-shablon-ishhem-tekst-vnutri-dokumenta/
+// https://progtask.ru/rabota-s-word-pri-pomoshi-c-sharp/
+// https://github.com/xceedsoftware/DocX

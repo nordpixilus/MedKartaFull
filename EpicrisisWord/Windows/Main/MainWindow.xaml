@@ -7,8 +7,10 @@
         xmlns:start="clr-namespace:EpicrisisWord.Windows.Main.Views.Start"
         mc:Ignorable="d"
         Title="{Binding Path=Title}"
-        Height="500"
-        Width="900">
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        MinWidth="500"
+        MinHeight="500">
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -25,7 +27,7 @@
             <!--<MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />-->
         </Menu>
 
-        <ContentControl Content="{Binding Path=ChildContent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ContentControl Content="{Binding Path=ChildContent}" Margin="10" />
 
     </DockPanel>
 </Window>

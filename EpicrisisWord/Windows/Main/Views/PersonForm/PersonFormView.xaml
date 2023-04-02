@@ -10,8 +10,8 @@
              d:DesignWidth="950">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Form">
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
 
         <Style TargetType="StackPanel" x:Key="Line">

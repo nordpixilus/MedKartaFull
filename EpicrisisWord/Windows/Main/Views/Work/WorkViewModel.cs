@@ -8,11 +8,12 @@ using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
-internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMessage>, IRecipient<ChangeFieldBlockMessege>
+internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldBlockMessege>
 {
     // Важна очерёдность подключений
     [ObservableProperty]
@@ -32,12 +33,12 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMes
         PersonFormContent.SetFiedsPerson(fieldsText);
         WeakReferenceMessenger.Default.RegisterAll(this);
         CheckValidationBlock();
-        //WeakReferenceMessenger.Default.Register<OpenDocumentMessage>(this);        
+        //WeakReferenceMessenger.Default.Register<CreateDocumentMessage>(this);        
         //WeakReferenceMessenger.Default.Register<ChangeFieldBlockMessege>(this);
 
     }
 
-    public async void Receive(OpenDocumentMessage message)
+    public async void Receive(CreateDocumentMessage message)
     {
         DocumentHelper.OpenDocumentToPath(message.Value);
         string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();
@@ -51,7 +52,8 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<OpenDocumentMes
                 var helper = new WordHelper(boardFields);
                 helper.ProcessAdd();
                 DocumentHelper.OpenDocumentToPath(helper.specialFolderPathFile);
-
+                await Task.Delay(3000);
+                Application.Current.Windows[0].Close();
             }
         }
         

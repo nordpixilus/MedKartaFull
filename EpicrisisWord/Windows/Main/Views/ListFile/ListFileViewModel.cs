@@ -32,7 +32,7 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     {        
         if (value != null)
         {
-            Messenger.Send(new OpenDocumentMessage(value.PathFile!));
+            Messenger.Send(new CreateDocumentMessage(value.PathFile!));
         }
     }
 

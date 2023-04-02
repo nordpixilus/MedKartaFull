@@ -11,39 +11,56 @@ namespace EpicrisisWord.Windows.Main
 {
     internal partial class MainWindowViewModel : BaseViewModel, IRecipient<NavigationMessage>
     {
+        #region Title
         [ObservableProperty]
-        private string? _Title;
+        private string? _Title = "Эпикриз";
+        #endregion
 
+        #region ChildContent
+
+        /// <summary>
+        /// Содержит программно изменяемый контент главного окна.
+        /// </summary>
         [ObservableProperty]
         private BaseViewModel? _ChildContent;
+
+        #endregion
 
         public MainWindowViewModel()
         {
             WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
-            //WeakReferenceMessenger.Default.Register(this);
             //WeakReferenceMessenger.Default.RegisterAll(this);
             SetFiedsPerson();
         }
 
         #region Команды переключения главного представления
 
+        /// <summary>
+        /// Переключение на стартовое окно
+        /// </summary>
         [RelayCommand]
         private void GoToStartView()
         {
             ChildContent = new StartViewModel();
-            Title = "Open HomeView";
         }
 
+        /// <summary>
+        /// Переключение на окно ввода информации.
+        /// </summary>
+        /// <param name="fieldsText">Текст содержащий личные данные пациента.</param>
         [RelayCommand]
         private void GoToWorkView(string? fieldsText)
         {
             if (fieldsText != null)
             {
                 ChildContent = new WorkViewModel(fieldsText);
-                Title = "Open WorkView";
             }
             
         }
+
+        #endregion
+
+        #region Обработка сообщения
 
         public void Receive(NavigationMessage message)
         {
@@ -56,8 +73,11 @@ namespace EpicrisisWord.Windows.Main
 
         #endregion
 
-        #region
+        #region Логика переключения представления в главном окне.
 
+        /// <summary>
+        /// Логика переключения представления в главном окне.
+        /// </summary>
         private void SetFiedsPerson()
         {
             string? fieldsText = ClipoardHelper.GetFieldsPersonClipBoard();
