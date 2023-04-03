@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -95,7 +96,7 @@ internal static class RegexHelper
             { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*) Осложнения" },
             { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*) Сопутствующ(ий|ие заболевания)" },
             { "parallel_problem", @"^.*Сопутствующ(ий|ие заболевания)(:|,|.|;)\s*(?<parallel_problem>.*) План обследования:" },
-            { "medication", @"^.*План лечения(:|,|.|;)\s*(?<medication>.*)( Врач| ?$)" },
+            { "medication", @"^.*План лечения(:|,|.|;)\s*(?<medication>.*) Врач.*$" },
         };
 
         foreach (KeyValuePair<string, string> entry in patterns)
