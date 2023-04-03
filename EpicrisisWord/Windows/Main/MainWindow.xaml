@@ -4,35 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:EpicrisisWord.Windows.Main"
-        xmlns:home="clr-namespace:EpicrisisWord.Windows.Main.Views.Home"
-        xmlns:work="clr-namespace:EpicrisisWord.Windows.Main.Views.Work"
+        xmlns:start="clr-namespace:EpicrisisWord.Windows.Main.Views.Start"
         mc:Ignorable="d"
         Title="{Binding Path=Title}"
-        Height="450"
-        Width="800">
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        FontSize="16"
+        MinWidth="1005"
+        MinHeight="530">
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type home:HomeViewModel}">
-            <home:HomeView DataContext="{Binding}" />
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type work:WorkViewModel}">
-            <work:WorkView DataContext="{Binding}" />
-        </DataTemplate>
+    <Window.Resources>
+        <ResourceDictionary Source="../../Core/Navigations/UserControlResourse.xaml"/>
     </Window.Resources>
-    
+
     <DockPanel>
         
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Command="{Binding GoToHomeViewCommand}" Header="HomeView" />
+        <!--<Menu DockPanel.Dock="Top">
+            <MenuItem Command="{Binding GoToStartViewCommand}" Header="HomeView" />
             <MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />
-        </Menu>
+        </Menu>-->
 
-        <ContentControl Content="{Binding Path=ChildContent}" />
+        <ContentControl Content="{Binding Path=ChildContent}" Margin="10" />
 
     </DockPanel>
 </Window>
