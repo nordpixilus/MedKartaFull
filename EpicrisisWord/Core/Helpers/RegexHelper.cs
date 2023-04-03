@@ -92,10 +92,10 @@ internal static class RegexHelper
 
         Dictionary<string, string> patterns = new()
         {
-            { "problem", @"^.*Диагноз основной(:|,|.) ?(?<problem>.*) Осложнения:" },
-            { "super_problem", @"^.*Осложнения(:|,|.) ?(?<super_problem>.*) Сопутствующие заболевания:" },
-            { "parallel_problem", @"^.*Сопутствующие заболевания(:|,|.) ?(?<parallel_problem>.*) План обследования:" },
-            { "medication", @"^.*План лечения(:|,|.) ?(?<medication>.*)( Врач| ?$)" },
+            { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*) Осложнения" },
+            { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*) Сопутствующ(ий|ие заболевания)" },
+            { "parallel_problem", @"^.*Сопутствующ(ий|ие заболевания)(:|,|.|;)\s*(?<parallel_problem>.*) План обследования:" },
+            { "medication", @"^.*План лечения(:|,|.|;)\s*(?<medication>.*)( Врач| ?$)" },
         };
 
         foreach (KeyValuePair<string, string> entry in patterns)
