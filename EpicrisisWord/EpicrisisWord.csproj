@@ -2,15 +2,22 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows8.0</TargetFramework>
+    <TargetFramework>net7.0-windows8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>syringe.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
-    <BaseOutputPath>D:\Project\MedKarta_WPF_NET7\Work_project\Relise</BaseOutputPath>
+    <BaseOutputPath></BaseOutputPath>
     <NeutralLanguage>ru-RU</NeutralLanguage>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Word">
