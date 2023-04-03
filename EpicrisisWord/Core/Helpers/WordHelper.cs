@@ -31,6 +31,7 @@ internal class WordHelper
         this.fiedlsPerson = fiedlsPerson;
         string shortFullName = RegexHelper.ExtractIni(fiedlsPerson["full_name"]);
         string shortMedicftion = StringHelper.ExtractMedication(fiedlsPerson["problem"]);
+        fiedlsPerson["recommendation"] = StringHelper.ExtractRecommendation(shortMedicftion);
         (newNameFile, specialFolderPathFile) = StringHelper.GetNewNameFile(shortFullName, shortMedicftion);
 
         _fileInfoTemlate = new FileInfo(pathTemlateNameFile);

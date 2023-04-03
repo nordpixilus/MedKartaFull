@@ -22,5 +22,32 @@ namespace EpicrisisWord.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Рекомендации при выписке: наблюдение терапевта, невропатолога, диета № 12, ЛФК, массаж курсами. Курсы сосудистой терапии 2 раза в год в дневном стационаре по показаниям, при болях — короткий курс нестероидных противовоспалительных средств ( таб. Ксефокам 8 мг 1т. в день, мазь Диклоран наружно), приём таб. Кавинтон 5  мг 1т. 3 раза в день и таб. Пирацетам 400 мг 1т. 3 раза в день 1месяц . Избегать вертикальных нагрузок, переохлаждений, длительных вынужденных положений, переразгибаний  в шейном отделе позвоночника. ЦДС экстракраниальных отделов сосудов головного мозга выполнить по участку в плановом порядке.")]
+        public string recom_hop {
+            get {
+                return ((string)(this["recom_hop"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Рекомендации при выписке: наблюдение терапевта, невропатолога, диета № 12, ЛФК, массаж курсами. Курсы терапии 2 раза в год в дневном стационаре по показаниям, при болях — короткий курс нестероидных противовоспалительных средств ( таб. Ксефокам 8 мг 1т. в день, мазь Диклоран наружно). Избегать вертикальных нагрузок, переохлаждений, длительных вынужденных положений, переразгибаний  в поясничном отделе позвоночника.")]
+        public string recom_pop {
+            get {
+                return ((string)(this["recom_pop"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Рекомендации при выписке: наблюдение терапевта, невропатолога, диета № 12, ЛФК, массаж курсами. Курсы терапии 2 раза в год в дневном стационаре по показаниям, при болях — короткий курс нестероидных противовоспалительных средств ( таб. Ксефокам 8 мг 1т. в день, мазь Диклоран наружно). Избегать вертикальных нагрузок, переохлаждений, длительных вынужденных положений, переразгибаний  в грудном отделе позвоночника.")]
+        public string recom_gop {
+            get {
+                return ((string)(this["recom_gop"]));
+            }
+        }
     }
 }

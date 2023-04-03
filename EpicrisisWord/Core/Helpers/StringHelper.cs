@@ -84,4 +84,15 @@ internal static class StringHelper
             return string.Empty;
         }
     }
+
+    internal static string ExtractRecommendation(string shortMedicftion)
+    {
+        return shortMedicftion switch
+        {
+            "ШОП" => Properties.Settings.Default.recom_hop,
+            "ПОП" => Properties.Settings.Default.recom_pop,
+            "ГОП" => Properties.Settings.Default.recom_gop,
+            _ => string.Empty,
+        };
+    }
 }
