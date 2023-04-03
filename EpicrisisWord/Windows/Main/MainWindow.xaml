@@ -9,8 +9,9 @@
         Title="{Binding Path=Title}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
-        MinWidth="500"
-        MinHeight="500">
+        FontSize="16"
+        MinWidth="1005"
+        MinHeight="530">
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -22,10 +23,10 @@
 
     <DockPanel>
         
-        <Menu DockPanel.Dock="Top">
+        <!--<Menu DockPanel.Dock="Top">
             <MenuItem Command="{Binding GoToStartViewCommand}" Header="HomeView" />
-            <!--<MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />-->
-        </Menu>
+            <MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />
+        </Menu>-->
 
         <ContentControl Content="{Binding Path=ChildContent}" Margin="10" />
 

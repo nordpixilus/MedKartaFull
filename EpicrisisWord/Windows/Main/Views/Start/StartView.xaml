@@ -11,7 +11,7 @@
 
         <Label Content="Скопировать в буфер обмена:" />
 
-        <Label Content="Данные пациента."/>
+        <Label Content="Данные пациента." HorizontalAlignment="Center"/>
 
     </StackPanel>
 </UserControl>

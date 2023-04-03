@@ -9,6 +9,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <BaseOutputPath>D:\Project\MedKarta_WPF_NET7\Work_project\Relise</BaseOutputPath>
     <NeutralLanguage>ru-RU</NeutralLanguage>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

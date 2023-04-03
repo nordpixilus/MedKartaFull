@@ -5,17 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EpicrisisWord.Windows.Main.Views.PersonForm"
              d:DataContext="{d:DesignInstance Type=local:PersonFormViewModel}"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             d:FontSize="16"
              d:DesignHeight="450"
-             d:DesignWidth="950">
+             d:DesignWidth="1000">
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="Form">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Top" />
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
 
         <Style TargetType="StackPanel" x:Key="Line">
-            <Setter Property="Margin" Value="10, 10, 0, 0" />
+            <!--<Setter Property="Margin" Value="10, 10, 0, 0" />-->
         </Style>
         
     </UserControl.Resources>
@@ -23,55 +31,46 @@
 
         <StackPanel Orientation="Horizontal">
 
-            <Label Content="Ф.И.О:" Margin="115,0,0,0"
-                                       Style="{StaticResource Form}"/>
+            <Label Content="Ф.И.О:" Margin="99,0,0,0" />
 
             <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                         Width="400"/>
+                     Width="450"/>
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"
-                                        Style="{StaticResource Line}">
+        <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
 
-            <Label Content="Дата рождения:" Margin="35,0,0,0"
-                                       Style="{StaticResource Form}"/>
+            <Label Content="Дата рождения:" Margin="28,0,0,0" />
 
             <TextBox Text="{Binding BirthDateFull, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                         Width="200" />
+                     Width="170" />
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"
-                                        Style="{StaticResource Line}">
+        <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
 
-            <Label Content="Адрес регистрации:" Margin="6,0,0,0"
-                                       Style="{StaticResource Form}"/>
+            <Label Content="Адрес регистрации:" />
 
             <TextBox Text="{Binding Reg, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                         Width="750" />
+                     Width="800" />
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"
-                                        Style="{StaticResource Line}">
+        <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
 
-            <Label Content="Адрес проживания:" Margin="6,0,0,0"
-                                       Style="{StaticResource Form}"/>
+            <Label Content="Адрес проживания:" />
 
             <TextBox Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                         Width="750" />
+                     Width="800" />
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"
-                                        Style="{StaticResource Line}">
+        <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
 
-            <Label Content="Занятость:" Margin="75,0,0,0"
-                                       Style="{StaticResource Form}"/>
+            <Label Content="Занятость:" Margin="69,0,0,0" />
 
             <TextBox Text="{Binding Work, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                         Width="750" />
+                     Width="800" />
         </StackPanel>
         
     </StackPanel>

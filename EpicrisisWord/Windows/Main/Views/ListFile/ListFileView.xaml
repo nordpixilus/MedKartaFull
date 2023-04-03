@@ -6,14 +6,16 @@
              xmlns:local="clr-namespace:EpicrisisWord.Windows.Main.Views.ListFile"
              d:DataContext="{d:DesignInstance Type=local:ListFileViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Width="460">
     <Grid>
 
-        <ListView ItemsSource="{Binding Path=Files}" SelectedItem="{Binding SelectedItemListViewFile, Mode=OneWayToSource}" IsEnabled="{Binding IsEnabled}">
+        <ListView ItemsSource="{Binding Path=Files}"
+                  SelectedItem="{Binding SelectedItemListViewFile, Mode=OneWayToSource}"
+                  IsEnabled="{Binding IsEnabled}">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=NameFile}" Width="100"/>
+                        <GridViewColumn Header="Список файлов" DisplayMemberBinding="{Binding Path=NameFile}" Width="450"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
