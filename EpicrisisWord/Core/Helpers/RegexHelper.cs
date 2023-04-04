@@ -95,7 +95,7 @@ internal static class RegexHelper
         text = regexDoctor.Replace(text, "");
 
         text = text.Trim();
-        MessageBox.Show(text);
+       
         Dictionary<string, string> fields = new();
 
         Dictionary<string, string> patterns = new()

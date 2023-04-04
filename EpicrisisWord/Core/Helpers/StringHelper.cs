@@ -71,11 +71,11 @@ internal static class StringHelper
         {
             boardFields["short_medicftion"] = "ШОП";
         }
-        else if (problem.Contains("  грудного "))
+        else if (problem.Contains(" грудного "))
         {
             boardFields["short_medicftion"] = "ГОП";
         }
-        else if (problem.Contains("  пояснично"))
+        else if (problem.Contains(" пояснично"))
         {
             boardFields["short_medicftion"] = "ПОП";
         }
