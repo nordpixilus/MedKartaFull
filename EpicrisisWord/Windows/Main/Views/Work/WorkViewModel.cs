@@ -7,6 +7,7 @@ using EpicrisisWord.Core.Navigations;
 using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,14 +45,28 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();
         if (textProblem != null)
         {
+            // Получаем медицинские поля 
             (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
             if(isFields)
             {
+                // Добавляем в список поля пациента.
                 PersonFormContent.AddDictionaryFielsPerson(ref boardFields);
+                // Добавляем поля с датой.
                 DateContent.AddDictionaryFielsDate(ref boardFields);
+                // Добавляем поле с инициалами.
+                RegexHelper.AddExtractIni(ref boardFields);
+                // Добавляем поле с коротким названием заболевания.
+                StringHelper.AddExtractMedication(ref boardFields);
+                // Добавляем поле с рекомендацией.
+                StringHelper.AddExtractRecommendation(ref boardFields);
+                // Добавляем новое название файла и путь к нему.
+                StringHelper.AddNewNameFile(ref boardFields);
+
+              
                 var helper = new WordHelper(boardFields);
-                helper.ProcessAdd();
-                DocumentHelper.OpenDocumentToPath(helper.specialFolderPathFile);
+                helper.CreateEpicrisisFile();
+                //helper.CreateDiagnosisFile();
+                DocumentHelper.OpenDocumentToPath(boardFields["specialFolderPathFile"]);
                 await Task.Delay(3000);
                 Application.Current.Windows[0].Close();
             }

@@ -4,23 +4,26 @@ using System.Windows;
 using System;
 using Word = Microsoft.Office.Interop.Word;
 using static System.Environment;
+using System.Threading;
 
 namespace EpicrisisWord.Core.Helpers;
 
 internal class WordHelper
 {
     // Путь до файла шаблона
-    private readonly string pathTemlateNameFile = Path.Combine("TemplatesWord", "epicrisis.docx");
+    //private string pathTemlateNameFile = Path.Combine("TemplatesWord", "epicrisis.docx");
 
     // Путь до до файла в папке документы
-    public readonly string specialFolderPathFile;
+    //public readonly string specialFolderPathFile;
 
     //string shortFullName;
 
     // получаем название новаго файла
-    private readonly string newNameFile;
+    //private readonly string newNameFile;
 
-    private readonly FileInfo _fileInfoTemlate;
+    private FileInfo? _fileInfoTemlate;
+
+    private bool _isSave = false;
 
 
 
@@ -29,15 +32,28 @@ internal class WordHelper
     public WordHelper(Dictionary<string, string> fiedlsPerson)
     {
         this.fiedlsPerson = fiedlsPerson;
-        string shortFullName = RegexHelper.ExtractIni(fiedlsPerson["full_name"]);
-        string shortMedicftion = StringHelper.ExtractMedication(fiedlsPerson["problem"]);
-        fiedlsPerson["recommendation"] = StringHelper.ExtractRecommendation(shortMedicftion);
-        (newNameFile, specialFolderPathFile) = StringHelper.GetNewNameFile(shortFullName, shortMedicftion);
+    }
 
+    public void CreateEpicrisisFile()
+    {
+        _isSave = true;
+        SetFileInfo("epicrisis");
+        ProcessAdd();
+    }
+
+    public void CreateDiagnosisFile()
+    {
+        SetFileInfo("diagnosis");
+        ProcessAdd();
+    }
+
+    private void SetFileInfo(string nameFile)
+    {
+        string pathTemlateNameFile = Path.Combine("TemplatesWord", $"{nameFile}.docx");
         _fileInfoTemlate = new FileInfo(pathTemlateNameFile);
     }
 
-    public void ProcessAdd()
+    private void ProcessAdd()
     {
         // Создаём объект документа
         Word.Document? doc = null;
@@ -47,11 +63,9 @@ internal class WordHelper
             Word.Application app = new();
 
             // Путь до шаблона документа
-            Object file = _fileInfoTemlate.FullName;
+            Object file = _fileInfoTemlate!.FullName;
 
-            // Открываем
             doc = app.Documents.Open(file);
-            //doc.Activate();
 
             // Добавляем информацию
             // wBookmarks содержит все закладки
@@ -68,12 +82,24 @@ internal class WordHelper
                 }
                 catch
                 {
-                    MessageBox.Show($"В шалоне документа отсутствует ключ {mark.Name}");
+                    MessageBox.Show($"В шаблоне документа отсутствует ключ {mark.Name}");
                 }
             }
 
+            
             // Закрываем документ
-            app.ActiveDocument.SaveAs2(specialFolderPathFile);
+            if (_isSave )
+            {
+                app.ActiveDocument.SaveAs2(fiedlsPerson["specialFolderPathFile"]);
+            }
+            else
+            {
+                app.Visible = true;
+                app.ActiveDocument.Activate();
+                Thread.Sleep(25000);
+                //doc.Activate();
+            }
+            
             //app.ActiveDocument.Save();
             app.ActiveDocument.Close();
             doc = null;

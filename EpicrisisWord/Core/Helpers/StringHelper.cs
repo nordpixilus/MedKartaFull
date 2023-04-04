@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -6,21 +7,23 @@ namespace EpicrisisWord.Core.Helpers;
 
 internal static class StringHelper
 {
-    internal static (string fileName, string pathFile) GetNewNameFile(string ini, string shortMedicftion)
+    internal static void AddNewNameFile(ref Dictionary<string, string> boardFields)
     {
+        string ini = boardFields["ini"];
+        string short_medicftion = boardFields["short_medicftion"];
 
-
-        string newNameFile = $"{ini} Эпикриз {shortMedicftion}.docx";
+        string newNameFile = $"{ini} Эпикриз {short_medicftion}.docx";
         string specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string? specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
         if (File.Exists(specialFolderPathFile))
         {
             string currentYear = DateTime.Now.Year.ToString();
-            newNameFile = $"{ini} Эпикриз {shortMedicftion} {currentYear}.docx";
+            newNameFile = $"{ini} Эпикриз {short_medicftion} {currentYear}.docx";
             specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
         }
 
-        return (newNameFile, specialFolderPathFile);
+        boardFields["newNameFile"] = newNameFile;
+        boardFields["specialFolderPathFile"] = specialFolderPathFile;
     }
 
     /// <summary>
@@ -60,34 +63,31 @@ internal static class StringHelper
         };
     }
 
-    internal static string ExtractMedication(string medication)
+    internal static void AddExtractMedication(ref Dictionary<string, string> boardFields)
     {
-        if (string.IsNullOrEmpty(medication))
+        string problem = boardFields["problem"];
+
+        if (problem.Contains(" шейного "))
         {
-            return string.Empty;
+            boardFields["short_medicftion"] = "ШОП";
         }
-        else if(medication.Contains(" шейного "))
+        else if (problem.Contains("  грудного "))
         {
-            return "ШОП";
+            boardFields["short_medicftion"] = "ГОП";
         }
-        else if (medication.Contains("  грудного "))
+        else if (problem.Contains("  пояснично"))
         {
-            return "ГОП";
-        }
-        else if (medication.Contains("  пояснично "))
-        {
-            return "ПОП";
+            boardFields["short_medicftion"] = "ПОП";
         }
         else
         {
-            MessageBox.Show("Не смог разобрать тип заболевания");
-            return string.Empty;
+            boardFields["short_medicftion"] = string.Empty;
         }
     }
 
-    internal static string ExtractRecommendation(string shortMedicftion)
+    internal static void AddExtractRecommendation(ref Dictionary<string, string> boardFields)
     {
-        return shortMedicftion switch
+        boardFields["recommendation"] = boardFields["short_medicftion"] switch
         {
             "ШОП" => Properties.Settings.Default.recom_hop,
             "ПОП" => Properties.Settings.Default.recom_pop,

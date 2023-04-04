@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -70,7 +71,7 @@ internal static class RegexHelper
     /// <returns></returns>
     internal static bool IsFamilyToPathFile(string filename, string name)
     {
-        string pattern = $"^.*({name}).*";
+        string pattern = $"^{name}.*";
 
 
         if (Regex.IsMatch(filename, pattern))
@@ -84,10 +85,18 @@ internal static class RegexHelper
     }
 
     internal static (Dictionary<string, string> boardFields, bool isFields) ExtractTextProblem(string text)
-    {
+    {       
         string pattern = @"  +|(\r+\n+)+";
         Regex regex = new(pattern);
         text = regex.Replace(text, " ");
+       
+        string patternDoctor = @"(Врач.*)";
+        Regex regexDoctor = new(patternDoctor);
+        text = regexDoctor.Replace(text, "");
+
+        text = text.Trim();
+        
+        Clipboard.SetText(text);
 
         Dictionary<string, string> fields = new();
 
@@ -95,8 +104,8 @@ internal static class RegexHelper
         {
             { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*) Осложнения" },
             { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*) Сопутствующ(ий|ие заболевания)" },
-            { "parallel_problem", @"^.*Сопутствующ(ий|ие заболевания)(:|,|.|;)\s*(?<parallel_problem>.*) План обследования:" },
-            { "medication", @"^.*План лечения(:|,|.|;)\s*(?<medication>.*) Врач.*$" },
+            { "parallel_problem", @"^.*Сопутствующ(ий|ие заболевания)(:|,|.|;)\s*(?<parallel_problem>.*) План обследования" },
+            { "medication", @"^.*План (лечения|ведения)(:|,|.|;)\s*(?<medication>.*)$" },
         };
 
         foreach (KeyValuePair<string, string> entry in patterns)
@@ -104,26 +113,33 @@ internal static class RegexHelper
             fields[entry.Key] = ParseText(entry.Key, entry.Value, text);
         }
 
+        fields["problem2"] = fields["problem"];
+        fields["super_problem2"] = fields["super_problem"];
+        fields["parallel_problem2"] = fields["parallel_problem"];
+
         return (fields, true);
     }
 
-    //https://www.cyberforum.ru/csharp-beginners/thread1230635.html
-    internal static string ExtractIni(string full_name)
+    //https://www.cyberforum.ru/csharp-beginners/thread1230635.html    
+    internal static void AddExtractIni(ref Dictionary<string, string> boardFields)
     {
         string pattern = "(?<F>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<I>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<O>[а-яА-Я]+))?)?";
 
         Regex regex = new(pattern);
 
-        var match = regex.Match(full_name);
+        var match = regex.Match(boardFields["full_name"]);
 
         if (!match.Success)
-            return string.Empty; //подсунули дрянь :)
+            boardFields["ini"] = string.Empty; //подсунули дрянь :)
 
         var inits = match.Groups;
+
         if (inits["O"].Success)
-            return string.Format("{0} {1}. {2}.", inits["F"], inits["I"].Value[0], inits["O"].Value[0]);
+            boardFields["ini"] = string.Format("{0} {1}. {2}.", inits["F"], inits["I"].Value[0], inits["O"].Value[0]);
+        
         if (inits["I"].Success)
-            return string.Format("{0} {1}. ", inits["F"], inits["I"].Value[0]);
-        return inits["F"].Value;
-    }    
+            boardFields["ini"] = string.Format("{0} {1}. ", inits["F"], inits["I"].Value[0]);
+
+        boardFields["ini"] = inits["F"].Value;
+    }
 }
