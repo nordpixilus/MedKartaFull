@@ -86,7 +86,7 @@ internal static class RegexHelper
 
     internal static (Dictionary<string, string> boardFields, bool isFields) ExtractTextProblem(string text)
     {       
-        string pattern = @"  +|(\r+\n+)+";
+        string pattern = @"  +|\r\n?";
         Regex regex = new(pattern);
         text = regex.Replace(text, " ");
        
@@ -95,9 +95,7 @@ internal static class RegexHelper
         text = regexDoctor.Replace(text, "");
 
         text = text.Trim();
-        
-        Clipboard.SetText(text);
-
+        MessageBox.Show(text);
         Dictionary<string, string> fields = new();
 
         Dictionary<string, string> patterns = new()
