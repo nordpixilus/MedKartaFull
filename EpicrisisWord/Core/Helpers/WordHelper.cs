@@ -5,6 +5,7 @@ using System;
 using Word = Microsoft.Office.Interop.Word;
 using static System.Environment;
 using System.Threading;
+using Microsoft.Office.Interop.Word;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -115,7 +116,25 @@ internal class WordHelper
             doc = null;
         }
     }
+
+    // https://www.cyberforum.ru/csharp-net/thread450570.html
+    internal static string GetTextFromDocxHelper(string path)
+    {
+        string textProblem = string.Empty;
+        Word.Application app = new();
+        //Object fileName = dialog.FileName;
+        app.Documents.Open(path);
+        Word.Document doc = app.ActiveDocument;
+        // Нумерация параграфов начинается с одного
+        for (int i = 1; i < doc.Paragraphs.Count; i++)
+        {
+            textProblem += doc.Paragraphs[i].Range.Text;
+            
+        }
+        app.Quit();
+        return textProblem;
+    }
 }
 // http://nullpro.info/2012/rabotaem-s-ms-word-iz-c-chast-1-otkryvaem-shablon-ishhem-tekst-vnutri-dokumenta/
 // https://progtask.ru/rabota-s-word-pri-pomoshi-c-sharp/
-// https://github.com/xceedsoftware/DocX
+// https://github.com/xceedsoftware/DocX 
