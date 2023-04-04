@@ -87,43 +87,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
             
         }
-
-            //
-
-
-
-
-            //DocumentHelper.OpenDocumentToPath(message.Value);
-        //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();
-        //if (textProblem != null)
-        //{
-        //    // Получаем медицинские поля 
-        //    (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
-        //    if(isFields)
-        //    {
-        //        // Добавляем в список поля пациента.
-        //        PersonFormContent.AddDictionaryFielsPerson(ref boardFields);
-        //        // Добавляем поля с датой.
-        //        DateContent.AddDictionaryFielsDate(ref boardFields);
-        //        // Добавляем поле с инициалами.
-        //        RegexHelper.AddExtractIni(ref boardFields);
-        //        // Добавляем поле с коротким названием заболевания.
-        //        StringHelper.AddExtractMedication(ref boardFields);
-        //        // Добавляем поле с рекомендацией.
-        //        StringHelper.AddExtractRecommendation(ref boardFields);
-        //        // Добавляем новое название файла и путь к нему.
-        //        StringHelper.AddNewNameFile(ref boardFields);
-
-              
-        //        var helper = new WordHelper(boardFields);
-        //        helper.CreateEpicrisisFile();
-        //        //helper.CreateDiagnosisFile();
-        //        DocumentHelper.OpenDocumentToPath(boardFields["specialFolderPathFile"]);
-        //        await Task.Delay(3000);
-        //        Application.Current.Windows[0].Close();
-        //    }
-        //}
-        
+        //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
     }
 
     public void Receive(ChangeFieldBlockMessege message)

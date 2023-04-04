@@ -29,35 +29,6 @@ internal static class ClipoardHelper
     }
 
     /// <summary>
-    /// Получает в асинхронном режиме текс проблем из буфера обмена.
-    /// </summary>
-    /// <returns>
-    /// Возвращает srting или null.
-    /// </returns>
-    async internal static Task<string?> StartMoninitorTextProblemAsync()
-    {
-        string? textProblem = null;
-        bool x = true;
-        while (x)
-        {
-            await Task.Delay(1000);
-            if (Clipboard.ContainsText() == true)
-            {
-                string? text = Clipboard.GetText();
-                if (text.Contains("Диагноз"))
-                {
-                    textProblem = Clipboard.GetText();
-                    Clipboard.Clear();
-                    x = false;
-                }
-                
-            }
-        }
-
-        return textProblem;
-    }
-
-    /// <summary>
     /// Получает личные данные из буфера обмена.
     /// </summary>
     /// <returns>
