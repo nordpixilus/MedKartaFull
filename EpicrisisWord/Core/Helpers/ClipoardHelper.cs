@@ -43,9 +43,14 @@ internal static class ClipoardHelper
             await Task.Delay(1000);
             if (Clipboard.ContainsText() == true)
             {
-                textProblem = Clipboard.GetText();
-                Clipboard.Clear();
-                x = false;
+                string? text = Clipboard.GetText();
+                if (text.Contains("Диагноз"))
+                {
+                    textProblem = Clipboard.GetText();
+                    Clipboard.Clear();
+                    x = false;
+                }
+                
             }
         }
 
@@ -62,11 +67,11 @@ internal static class ClipoardHelper
     {
         if (Clipboard.ContainsText() == true)
         {
-            string? fieldsText = Clipboard.GetText();
-            if (fieldsText.Contains("дата рождения:"))
+            string? text = Clipboard.GetText();
+            if (text.Contains("дата рождения"))
             {
                 Clipboard.Clear();
-                return fieldsText;
+                return text;
             }
         }
 
