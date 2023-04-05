@@ -65,13 +65,5 @@
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
-
-            <Label Content="Занятость:" Margin="69,0,0,0" />
-
-            <TextBox Text="{Binding Work, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Width="800" />
-        </StackPanel>
-        
     </StackPanel>
 </UserControl>

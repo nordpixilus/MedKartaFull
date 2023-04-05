@@ -71,22 +71,7 @@ internal partial class PersonFormViewModel : BaseViewModel
         ActionChangeField();
     }
 
-    #endregion
-
-    #region Поле Work Занятость    
-
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "Name is Required")]
-    [MinLength(3, ErrorMessage = "Name Should be at least 3 character")]
-    [MaxLength(100)]
-    private string _Work = string.Empty;
-    partial void OnWorkChanged(string value)
-    {
-        ActionChangeField();
-    }
-
-    #endregion
+    #endregion    
 
     #endregion
 
@@ -116,8 +101,6 @@ internal partial class PersonFormViewModel : BaseViewModel
             FullName = boardFields["full_name"];
             Reg = boardFields["reg"];
             Res = boardFields["res"];
-            OldWork = boardFields["work"];
-            Work = StringHelper.SetDefautValueWork(OldWork);
 
 
         }
@@ -129,7 +112,6 @@ internal partial class PersonFormViewModel : BaseViewModel
         dict["full_name"] = FullName;
         dict["reg"] = Reg;
         dict["res"] = Res;
-        dict["work"] = Work;
     }
 
 }

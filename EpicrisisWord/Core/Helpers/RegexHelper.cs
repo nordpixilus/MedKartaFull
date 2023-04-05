@@ -28,7 +28,7 @@ internal static class RegexHelper
             //{ "cod", "" },
             { "reg", @"^.+Адрес регистрации: ?(?<reg>.+) Адрес" },
             { "res", @"^.+Адрес проживания: ?(?<res>.+)(,?|\.?) Занятость" },
-            { "work", @"^.+Занятость: ?(?<work>.*) (Теле|Кон)" },
+            //{ "work", @"^.+Занятость: ?(?<work>.*) (Теле|Кон)" },
             //{ "date_start", "" },
             //{ "date_end", "" }
         };
@@ -100,10 +100,11 @@ internal static class RegexHelper
 
         Dictionary<string, string> patterns = new()
         {
-            { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*) Осложнения" },
-            { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*) Сопутствующ(ий|ие заболевания)" },
-            { "parallel_problem", @"^.*Сопутствующ(ий|ие заболевания)(:|,|.|;)\s*(?<parallel_problem>.*) План обследования" },
-            { "medication", @"^.*План (лечения|ведения)(:|,|.|;)\s*(?<medication>.*)$" },
+            { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*)\sОсложнения" },
+            { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*)\sСопутствующ(ий|ие\sзаболевания)" },
+            { "parallel_problem", @"^.*Сопутствующ(ий|ие\sзаболевания)(:|,|.|;)\s*(?<parallel_problem>.*)\sПлан\sобследования" },
+            { "work", @"^.*СТРАХОВОЙ\sАНАМНЕЗ(:|,|.|;)\s*(?<work>.*)\sДАННЫЕ" },
+            { "medication", @"^.*План\s(лечения|ведения)(:|,|.|;)\s*(?<medication>.*)$" },
         };
 
         foreach (KeyValuePair<string, string> entry in patterns)
