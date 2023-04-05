@@ -7,9 +7,13 @@ using EpicrisisWord.Core.Navigations;
 using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
@@ -40,23 +44,55 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
     public async void Receive(CreateDocumentMessage message)
     {
-        DocumentHelper.OpenDocumentToPath(message.Value);
-        string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();
-        if (textProblem != null)
+        string textProblem = string.Empty;
+        //string extension = Path.GetExtension(message.Value);
+        string extension = Path.GetExtension(message.Value).Remove(0, 1);
+
+        switch (extension)
         {
-            (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
-            if(isFields)
-            {
-                PersonFormContent.AddDictionaryFielsPerson(ref boardFields);
-                DateContent.AddDictionaryFielsDate(ref boardFields);
-                var helper = new WordHelper(boardFields);
-                helper.ProcessAdd();
-                DocumentHelper.OpenDocumentToPath(helper.specialFolderPathFile);
-                await Task.Delay(3000);
-                Application.Current.Windows[0].Close();
-            }
+            case "odt":
+                textProblem = GetTextFromOdtHelper.GetTextFromOdt(message.Value);
+                break;
+            case "docx":
+                textProblem = WordHelper.GetTextFromDocxHelper(message.Value);
+                break;
         }
-        
+        DocumentHelper.OpenDocumentToPath(message.Value);
+        if (!string.IsNullOrEmpty(textProblem))
+        {
+            (Dictionary<string, string> fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
+            if (isFields)
+            {                
+                // Добавляем в список поля пациента.
+                PersonFormContent.AddDictionaryFielsPerson(ref fiedlsPerson);
+                // Добавляем поля с датой.
+                DateContent.AddDictionaryFielsDate(ref fiedlsPerson);                
+                // Добавляем поле с коротким названием заболевания.
+                StringHelper.AddExtractMedication(ref fiedlsPerson);
+                // Добавляем поле с рекомендацией.
+                StringHelper.AddExtractRecommendation(ref fiedlsPerson);               
+                // Добавляем поле с инициалами.
+                RegexHelper.AddExtractIni(ref fiedlsPerson);
+                // Добавление путей к файлам
+                StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
+                // Добавляем путь к файлу с файлу диагноза для печати
+                StringHelper.AddPathNewDiagnosisFile(ref fiedlsPerson);
+                // Добавляем новое название файла и путь к нему.
+                StringHelper.AddNewNameEpicrisisFile(ref fiedlsPerson);
+
+
+                var helper = new WordHelper(fiedlsPerson);
+                helper.CreateEpicrisisFile();
+                helper.CreateDiagnosisFile();
+                DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewEpicrisisFile"]);
+                DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiagnosisFile"]);
+                await Task.Delay(3000);
+                System.Windows.Application.Current.Windows[0].Close();
+            }
+
+            
+        }
+        //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
     }
 
     public void Receive(ChangeFieldBlockMessege message)

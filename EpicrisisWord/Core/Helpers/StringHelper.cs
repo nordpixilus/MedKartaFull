@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ICSharpCode.SharpZipLib.Core;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -6,21 +8,24 @@ namespace EpicrisisWord.Core.Helpers;
 
 internal static class StringHelper
 {
-    internal static (string fileName, string pathFile) GetNewNameFile(string ini, string shortMedicftion)
+    internal static void AddNewNameEpicrisisFile(ref Dictionary<string, string> fiedlsPerson)
     {
+        string ini = fiedlsPerson["ini"];
+        string short_medicftion = fiedlsPerson["short_medicftion"];
+        string specialFolder = fiedlsPerson["specialFolder"];
 
-
-        string newNameFile = $"{ini} Эпикриз {shortMedicftion}.docx";
-        string specialFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string? specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
-        if (File.Exists(specialFolderPathFile))
+        string newNameEpicrisisFile = $"{ini} Эпикриз {short_medicftion}.docx";
+        
+        string? pathNewEpicrisisFile = Path.Combine(specialFolder, $"{newNameEpicrisisFile}");
+        if (File.Exists(pathNewEpicrisisFile))
         {
             string currentYear = DateTime.Now.Year.ToString();
-            newNameFile = $"{ini} Эпикриз {shortMedicftion} {currentYear}.docx";
-            specialFolderPathFile = Path.Combine(specialFolder, $"{newNameFile}");
+            newNameEpicrisisFile = $"{ini} Эпикриз {short_medicftion} {currentYear}.docx";
+            pathNewEpicrisisFile = Path.Combine(specialFolder, $"{newNameEpicrisisFile}");
         }
 
-        return (newNameFile, specialFolderPathFile);
+        fiedlsPerson["newNameEpicrisisFile"] = newNameEpicrisisFile;
+        fiedlsPerson["pathNewEpicrisisFile"] = pathNewEpicrisisFile;
     }
 
     /// <summary>
@@ -60,39 +65,59 @@ internal static class StringHelper
         };
     }
 
-    internal static string ExtractMedication(string medication)
+    internal static void AddExtractMedication(ref Dictionary<string, string> fiedlsPerson)
     {
-        if (string.IsNullOrEmpty(medication))
+        string problem = fiedlsPerson["problem"];
+
+        if (problem.Contains(" шейного "))
         {
-            return string.Empty;
+            fiedlsPerson["short_medicftion"] = "ШОП";
         }
-        else if(medication.Contains(" шейного "))
+        else if (problem.Contains(" грудного "))
         {
-            return "ШОП";
+            fiedlsPerson["short_medicftion"] = "ГОП";
         }
-        else if (medication.Contains("  грудного "))
+        else if (problem.Contains(" пояснично"))
         {
-            return "ГОП";
-        }
-        else if (medication.Contains("  пояснично "))
-        {
-            return "ПОП";
+            fiedlsPerson["short_medicftion"] = "ПОП";
         }
         else
         {
-            MessageBox.Show("Не смог разобрать тип заболевания");
-            return string.Empty;
+            fiedlsPerson["short_medicftion"] = string.Empty;
         }
     }
 
-    internal static string ExtractRecommendation(string shortMedicftion)
+    internal static void AddExtractRecommendation(ref Dictionary<string, string> fiedlsPerson)
     {
-        return shortMedicftion switch
+        fiedlsPerson["recommendation"] = fiedlsPerson["short_medicftion"] switch
         {
             "ШОП" => Properties.Settings.Default.recom_hop,
             "ПОП" => Properties.Settings.Default.recom_pop,
             "ГОП" => Properties.Settings.Default.recom_gop,
             _ => string.Empty,
         };
+    }
+
+    internal static void AddPathTemplateFiles(ref Dictionary<string, string> fiedlsPerson)
+    {
+        fiedlsPerson["specialFolder"] = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string pathTemp = "Temp";
+
+        DirectoryInfo dirInfoTemp = new(pathTemp);
+        if (!dirInfoTemp.Exists) dirInfoTemp.Create();
+
+        FileInfo fileInfoEpicrisis =  new(Path.Combine("TemplatesWord", "epicrisis.docx"));
+        fiedlsPerson["pathEpicrisisFile"] = fileInfoEpicrisis.FullName;
+
+        FileInfo fileInfoDiagnosis = new(Path.Combine("TemplatesWord", "diagnosis.docx"));
+        fiedlsPerson["pathDiagnosisFile"] = fileInfoDiagnosis.FullName;
+
+             
+    }
+
+    internal static void AddPathNewDiagnosisFile(ref Dictionary<string, string> fiedlsPerson)
+    {
+        FileInfo fileInfoNewDiagnosis = new(Path.Combine("Temp", "NewDiagnosis.docx"));
+        fiedlsPerson["pathNewDiagnosisFile"] = fileInfoNewDiagnosis.FullName;
     }
 }

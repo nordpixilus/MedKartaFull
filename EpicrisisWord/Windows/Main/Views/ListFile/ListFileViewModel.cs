@@ -59,12 +59,14 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
         string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string[] pathFiles = Directory.GetFiles(folderDocuments);
         string family = fullName.Split(' ')[0];
+        string nameFile;
 
-        foreach (string file in pathFiles)
+        foreach (string path in pathFiles)
         {
-            if (RegexHelper.IsFamilyToPathFile(file, family))
+            nameFile = Path.GetFileName(path);
+            if (RegexHelper.IsFamilyToPathFile(nameFile, family))
             {
-                Files.Add(new DocumentName() { PathFile = file, NameFile = Path.GetFileName(file) });
+                Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
             }
         }
     }

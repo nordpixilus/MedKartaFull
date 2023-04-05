@@ -35,19 +35,22 @@ internal static class DocumentHelper
         try
         {
             using Process myProcess = new();
+
             myProcess.StartInfo.UseShellExecute = true;
             // You can start any process, HelloWorld is a do-nothing example.
             myProcess.StartInfo.FileName = path;
             //myProcess.StartInfo.CreateNoWindow = true;
             myProcess.Start();
-            // This code assumes the process you are starting will terminate itself.
-            // Given that it is started without a window so you cannot terminate it
-            // on the desktop, it must terminate itself or you can do it programmatically
-            // from this application using the Kill method.
+            // Этот код предполагает, что процесс, который вы запускаете, завершится сам по себе.
+            // Учитывая, что он запущен без окна, поэтому вы не можете его завершить
+            // на рабочем столе он должен завершиться сам по себе, или вы можете сделать это программно
+            // из этого приложения с использованием метода Kill.
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            MessageBox.Show(@"Закрыть все открытые офисные докуметы.\n Программа закроется. \n Открыть программу снова.");
+            //MessageBox.Show(e.Message);
+            //Console.WriteLine(e.Message);
         }
     }
 }
