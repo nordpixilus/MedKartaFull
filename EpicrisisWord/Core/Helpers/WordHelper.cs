@@ -6,7 +6,7 @@ using Word = Microsoft.Office.Interop.Word;
 using static System.Environment;
 using System.Threading;
 using Microsoft.Office.Interop.Word;
-using System.Windows.Shapes;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -94,14 +94,17 @@ internal class WordHelper
     }
 
     // https://www.cyberforum.ru/csharp-net/thread450570.html
-    internal static string GetTextFromDocxHelper(string path)
+    internal static string GetTextFromDocxHelper(string pathFile)
     {
         string textProblem = string.Empty;
+        object Revert = false;
+        object ReadOnly = true;
         Word.Application app = new();
+        //object s = Word.Tasks.Count;
         //Object fileName = dialog.FileName;
         try
         {
-            app.Documents.Open(path);
+            app.Documents.Open(pathFile, ref Revert, ref ReadOnly);
             Word.Document doc = app.ActiveDocument;
             // Нумерация параграфов начинается с одного
             for (int i = 1; i < doc.Paragraphs.Count; i++)
@@ -114,7 +117,7 @@ internal class WordHelper
         }
         catch
         {
-            MessageBox.Show(@"Закрыть все открытые офисные докуметы.\n Программа закроется. \n Открыть программу снова.");
+            MessageBox.Show($"Закрыть Word документ. {Path.GetFileName(pathFile)}");
         }
         return textProblem;
     }
