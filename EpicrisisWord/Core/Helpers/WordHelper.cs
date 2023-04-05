@@ -6,26 +6,15 @@ using Word = Microsoft.Office.Interop.Word;
 using static System.Environment;
 using System.Threading;
 using Microsoft.Office.Interop.Word;
+using System.Windows.Shapes;
 
 namespace EpicrisisWord.Core.Helpers;
 
 internal class WordHelper
 {
-    // Путь до файла шаблона
-    //private string pathTemlateNameFile = Path.Combine("TemplatesWord", "epicrisis.docx");
+    private string? _fileInfoTemlate;
 
-    // Путь до до файла в папке документы
-    //public readonly string specialFolderPathFile;
-
-    //string shortFullName;
-
-    // получаем название новаго файла
-    //private readonly string newNameFile;
-
-    private FileInfo? _fileInfoTemlate;
-
-    private bool _isSave = false;
-
+    private string? _fileInfoNew;
 
 
     private readonly Dictionary<string, string> fiedlsPerson;
@@ -37,21 +26,22 @@ internal class WordHelper
 
     public void CreateEpicrisisFile()
     {
-        _isSave = true;
-        SetFileInfo("epicrisis");
+        //_fileInfoTemlate = new FileInfo(fiedlsPerson["pathEpicrisisFile"]);
+        _fileInfoTemlate = fiedlsPerson["pathEpicrisisFile"];
+
+        //_fileInfoNew = new FileInfo(fiedlsPerson["pathNewEpicrisisFile"]);
+        _fileInfoNew = fiedlsPerson["pathNewEpicrisisFile"];
         ProcessAdd();
     }
 
     public void CreateDiagnosisFile()
     {
-        SetFileInfo("diagnosis");
-        ProcessAdd();
-    }
+        //_fileInfoTemlate = new FileInfo(fiedlsPerson["pathDiagnosisFile"]);
+        _fileInfoTemlate = fiedlsPerson["pathDiagnosisFile"];
 
-    private void SetFileInfo(string nameFile)
-    {
-        string pathTemlateNameFile = Path.Combine("TemplatesWord", $"{nameFile}.docx");
-        _fileInfoTemlate = new FileInfo(pathTemlateNameFile);
+        //_fileInfoNew = new FileInfo(fiedlsPerson["pathNewDiagnosisFile"]);
+        _fileInfoNew = fiedlsPerson["pathNewDiagnosisFile"];
+        ProcessAdd();
     }
 
     private void ProcessAdd()
@@ -64,9 +54,9 @@ internal class WordHelper
             Word.Application app = new();
 
             // Путь до шаблона документа
-            Object file = _fileInfoTemlate!.FullName;
+            //Object file = _fileInfoTemlate!;
 
-            doc = app.Documents.Open(file);
+            doc = app.Documents.Open(_fileInfoTemlate);
 
             // Добавляем информацию
             // wBookmarks содержит все закладки
@@ -87,29 +77,15 @@ internal class WordHelper
                 }
             }
 
-            
-            // Закрываем документ
-            if (_isSave )
-            {
-                app.ActiveDocument.SaveAs2(fiedlsPerson["specialFolderPathFile"]);
-            }
-            else
-            {
-                app.Visible = true;
-                app.ActiveDocument.Activate();
-                Thread.Sleep(25000);
-                //doc.Activate();
-            }
-            
-            //app.ActiveDocument.Save();
+            app.ActiveDocument.SaveAs2(_fileInfoNew);
             app.ActiveDocument.Close();
             doc = null;
             app.Quit();
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            MessageBox.Show("произошла ошибка");
+            MessageBox.Show($"произошла ошибка ProcessAdd {ex?.ToString()}");
             // Если произошла ошибка, то
             // закрываем документ и выводим информацию
             doc?.Close();
@@ -123,15 +99,23 @@ internal class WordHelper
         string textProblem = string.Empty;
         Word.Application app = new();
         //Object fileName = dialog.FileName;
-        app.Documents.Open(path);
-        Word.Document doc = app.ActiveDocument;
-        // Нумерация параграфов начинается с одного
-        for (int i = 1; i < doc.Paragraphs.Count; i++)
+        try
         {
-            textProblem += doc.Paragraphs[i].Range.Text;
+            app.Documents.Open(path);
+            Word.Document doc = app.ActiveDocument;
+            // Нумерация параграфов начинается с одного
+            for (int i = 1; i < doc.Paragraphs.Count; i++)
+            {
+                textProblem += doc.Paragraphs[i].Range.Text;
+
+            }
+            app.Quit();
             
         }
-        app.Quit();
+        catch
+        {
+            MessageBox.Show(@"Закрыть все открытые офисные докуметы.\n Программа закроется. \n Открыть программу снова.");
+        }
         return textProblem;
     }
 }

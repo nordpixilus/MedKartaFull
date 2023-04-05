@@ -60,27 +60,32 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         DocumentHelper.OpenDocumentToPath(message.Value);
         if (!string.IsNullOrEmpty(textProblem))
         {
-            (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
+            (Dictionary<string, string> fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
             if (isFields)
-            {
+            {                
                 // Добавляем в список поля пациента.
-                PersonFormContent.AddDictionaryFielsPerson(ref boardFields);
+                PersonFormContent.AddDictionaryFielsPerson(ref fiedlsPerson);
                 // Добавляем поля с датой.
-                DateContent.AddDictionaryFielsDate(ref boardFields);
-                // Добавляем поле с инициалами.
-                RegexHelper.AddExtractIni(ref boardFields);
+                DateContent.AddDictionaryFielsDate(ref fiedlsPerson);                
                 // Добавляем поле с коротким названием заболевания.
-                StringHelper.AddExtractMedication(ref boardFields);
+                StringHelper.AddExtractMedication(ref fiedlsPerson);
                 // Добавляем поле с рекомендацией.
-                StringHelper.AddExtractRecommendation(ref boardFields);
+                StringHelper.AddExtractRecommendation(ref fiedlsPerson);               
+                // Добавляем поле с инициалами.
+                RegexHelper.AddExtractIni(ref fiedlsPerson);
+                // Добавление путей к файлам
+                StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
+                // Добавляем путь к файлу с файлу диагноза для печати
+                StringHelper.AddPathNewDiagnosisFile(ref fiedlsPerson);
                 // Добавляем новое название файла и путь к нему.
-                StringHelper.AddNewNameFile(ref boardFields);
+                StringHelper.AddNewNameEpicrisisFile(ref fiedlsPerson);
 
 
-                var helper = new WordHelper(boardFields);
+                var helper = new WordHelper(fiedlsPerson);
                 helper.CreateEpicrisisFile();
-                //helper.CreateDiagnosisFile();
-                DocumentHelper.OpenDocumentToPath(boardFields["specialFolderPathFile"]);
+                helper.CreateDiagnosisFile();
+                DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewEpicrisisFile"]);
+                DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiagnosisFile"]);
                 await Task.Delay(3000);
                 System.Windows.Application.Current.Windows[0].Close();
             }
