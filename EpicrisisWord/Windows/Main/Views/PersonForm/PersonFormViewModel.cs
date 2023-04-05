@@ -94,7 +94,7 @@ internal partial class PersonFormViewModel : BaseViewModel
     /// <param name="fieldsText"></param>
     public void SetFiedsPerson(string? fieldsText)
     {
-        (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractFieldsPerson(fieldsText);
+        (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractFieldsPerson(fieldsText!);
         if (isFields)
         {
             BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
