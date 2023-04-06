@@ -91,36 +91,7 @@ internal class WordHelper
             doc?.Close();
             doc = null;
         }
-    }
-
-    // https://www.cyberforum.ru/csharp-net/thread450570.html
-    internal static string GetTextFromDocxHelper(string pathFile)
-    {
-        string textProblem = string.Empty;
-        object Revert = false;
-        object ReadOnly = true;
-        Word.Application app = new();
-        //object s = Word.Tasks.Count;
-        //Object fileName = dialog.FileName;
-        try
-        {
-            app.Documents.Open(pathFile, ref Revert, ref ReadOnly);
-            Word.Document doc = app.ActiveDocument;
-            // Нумерация параграфов начинается с одного
-            for (int i = 1; i < doc.Paragraphs.Count; i++)
-            {
-                textProblem += doc.Paragraphs[i].Range.Text;
-
-            }
-            app.Quit();
-            
-        }
-        catch
-        {
-            MessageBox.Show($"Закрыть Word документ. {Path.GetFileName(pathFile)}");
-        }
-        return textProblem;
-    }
+    }    
 }
 // http://nullpro.info/2012/rabotaem-s-ms-word-iz-c-chast-1-otkryvaem-shablon-ishhem-tekst-vnutri-dokumenta/
 // https://progtask.ru/rabota-s-word-pri-pomoshi-c-sharp/
