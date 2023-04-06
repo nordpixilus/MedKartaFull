@@ -36,6 +36,10 @@
             <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Width="450"/>
 
+            <Label Content="Создать направление:" Margin="99,0,0,0" />
+
+            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsCheckedDirection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Style="{StaticResource Line}">
@@ -43,7 +47,7 @@
             <Label Content="Дата рождения:" Margin="28,0,0,0" />
 
             <TextBox Text="{Binding BirthDateFull, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Width="170" />
+                     Width="170" />            
 
         </StackPanel>
 

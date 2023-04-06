@@ -31,6 +31,13 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     #endregion
 
+    #region Поле выбора создания документа направление
+
+    [ObservableProperty]
+    private bool _IsCheckedDirection = false;
+
+    #endregion
+
     #region Поле BirthDateFull Дата рождения и возраст    
 
     [ObservableProperty]
