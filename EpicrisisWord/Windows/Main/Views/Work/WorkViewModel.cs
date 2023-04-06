@@ -6,6 +6,7 @@ using EpicrisisWord.Core.Models;
 using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
+using System;
 using System.Collections.Generic;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
@@ -45,7 +46,8 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
             (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
             if (isFields)
             {
-                CreateDocuments(message.Value);               
+                AddFiedlsPersonValue(message.Value);
+                CreateOpenFiles();
                 await System.Threading.Tasks.Task.Delay(3000);
                 System.Windows.Application.Current.Windows[0].Close();
             }
@@ -53,9 +55,9 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
             
         }
         //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
-    }
+    }    
 
-    private void CreateDocuments(string pathFile)
+    private void AddFiedlsPersonValue(string pathFile)
     {
         // Добавляем в список поля пациента.
         PersonFormContent.AddDictionaryFielsPerson(ref fiedlsPerson);
@@ -69,20 +71,32 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         RegexHelper.AddExtractIni(ref fiedlsPerson);
         // Добавление путей к файлам
         StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
+        // добавляем путь первичному файлу
+        fiedlsPerson["primary_file"] = pathFile;
         // Добавляем путь к файлу с файлу диагноза для печати
-        StringHelper.AddPathNewDiagnosisFile(ref fiedlsPerson);
+        StringHelper.AddPathNewFile(ref fiedlsPerson);
         // Добавляем новое название файла и путь к нему.
         StringHelper.AddNewNameEpicrisisFile(ref fiedlsPerson);
+    }
 
-
+    private void CreateOpenFiles()
+    {
         var helper = new WordHelper(fiedlsPerson);
+        // Открытие первичного осмотра
+        DocumentHelper.OpenDocumentToPath(fiedlsPerson["primary_file"]);
+        // Создание и открытие файла эпикриз
         helper.CreateEpicrisisFile();
-        helper.CreateDiagnosisFile();
-
-        DocumentHelper.OpenDocumentToPath(pathFile);
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewEpicrisisFile"]);
+        // Создание и открытие файла диагноз
+        helper.CreateDiagnosisFile();
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiagnosisFile"]);
-    }    
+
+        if (fiedlsPerson["check_direction"] == "true")
+        {
+            helper.CreateDirectionFile();
+            DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDirectionFile"]);
+        }
+    }
 
     /// <summary>
     /// Обработка сообщения при изменении любого поля на форме ввода личных данных.

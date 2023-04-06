@@ -112,12 +112,16 @@ internal static class StringHelper
         FileInfo fileInfoDiagnosis = new(Path.Combine("TemplatesWord", "diagnosis.docx"));
         fiedlsPerson["pathDiagnosisFile"] = fileInfoDiagnosis.FullName;
 
-             
+        FileInfo fileInfoDirection = new(Path.Combine("TemplatesWord", "direction.docx"));
+        fiedlsPerson["pathDirectionFile"] = fileInfoDirection.FullName;
     }
 
-    internal static void AddPathNewDiagnosisFile(ref Dictionary<string, string> fiedlsPerson)
+    internal static void AddPathNewFile(ref Dictionary<string, string> fiedlsPerson)
     {
         FileInfo fileInfoNewDiagnosis = new(Path.Combine("Temp", "NewDiagnosis.docx"));
         fiedlsPerson["pathNewDiagnosisFile"] = fileInfoNewDiagnosis.FullName;
+
+        FileInfo fileInfoNewDirection = new(Path.Combine("Temp", "NewDirection.docx"));
+        fiedlsPerson["pathNewDirectionFile"] = fileInfoNewDirection.FullName;
     }
 }

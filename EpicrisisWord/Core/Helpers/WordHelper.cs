@@ -26,21 +26,22 @@ internal class WordHelper
 
     public void CreateEpicrisisFile()
     {
-        //_fileInfoTemlate = new FileInfo(fiedlsPerson["pathEpicrisisFile"]);
         _fileInfoTemlate = fiedlsPerson["pathEpicrisisFile"];
-
-        //_fileInfoNew = new FileInfo(fiedlsPerson["pathNewEpicrisisFile"]);
         _fileInfoNew = fiedlsPerson["pathNewEpicrisisFile"];
         ProcessAdd();
     }
 
     public void CreateDiagnosisFile()
     {
-        //_fileInfoTemlate = new FileInfo(fiedlsPerson["pathDiagnosisFile"]);
         _fileInfoTemlate = fiedlsPerson["pathDiagnosisFile"];
-
-        //_fileInfoNew = new FileInfo(fiedlsPerson["pathNewDiagnosisFile"]);
         _fileInfoNew = fiedlsPerson["pathNewDiagnosisFile"];
+        ProcessAdd();
+    }
+
+    public void CreateDirectionFile()
+    {
+        _fileInfoTemlate = fiedlsPerson["pathDirectionFile"];
+        _fileInfoNew = fiedlsPerson["pathNewDirectionFile"];
         ProcessAdd();
     }
 

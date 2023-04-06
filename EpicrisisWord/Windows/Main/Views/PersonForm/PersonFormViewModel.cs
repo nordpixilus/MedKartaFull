@@ -82,9 +82,6 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     #endregion
 
-    [ObservableProperty]
-    private string _OldWork = string.Empty;
-
     public PersonFormViewModel()
     {
         ValidateAllProperties();
@@ -96,29 +93,33 @@ internal partial class PersonFormViewModel : BaseViewModel
     }
 
     /// <summary>
-    /// Выборка из текста нужных значений.
+    /// Заполнение полей формы.
     /// </summary>
     /// <param name="fieldsText"></param>
     public void SetFiedsPerson(string? fieldsText)
     {
+        // Выборка из текста нужных значений.
         (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractFieldsPerson(fieldsText!);
         if (isFields)
-        {
-            BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
+        {            
             FullName = boardFields["full_name"];
+            BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
             Reg = boardFields["reg"];
             Res = boardFields["res"];
-
-
         }
     }
 
+    /// <summary>
+    /// Добавляет в список значения полей: full_name, direction, birth_date_full, reg, res
+    /// </summary>
+    /// <param name="dict"></param>
     public void AddDictionaryFielsPerson(ref Dictionary<string, string> dict)
-    {
-        dict["birth_date_full"] = BirthDateFull;
+    {        
         dict["full_name"] = FullName;
+        dict["check_direction"] = IsCheckedDirection ? "true" : "false";
+        dict["birth_date_full"] = BirthDateFull;
         dict["reg"] = Reg;
-        dict["res"] = Res;
+        dict["res"] = Res;        
     }
 
 }
