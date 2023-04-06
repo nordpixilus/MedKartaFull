@@ -100,11 +100,12 @@ internal static class RegexHelper
 
         Dictionary<string, string> patterns = new()
         {
-            { "problem", @"^.*Диагноз основной(:|,|.|;)\s*(?<problem>.*)\sОсложнения" },
-            { "super_problem", @"^.*Осложнения(:|,|.|;)\s*(?<super_problem>.*)\sСопутствующ(ий|ие\sзаболевания)" },
-            { "parallel_problem", @"^.*Сопутствующ(ий|ие\sзаболевания)(:|,|.|;)\s*(?<parallel_problem>.*)\sПлан\sобследования" },
-            { "work", @"^.*СТРАХОВОЙ\sАНАМНЕЗ(:|,|.|;)\s*(?<work>.*)\sДАННЫЕ" },
-            { "medication", @"^.*План\s(лечения|ведения)(:|,|.|;)\s*(?<medication>.*)$" },
+            { "anamnesis_problem", @"^.*АНАМНЕЗ\s+ЗАБОЛЕВАНИЯ(:|,|.|;)?\s*(?<anamnesis_problem>.*)\sАНАМНЕЗ\s+ЖИЗНИ" },
+            { "problem", @"^.*Диагноз основной(:|,|.|;)?\s*(?<problem>.*)\sОсложнения" },
+            { "super_problem", @"^.*Осложнения(:|,|.|;)?\s*(?<super_problem>.*)\sСопутствующ(ий|ие\sзаболевания)" },
+            { "parallel_problem", @"^.*Сопутствующ(ий|ие\sзаболевания)(:|,|.|;)?\s*(?<parallel_problem>.*)\sПлан\sобследования" },
+            { "work", @"^.*СТРАХОВОЙ\sАНАМНЕЗ(:|,|.|;)?\s*(?<work>.*)\sДАННЫЕ" },
+            { "medication", @"^.*План\s(лечения|ведения)(:|,|.|;)?\s*(?<medication>.*)$" },
         };
 
         foreach (KeyValuePair<string, string> entry in patterns)

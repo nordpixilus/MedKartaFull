@@ -55,5 +55,6 @@ internal partial class DateViewModel : BaseViewModel
         dict["date_start"] = DateStart!.Value.ToShortDateString();
         dict["date_end"] = DateEnd!.Value.ToShortDateString();
         dict["date_end2"] = DateEnd!.Value.ToShortDateString();
+        dict["date_direction"] = DateStart!.Value.Subtract(TimeSpan.FromDays(1)).ToShortDateString();
     }
 }
