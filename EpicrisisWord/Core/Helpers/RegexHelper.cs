@@ -120,26 +120,28 @@ internal static class RegexHelper
         return (fiedlsPerson, true);
     }
 
-    //https://www.cyberforum.ru/csharp-beginners/thread1230635.html    
+    //https://www.cyberforum.ru/csharp-beginners/thread1230635.html  
     internal static void AddExtractIni(ref Dictionary<string, string> fiedlsPerson)
+    {
+        fiedlsPerson["ini"] = ExtractIni(fiedlsPerson["full_name"]);
+    }
+
+    private static string ExtractIni(string full_name)
     {
         string pattern = "(?<F>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<I>[а-яА-Я]+)(?:(?:[^а-яА-Я]+)(?<O>[а-яА-Я]+))?)?";
 
         Regex regex = new(pattern);
 
-        var match = regex.Match(fiedlsPerson["full_name"]);
+        var match = regex.Match(full_name);
 
         if (!match.Success)
-            fiedlsPerson["ini"] = string.Empty; //подсунули дрянь :)
+            return string.Empty; //подсунули дрянь :)
 
         var inits = match.Groups;
-
         if (inits["O"].Success)
-            fiedlsPerson["ini"] = string.Format("{0} {1}. {2}.", inits["F"], inits["I"].Value[0], inits["O"].Value[0]);
-        
+            return string.Format("{0} {1}. {2}.", inits["F"], inits["I"].Value[0], inits["O"].Value[0]);
         if (inits["I"].Success)
-            fiedlsPerson["ini"] = string.Format("{0} {1}. ", inits["F"], inits["I"].Value[0]);
-
-        fiedlsPerson["ini"] = inits["F"].Value;
+            return string.Format("{0} {1}. ", inits["F"], inits["I"].Value[0]);
+        return inits["F"].Value;
     }
 }
