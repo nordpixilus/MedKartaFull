@@ -42,24 +42,27 @@ internal static class StringHelper
 
     internal static void AddExtractMedication(ref Dictionary<string, string> fiedlsPerson)
     {
-        string problem = fiedlsPerson["problem"];
+        string problem = fiedlsPerson["problem"].ToLower();
+        fiedlsPerson["short_medicftion"] = string.Empty;
 
-        if (problem.Contains(" шейного "))
+        Dictionary<string, string> keyValuePairs = new()
         {
-            fiedlsPerson["short_medicftion"] = "ШОП";
-        }
-        else if (problem.Contains(" грудного "))
+            { "ШОП", " шейного " },
+            { "ГОП", " грудного " },
+            { "ПОП", " пояснично" },
+            { "Диабет", "сахарный " },
+            { "ДЭ", "энцефалопатия " },
+            { "Атеро", "атеросклероз" }
+        };
+
+        foreach (var (key, value) in keyValuePairs)
         {
-            fiedlsPerson["short_medicftion"] = "ГОП";
-        }
-        else if (problem.Contains(" пояснично"))
-        {
-            fiedlsPerson["short_medicftion"] = "ПОП";
-        }
-        else
-        {
-            fiedlsPerson["short_medicftion"] = string.Empty;
-        }
+            if (problem.Contains(value))
+            {
+                fiedlsPerson["short_medicftion"] = key;
+                break;
+            }
+        }        
     }
 
     internal static void AddExtractRecommendation(ref Dictionary<string, string> fiedlsPerson)
