@@ -40,31 +40,6 @@ internal static class StringHelper
         return string.Concat(birth_date, " (", age_int, " ", age_str, ")");
     }
 
-    /// <summary>
-    /// Заменяет значения для поля занятость.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    internal static string SetDefautValueWork(string value)
-    {
-        return value switch
-        {
-            "пенсионер" => "Не работает, пенсионер",
-            "Пенсионер" => "Не работает, пенсионер",
-            "п/с" => "Не работает, пенсионер",
-            "П/С" => "Не работает, пенсионер",
-            "п/С" => "Не работает, пенсионер",
-            "П/с" => "Не работает, пенсионер",
-            "н/р" => "Не работает",
-            "Н/Р" => "Не работает",
-            "р/Р" => "Не работает",
-            "Н/р" => "Не работает",
-            "не указано" => string.Empty,
-            "Не указано" => string.Empty,
-            _ => value,
-        };
-    }
-
     internal static void AddExtractMedication(ref Dictionary<string, string> fiedlsPerson)
     {
         string problem = fiedlsPerson["problem"];
