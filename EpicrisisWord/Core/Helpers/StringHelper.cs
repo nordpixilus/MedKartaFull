@@ -72,6 +72,9 @@ internal static class StringHelper
             "ШОП" => Properties.Settings.Default.recom_hop,
             "ПОП" => Properties.Settings.Default.recom_pop,
             "ГОП" => Properties.Settings.Default.recom_gop,
+            "Диабет" => Properties.Settings.Default.recom_diabet,
+            "ДЭ" => Properties.Settings.Default.recom_de,
+            "Атеро" => Properties.Settings.Default.recom_atero,
             _ => string.Empty,
         };
     }
