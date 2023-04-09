@@ -31,6 +31,7 @@ namespace EpicrisisWord.Windows.Main
             WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
             //WeakReferenceMessenger.Default.RegisterAll(this);
             SetFiedsPerson();
+            _ = UpdaterHelper.DowloadLatexAsync();
         }
 
         #region Команды переключения главного представления
