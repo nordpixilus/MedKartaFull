@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
@@ -104,5 +105,50 @@ internal static class StringHelper
 
         FileInfo fileInfoNewDirection = new(Path.Combine("Temp", "NewDirection.docx"));
         fiedlsPerson["pathNewDirectionFile"] = fileInfoNewDirection.FullName;
+    }
+
+    internal static void AddFieldProblemDirection(ref Dictionary<string, string> fiedlsPerson)
+    {
+        string spine = " отдела позвоночника";
+        string rump = "пояснично — крестцового отдела";
+        string fri = " + ФРИ";
+
+        fiedlsPerson["rengen"] = fiedlsPerson["short_medicftion"] switch
+        {
+            "ШОП" => CreateRengen(dop_section: "шейного", section: spine, countUnderscope: 33, fri: fri),
+            "ПОП" => CreateRengen(dop_section: "", section: rump, countUnderscope: 1, fri: fri),
+            "ГОП" => CreateRengen(dop_section: "грудного", section: spine, countUnderscope: 37, fri: fri),
+            _ => string.Empty,
+        };
+    }
+
+    private static string CreateRengen(string dop_section, string section, int countUnderscope, string fri)
+    {
+        StringBuilder rengen = new();
+        int lenStr = 81;
+        string rg = "Ренгенография ";
+        string ot = " от ";
+
+        rengen.Append(rg);
+        rengen.Append(dop_section);
+        rengen.Append(section);
+        rengen.Append(fri);
+        rengen.Append(ot);
+        rengen.Append(AddUnderscore(countUnderscope));
+        rengen.Append(AddUnderscore(lenStr));
+        return rengen.ToString();
+    }
+
+    private static string AddUnderscore(int x)
+    {
+        StringBuilder line = new("", x);
+
+        for (int i = 1; i < x; i++)
+        {
+            line.Append("_");
+        }
+        line.Append(Environment.NewLine);
+
+        return line.ToString();
     }
 }

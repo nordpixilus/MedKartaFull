@@ -65,6 +65,8 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         DateContent.AddDictionaryFielsDate(ref fiedlsPerson);
         // Добавляем поле с коротким названием заболевания.
         StringHelper.AddExtractMedication(ref fiedlsPerson);
+        // добавляем поле с заболеванием для направления
+        StringHelper.AddFieldProblemDirection(ref fiedlsPerson);
         // Добавляем поле с рекомендацией.
         StringHelper.AddExtractRecommendation(ref fiedlsPerson);
         // Добавляем поле с инициалами.
@@ -90,7 +92,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Создание и открытие файла диагноз
         helper.CreateDiagnosisFile();
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiagnosisFile"]);
-
+        // Создание и открытие файла направления
         if (fiedlsPerson["check_direction"] == "true")
         {
             helper.CreateDirectionFile();
