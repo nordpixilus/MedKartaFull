@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
@@ -40,51 +41,29 @@ internal static class StringHelper
         return string.Concat(birth_date, " (", age_int, " ", age_str, ")");
     }
 
-    /// <summary>
-    /// Заменяет значения для поля занятость.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    internal static string SetDefautValueWork(string value)
-    {
-        return value switch
-        {
-            "пенсионер" => "Не работает, пенсионер",
-            "Пенсионер" => "Не работает, пенсионер",
-            "п/с" => "Не работает, пенсионер",
-            "П/С" => "Не работает, пенсионер",
-            "п/С" => "Не работает, пенсионер",
-            "П/с" => "Не работает, пенсионер",
-            "н/р" => "Не работает",
-            "Н/Р" => "Не работает",
-            "р/Р" => "Не работает",
-            "Н/р" => "Не работает",
-            "не указано" => string.Empty,
-            "Не указано" => string.Empty,
-            _ => value,
-        };
-    }
-
     internal static void AddExtractMedication(ref Dictionary<string, string> fiedlsPerson)
     {
-        string problem = fiedlsPerson["problem"];
+        string problem = fiedlsPerson["problem"].ToLower();
+        fiedlsPerson["short_medicftion"] = string.Empty;
 
-        if (problem.Contains(" шейного "))
+        Dictionary<string, string> keyValuePairs = new()
         {
-            fiedlsPerson["short_medicftion"] = "ШОП";
-        }
-        else if (problem.Contains(" грудного "))
+            { "ШОП", " шейного " },
+            { "ГОП", " грудного " },
+            { "ПОП", " пояснично" },
+            { "Диабет", "сахарный " },
+            { "ДЭ", "энцефалопатия " },
+            { "Атеро", "атеросклероз" }
+        };
+
+        foreach (var (key, value) in keyValuePairs)
         {
-            fiedlsPerson["short_medicftion"] = "ГОП";
-        }
-        else if (problem.Contains(" пояснично"))
-        {
-            fiedlsPerson["short_medicftion"] = "ПОП";
-        }
-        else
-        {
-            fiedlsPerson["short_medicftion"] = string.Empty;
-        }
+            if (problem.Contains(value))
+            {
+                fiedlsPerson["short_medicftion"] = key;
+                break;
+            }
+        }        
     }
 
     internal static void AddExtractRecommendation(ref Dictionary<string, string> fiedlsPerson)
@@ -94,6 +73,9 @@ internal static class StringHelper
             "ШОП" => Properties.Settings.Default.recom_hop,
             "ПОП" => Properties.Settings.Default.recom_pop,
             "ГОП" => Properties.Settings.Default.recom_gop,
+            "Диабет" => Properties.Settings.Default.recom_diabet,
+            "ДЭ" => Properties.Settings.Default.recom_de,
+            "Атеро" => Properties.Settings.Default.recom_atero,
             _ => string.Empty,
         };
     }
@@ -123,5 +105,50 @@ internal static class StringHelper
 
         FileInfo fileInfoNewDirection = new(Path.Combine("Temp", "NewDirection.docx"));
         fiedlsPerson["pathNewDirectionFile"] = fileInfoNewDirection.FullName;
+    }
+
+    internal static void AddFieldProblemDirection(ref Dictionary<string, string> fiedlsPerson)
+    {
+        string spine = " отдела позвоночника";
+        string rump = "пояснично — крестцового отдела";
+        string fri = " + ФРИ";
+
+        fiedlsPerson["rengen"] = fiedlsPerson["short_medicftion"] switch
+        {
+            "ШОП" => CreateRengen(dop_section: "шейного", section: spine, countUnderscope: 33, fri: fri),
+            "ПОП" => CreateRengen(dop_section: "", section: rump, countUnderscope: 1, fri: fri),
+            "ГОП" => CreateRengen(dop_section: "грудного", section: spine, countUnderscope: 37, fri: fri),
+            _ => string.Empty,
+        };
+    }
+
+    private static string CreateRengen(string dop_section, string section, int countUnderscope, string fri)
+    {
+        StringBuilder rengen = new();
+        int lenStr = 81;
+        string rg = "Ренгенография ";
+        string ot = " от ";
+
+        rengen.Append(rg);
+        rengen.Append(dop_section);
+        rengen.Append(section);
+        rengen.Append(fri);
+        rengen.Append(ot);
+        rengen.Append(AddUnderscore(countUnderscope));
+        rengen.Append(AddUnderscore(lenStr));
+        return rengen.ToString();
+    }
+
+    private static string AddUnderscore(int x)
+    {
+        StringBuilder line = new("", x);
+
+        for (int i = 1; i < x; i++)
+        {
+            line.Append("_");
+        }
+        line.Append(Environment.NewLine);
+
+        return line.ToString();
     }
 }
