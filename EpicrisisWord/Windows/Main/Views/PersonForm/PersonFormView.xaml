@@ -63,15 +63,7 @@
             <TextBox Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Width="800" />
 
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,150,0" >
-
-            <Label Content="Создать направление:" />
-
-            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsCheckedDirection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-        </StackPanel>
+        </StackPanel>        
 
     </StackPanel>
 </UserControl>

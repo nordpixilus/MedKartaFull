@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:EpicrisisWord.Windows.Main.Views.Work"
              d:DataContext="{d:DesignInstance Type=local:WorkViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <UserControl.Resources>
         <Style TargetType="ContentControl">
             <Setter Property="Validation.ErrorTemplate">
@@ -31,10 +32,27 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ContentControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Path=PersonFormContent}" />
-        <ContentControl Grid.Column="0" Grid.Row="1" Content="{Binding Path=DateContent}" />
-        <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding Path=ListContent}" />
+        <ContentControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                        Content="{Binding Path=PersonFormContent}" />
+
+        <StackPanel Grid.Column="0" Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+            <Label Content="Создать направление:" />
+
+            <CheckBox VerticalAlignment="Center"
+                      IsChecked="{Binding IsCheckedDirection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+        </StackPanel>
+        
+        <Grid Grid.Column="1" Grid.Row="1">
+
+        </Grid>
+        <ContentControl Grid.Column="0" Grid.Row="2" Content="{Binding Path=DateContent}" />
+        <ContentControl Grid.Column="1" Grid.Row="2" Content="{Binding Path=ListContent}" />
     </Grid>
 </UserControl>

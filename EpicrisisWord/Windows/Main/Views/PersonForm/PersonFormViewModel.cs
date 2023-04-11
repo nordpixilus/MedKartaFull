@@ -29,14 +29,7 @@ internal partial class PersonFormViewModel : BaseViewModel
         ActionChangeField();
     }
 
-    #endregion
-
-    #region Поле выбора создания документа направление
-
-    [ObservableProperty]
-    private bool _IsCheckedDirection = false;
-
-    #endregion
+    #endregion    
 
     #region Поле BirthDateFull Дата рождения и возраст    
 
@@ -115,8 +108,7 @@ internal partial class PersonFormViewModel : BaseViewModel
     /// <param name="dict"></param>
     public void AddDictionaryFielsPerson(ref Dictionary<string, string> dict)
     {        
-        dict["full_name"] = FullName;
-        dict["check_direction"] = IsCheckedDirection ? "true" : "false";
+        dict["full_name"] = FullName;        
         dict["birth_date_full"] = BirthDateFull;
         dict["reg"] = Reg;
         dict["res"] = Res;        

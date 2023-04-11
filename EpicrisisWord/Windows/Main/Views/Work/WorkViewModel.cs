@@ -25,6 +25,13 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     [ObservableProperty]
     private PersonFormViewModel _PersonFormContent = new();
 
+    #region Поле выбора создания документа направление
+
+    [ObservableProperty]
+    private bool _IsCheckedDirection = false;
+
+    #endregion
+
     private Dictionary<string, string> fiedlsPerson = new();
 
 
@@ -84,6 +91,8 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         RegexHelper.AddExtractIni(ref fiedlsPerson);
         // Добавление путей к файлам
         StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
+
+        fiedlsPerson["check_direction"] = IsCheckedDirection ? "true" : "false";
         // добавляем путь первичному файлу
         fiedlsPerson["primary_file"] = pathFile;
         // Добавляем путь к файлу с файлу диагноза для печати
