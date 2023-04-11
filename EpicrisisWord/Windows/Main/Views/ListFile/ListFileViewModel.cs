@@ -7,8 +7,10 @@ using EpicrisisWord.Core.Navigations;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
+using System.Xml.Linq;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
@@ -64,7 +66,7 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
         foreach (string path in pathFiles)
         {
             nameFile = Path.GetFileName(path);
-            if (RegexHelper.IsFamilyToPathFile(nameFile, family))
+            if(Regex.IsMatch(nameFile, $"^[^~]*{family}.*"))
             {
                 Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
             }

@@ -63,27 +63,6 @@ internal static class RegexHelper
 
     }
 
-    /// <summary>
-    /// Проверка совпадения в названии файла с фамилией.
-    /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    internal static bool IsFamilyToPathFile(string filename, string name)
-    {
-        string pattern = $"^{name}.*";
-
-
-        if (Regex.IsMatch(filename, pattern))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     internal static (Dictionary<string, string> fiedlsPerson, bool isFields) ExtractTextProblem(string text)
     {       
         string pattern = @"  +|\r\n?";
