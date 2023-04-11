@@ -40,7 +40,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
     public async void Receive(CreateDocumentMessage message)
     {
-        if (PersonFormContent.HasErrors == false && DateContent.HasErrors == false)
+        if (!PersonFormContent.HasErrors && !DateContent.HasErrors)
         {
             string textProblem = TextDocumentHelper.GetTextProblem(message.Value);
 
@@ -52,7 +52,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
                     AddFiedlsPersonValue(message.Value);
                     CreateOpenFiles();
                     await System.Threading.Tasks.Task.Delay(3000);
-                    System.Windows.Application.Current.Windows[0].Close();
+                    Application.Current.Windows[0].Close();
                 }
 
 
