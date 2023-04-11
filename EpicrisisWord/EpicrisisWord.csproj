@@ -73,6 +73,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Update="TemplatesWord\diabet.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TemplatesWord\diagnosis.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -4,6 +4,7 @@ using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
 using EpicrisisWord.Core.Navigations;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
@@ -56,19 +58,19 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     /// </summary>
     private void AddListPath(string fullName)
     {
-        string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        
-        string pattern = "^.*docx|odt$";
+        string searchWord = string.Empty;
+        string nameFile;
 
         if (!string.IsNullOrEmpty(fullName))
-        {
-            string family = fullName.Split(' ')[0];
-            pattern = $"^[^~]*{family}(?!.*(пикри)).*(docx|odt)$";
+        {            
+            searchWord = fullName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];                
         }
-        
-        string[] pathFiles = Directory.GetFiles(folderDocuments);
-        
-        string nameFile;
+
+        string pattern = $"^[^~]*{searchWord}(?!.*((Э|э)пикриз)|(С|с)татус).*(docx|odt)$";
+
+        string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        string[] pathFiles = Directory.GetFiles(folderDocuments);        
 
         foreach (string path in pathFiles)
         {

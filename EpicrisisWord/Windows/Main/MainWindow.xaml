@@ -12,8 +12,8 @@
         ResizeMode="NoResize"
         FontSize="16"
         MinWidth="1005"
-        MinHeight="530"
-        MaxHeight="530">
+        MinHeight="500"
+        MaxHeight="500">
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>

@@ -24,24 +24,10 @@ internal class WordHelper
         this.fiedlsPerson = fiedlsPerson;
     }
 
-    public void CreateEpicrisisFile()
+    public void CreateWordFile(string nameFile)
     {
-        _fileInfoTemlate = fiedlsPerson["pathEpicrisisFile"];
-        _fileInfoNew = fiedlsPerson["pathNewEpicrisisFile"];
-        ProcessAdd();
-    }
-
-    public void CreateDiagnosisFile()
-    {
-        _fileInfoTemlate = fiedlsPerson["pathDiagnosisFile"];
-        _fileInfoNew = fiedlsPerson["pathNewDiagnosisFile"];
-        ProcessAdd();
-    }
-
-    public void CreateDirectionFile()
-    {
-        _fileInfoTemlate = fiedlsPerson["pathDirectionFile"];
-        _fileInfoNew = fiedlsPerson["pathNewDirectionFile"];
+        _fileInfoTemlate = fiedlsPerson[$"path{nameFile}File"];
+        _fileInfoNew = fiedlsPerson[$"pathNew{nameFile}File"];
         ProcessAdd();
     }
 
