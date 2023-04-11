@@ -115,9 +115,9 @@ internal static class StringHelper
 
         fiedlsPerson["rengen"] = fiedlsPerson["short_medicftion"] switch
         {
-            "ШОП" => CreateRengen(dop_section: "шейного", section: spine, countUnderscope: 33, fri: fri),
+            "ШОП" => CreateRengen(dop_section: "шейного", section: spine, countUnderscope: 39, fri: fri),
             "ПОП" => CreateRengen(dop_section: "", section: rump, countUnderscope: 1, fri: fri),
-            "ГОП" => CreateRengen(dop_section: "грудного", section: spine, countUnderscope: 37, fri: fri),
+            "ГОП" => CreateRengen(dop_section: "грудного", section: spine, countUnderscope: 39, fri: fri),
             _ => string.Empty,
         };
     }
@@ -125,7 +125,7 @@ internal static class StringHelper
     private static string CreateRengen(string dop_section, string section, int countUnderscope, string fri)
     {
         StringBuilder rengen = new();
-        int lenStr = 81;
+        int lenStr = 87;
         string rg = "Ренгенография ";
         string ot = " от ";
 
@@ -137,6 +137,29 @@ internal static class StringHelper
         rengen.Append(AddUnderscore(countUnderscope));
         rengen.Append(AddUnderscore(lenStr));
         return rengen.ToString();
+    }    
+
+    internal static void AddFieldGynecolog(ref Dictionary<string, string> fiedlsPerson)
+    {
+        if(fiedlsPerson["gender"][..1].ToLower() == "ж")
+        {
+            fiedlsPerson["gynecolog"] = CreateGynecolog();
+        }
+        else
+        {
+            fiedlsPerson["gynecolog"] = string.Empty;
+        }
+    }
+
+    private static string CreateGynecolog()
+    {
+        StringBuilder gynecolog = new();
+
+        gynecolog.Append("Осмотр гинеколога (смотровой кабинет)  от ");
+        gynecolog.Append(AddUnderscore(49));
+        gynecolog.Append(AddUnderscore(87));
+
+        return gynecolog.ToString();
     }
 
     private static string AddUnderscore(int x)

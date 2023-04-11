@@ -7,15 +7,15 @@ using EpicrisisWord.Core.Navigations;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
+using System.Xml.Linq;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
 internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListFileMessage>
 {
-    [ObservableProperty]
-    private bool _IsEnabled = false;
     /// <summary>
     /// Коллекция для отобращение в ListView
     /// </summary>
@@ -57,14 +57,23 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     private void AddListPath(string fullName)
     {
         string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        
+        string pattern = "^.*docx|odt$";
+
+        if (!string.IsNullOrEmpty(fullName))
+        {
+            string family = fullName.Split(' ')[0];
+            pattern = $"^[^~]*{family}(?!.*(пикри)).*(docx|odt)$";
+        }
+        
         string[] pathFiles = Directory.GetFiles(folderDocuments);
-        string family = fullName.Split(' ')[0];
+        
         string nameFile;
 
         foreach (string path in pathFiles)
         {
             nameFile = Path.GetFileName(path);
-            if (RegexHelper.IsFamilyToPathFile(nameFile, family))
+            if(Regex.IsMatch(nameFile, pattern))
             {
                 Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
             }

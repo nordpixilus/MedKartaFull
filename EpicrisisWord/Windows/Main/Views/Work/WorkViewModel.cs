@@ -8,10 +8,12 @@ using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
-internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldBlockMessege>
+internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldsPersonMessege>
 {
     // Важна очерёдность подключений
     [ObservableProperty]
@@ -23,6 +25,24 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     [ObservableProperty]
     private PersonFormViewModel _PersonFormContent = new();
 
+    #region Поле выбора создания документа направление
+
+    [ObservableProperty]
+    private bool _IsCheckedDirection = false;
+
+    #endregion
+
+    #region Поле выбора применения фильтра
+
+    [ObservableProperty]
+    private bool _IsCheckedFilters = true;
+    partial void OnIsCheckedFiltersChanged(bool value)
+    {
+        UpdateListFiles();
+    }
+
+    #endregion
+
     private Dictionary<string, string> fiedlsPerson = new();
 
 
@@ -31,31 +51,40 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Заполнение данными полей в PersonFormViewModel
         PersonFormContent.SetFiedsPerson(fieldsText);
         WeakReferenceMessenger.Default.RegisterAll(this);
-        CheckValidationBlock();
+        UpdateListFiles();
         //WeakReferenceMessenger.Default.Register<CreateDocumentMessage>(this);        
-        //WeakReferenceMessenger.Default.Register<ChangeFieldBlockMessege>(this);
+        //WeakReferenceMessenger.Default.Register<ChangeFieldsPersonMessege>(this);
 
     }
 
-    public async void Receive(CreateDocumentMessage message)
+    public void Receive(CreateDocumentMessage message)
     {
-        string textProblem = TextDocumentHelper.GetTextProblem(message.Value);        
-        
+        if (!PersonFormContent.HasErrors && !DateContent.HasErrors)
+        {
+            CreateDocumentAsync(message.Value);            
+        }
+        else
+        {
+            MessageBox.Show("Поля не заполнены");
+        }   
+    }
+
+    private async void CreateDocumentAsync(string pathFile)
+    {
+        string textProblem = TextDocumentHelper.GetTextProblem(pathFile);
+
         if (!string.IsNullOrEmpty(textProblem))
         {
             (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
             if (isFields)
             {
-                AddFiedlsPersonValue(message.Value);
+                AddFiedlsPersonValue(pathFile);
                 CreateOpenFiles();
-                await System.Threading.Tasks.Task.Delay(3000);
-                System.Windows.Application.Current.Windows[0].Close();
+                await Task.Delay(3000);
+                Application.Current.Windows[0].Close();
             }
-
-            
         }
-        //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
-    }    
+    }
 
     private void AddFiedlsPersonValue(string pathFile)
     {
@@ -65,15 +94,16 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         DateContent.AddDictionaryFielsDate(ref fiedlsPerson);
         // Добавляем поле с коротким названием заболевания.
         StringHelper.AddExtractMedication(ref fiedlsPerson);
-        // добавляем поле с заболеванием для направления
-        StringHelper.AddFieldProblemDirection(ref fiedlsPerson);
+       
         // Добавляем поле с рекомендацией.
         StringHelper.AddExtractRecommendation(ref fiedlsPerson);
         // Добавляем поле с инициалами.
         RegexHelper.AddExtractIni(ref fiedlsPerson);
         // Добавление путей к файлам
         StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
-        // добавляем путь первичному файлу
+        // Добавляем значение создания документа направление
+        fiedlsPerson["check_direction"] = IsCheckedDirection ? "true" : "false";
+        // Добавляем путь первичному файлу
         fiedlsPerson["primary_file"] = pathFile;
         // Добавляем путь к файлу с файлу диагноза для печати
         StringHelper.AddPathNewFile(ref fiedlsPerson);
@@ -95,6 +125,10 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Создание и открытие файла направления
         if (fiedlsPerson["check_direction"] == "true")
         {
+            // добавляем поле с заболеванием для направления
+            StringHelper.AddFieldProblemDirection(ref fiedlsPerson);
+            //
+            StringHelper.AddFieldGynecolog(ref fiedlsPerson);
             helper.CreateDirectionFile();
             DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDirectionFile"]);
         }
@@ -103,31 +137,18 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     /// <summary>
     /// Обработка сообщения при изменении любого поля на форме ввода личных данных.
     /// </summary>
-    /// <param name="message"></param>
-    public void Receive(ChangeFieldBlockMessege message)
+    /// <param fullName="message"></param>
+    public void Receive(ChangeFieldsPersonMessege message)
     {
-        CheckValidationBlock();
+        UpdateListFiles();
     }
 
     /// <summary>
-    /// Проверка ошибок по всем полям формы личных данных пациента. 
+    /// Вызов обновления списка документов
     /// </summary>
-    // При отсутствии ошибок вызывается обновление списка документов и
-    // возможность дейстия выбора в списке.
-    private void CheckValidationBlock()
+    private void UpdateListFiles()
     {
-        if (PersonFormContent.HasErrors == false)
-        {
-            Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
-        }
-
-        if (PersonFormContent.HasErrors == false && DateContent.HasErrors == false)
-        {
-            ListContent.IsEnabled = true;
-        }
-        else
-        {
-            ListContent.IsEnabled = false;
-        }
+        string fullName = IsCheckedFilters ? PersonFormContent.FullName : string.Empty;
+        Messenger.Send(new UpdateListFileMessage(fullName));
     }
 }

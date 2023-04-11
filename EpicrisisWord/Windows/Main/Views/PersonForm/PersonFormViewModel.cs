@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
-using EpicrisisWord.Core.Navigations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.PersonForm;
 
@@ -29,14 +26,7 @@ internal partial class PersonFormViewModel : BaseViewModel
         ActionChangeField();
     }
 
-    #endregion
-
-    #region Поле выбора создания документа направление
-
-    [ObservableProperty]
-    private bool _IsCheckedDirection = false;
-
-    #endregion
+    #endregion    
 
     #region Поле BirthDateFull Дата рождения и возраст    
 
@@ -80,6 +70,8 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     #endregion    
 
+    private string _gender { get; set; } = string.Empty;
+
     #endregion
 
     public PersonFormViewModel()
@@ -87,9 +79,13 @@ internal partial class PersonFormViewModel : BaseViewModel
         ValidateAllProperties();
     }
 
+    /// <summary>
+    /// Вызывается при изменении любого поля формы пачиента.
+    /// Посылает сообжение об изменении.
+    /// </summary>
     private void ActionChangeField()
     {
-        Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
+        Messenger.Send(new ChangeFieldsPersonMessege(string.Empty));
     }
 
     /// <summary>
@@ -106,6 +102,7 @@ internal partial class PersonFormViewModel : BaseViewModel
             BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
             Reg = boardFields["reg"];
             Res = boardFields["res"];
+            _gender = boardFields["gender"];
         }
     }
 
@@ -115,11 +112,11 @@ internal partial class PersonFormViewModel : BaseViewModel
     /// <param name="dict"></param>
     public void AddDictionaryFielsPerson(ref Dictionary<string, string> dict)
     {        
-        dict["full_name"] = FullName;
-        dict["check_direction"] = IsCheckedDirection ? "true" : "false";
+        dict["full_name"] = FullName;        
         dict["birth_date_full"] = BirthDateFull;
         dict["reg"] = Reg;
-        dict["res"] = Res;        
+        dict["res"] = Res;
+        dict["gender"] = _gender;
     }
 
 }
