@@ -9,9 +9,11 @@
         Title="{Binding Path=Title}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize"
         FontSize="16"
         MinWidth="1005"
-        MinHeight="530">
+        MinHeight="530"
+        MaxHeight="530">
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>

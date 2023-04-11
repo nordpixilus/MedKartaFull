@@ -57,14 +57,23 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     private void AddListPath(string fullName)
     {
         string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        
+        string pattern = "^.*docx|odt$";
+
+        if (!string.IsNullOrEmpty(fullName))
+        {
+            string family = fullName.Split(' ')[0];
+            pattern = $"^[^~]*{family}(?!.*(пикри)).*(docx|odt)$";
+        }
+        
         string[] pathFiles = Directory.GetFiles(folderDocuments);
-        string family = fullName.Split(' ')[0];
+        
         string nameFile;
 
         foreach (string path in pathFiles)
         {
             nameFile = Path.GetFileName(path);
-            if(Regex.IsMatch(nameFile, $"^[^~]*{family}.*"))
+            if(Regex.IsMatch(nameFile, pattern))
             {
                 Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
             }

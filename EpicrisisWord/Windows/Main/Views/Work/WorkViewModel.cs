@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
-internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldBlockMessege>
+internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldsPersonMessege>
 {
     // Важна очерёдность подключений
     [ObservableProperty]
@@ -32,6 +32,17 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
     #endregion
 
+    #region Поле выбора применения фильтра
+
+    [ObservableProperty]
+    private bool _IsCheckedFilters = true;
+    partial void OnIsCheckedFiltersChanged(bool value)
+    {
+        UpdateListFiles();
+    }
+
+    #endregion
+
     private Dictionary<string, string> fiedlsPerson = new();
 
 
@@ -40,9 +51,9 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Заполнение данными полей в PersonFormViewModel
         PersonFormContent.SetFiedsPerson(fieldsText);
         WeakReferenceMessenger.Default.RegisterAll(this);
-        CheckValidationBlock();
+        UpdateListFiles();
         //WeakReferenceMessenger.Default.Register<CreateDocumentMessage>(this);        
-        //WeakReferenceMessenger.Default.Register<ChangeFieldBlockMessege>(this);
+        //WeakReferenceMessenger.Default.Register<ChangeFieldsPersonMessege>(this);
 
     }
 
@@ -91,9 +102,9 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         RegexHelper.AddExtractIni(ref fiedlsPerson);
         // Добавление путей к файлам
         StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
-
+        // Добавляем значение создания документа направление
         fiedlsPerson["check_direction"] = IsCheckedDirection ? "true" : "false";
-        // добавляем путь первичному файлу
+        // Добавляем путь первичному файлу
         fiedlsPerson["primary_file"] = pathFile;
         // Добавляем путь к файлу с файлу диагноза для печати
         StringHelper.AddPathNewFile(ref fiedlsPerson);
@@ -123,22 +134,18 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     /// <summary>
     /// Обработка сообщения при изменении любого поля на форме ввода личных данных.
     /// </summary>
-    /// <param name="message"></param>
-    public void Receive(ChangeFieldBlockMessege message)
+    /// <param fullName="message"></param>
+    public void Receive(ChangeFieldsPersonMessege message)
     {
-        CheckValidationBlock();
+        UpdateListFiles();
     }
 
     /// <summary>
-    /// Проверка ошибок по всем полям формы личных данных пациента. 
+    /// Вызов обновления списка документов
     /// </summary>
-    // При отсутствии ошибок вызывается обновление списка документов и
-    // возможность дейстия выбора в списке.
-    private void CheckValidationBlock()
+    private void UpdateListFiles()
     {
-        if (PersonFormContent.HasErrors == false)
-        {
-            Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
-        }        
+        string fullName = IsCheckedFilters ? PersonFormContent.FullName : string.Empty;
+        Messenger.Send(new UpdateListFileMessage(fullName));
     }
 }

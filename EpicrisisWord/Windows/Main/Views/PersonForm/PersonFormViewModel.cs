@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
-using EpicrisisWord.Core.Navigations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.PersonForm;
 
@@ -80,9 +77,13 @@ internal partial class PersonFormViewModel : BaseViewModel
         ValidateAllProperties();
     }
 
+    /// <summary>
+    /// Вызывается при изменении любого поля формы пачиента.
+    /// Посылает сообжение об изменении.
+    /// </summary>
     private void ActionChangeField()
     {
-        Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
+        Messenger.Send(new ChangeFieldsPersonMessege(string.Empty));
     }
 
     /// <summary>

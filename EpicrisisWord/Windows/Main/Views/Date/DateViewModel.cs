@@ -47,7 +47,7 @@ internal partial class DateViewModel : BaseViewModel
 
     private void ActionChangeField()
     {
-        Messenger.Send(new ChangeFieldBlockMessege(string.Empty));
+        Messenger.Send(new ChangeFieldsPersonMessege(string.Empty));
     }
 
     public void AddDictionaryFielsDate(ref Dictionary<string, string> dict)

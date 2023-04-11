@@ -30,11 +30,12 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+        <!--Подключение формы пациента-->
         <ContentControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                         Content="{Binding Path=PersonFormContent}" />
 
@@ -48,10 +49,17 @@
                       IsChecked="{Binding IsCheckedDirection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         </StackPanel>
-        
-        <Grid Grid.Column="1" Grid.Row="1">
 
-        </Grid>
+        <StackPanel Grid.Column="1" Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+            <Label Content="Фильтр по фамилии:" />
+
+            <CheckBox VerticalAlignment="Center"
+                      IsChecked="{Binding IsCheckedFilters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+        </StackPanel>
         <ContentControl Grid.Column="0" Grid.Row="2" Content="{Binding Path=DateContent}" />
         <ContentControl Grid.Column="1" Grid.Row="2" Content="{Binding Path=ListContent}" />
     </Grid>
