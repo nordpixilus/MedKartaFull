@@ -70,6 +70,8 @@ internal partial class PersonFormViewModel : BaseViewModel
 
     #endregion    
 
+    private string _gender { get; set; } = string.Empty;
+
     #endregion
 
     public PersonFormViewModel()
@@ -100,6 +102,7 @@ internal partial class PersonFormViewModel : BaseViewModel
             BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
             Reg = boardFields["reg"];
             Res = boardFields["res"];
+            _gender = boardFields["gender"];
         }
     }
 
@@ -112,7 +115,8 @@ internal partial class PersonFormViewModel : BaseViewModel
         dict["full_name"] = FullName;        
         dict["birth_date_full"] = BirthDateFull;
         dict["reg"] = Reg;
-        dict["res"] = Res;        
+        dict["res"] = Res;
+        dict["gender"] = _gender;
     }
 
 }
