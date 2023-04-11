@@ -8,6 +8,7 @@ using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
@@ -38,33 +39,34 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
     }
 
-    public async void Receive(CreateDocumentMessage message)
+    public void Receive(CreateDocumentMessage message)
     {
         if (!PersonFormContent.HasErrors && !DateContent.HasErrors)
         {
-            string textProblem = TextDocumentHelper.GetTextProblem(message.Value);
-
-            if (!string.IsNullOrEmpty(textProblem))
-            {
-                (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
-                if (isFields)
-                {
-                    AddFiedlsPersonValue(message.Value);
-                    CreateOpenFiles();
-                    await System.Threading.Tasks.Task.Delay(3000);
-                    Application.Current.Windows[0].Close();
-                }
-
-
-            }
+            CreateDocumentAsync(message.Value);            
         }
         else
         {
             MessageBox.Show("Поля не заполнены");
+        }   
+    }
+
+    private async void CreateDocumentAsync(string pathFile)
+    {
+        string textProblem = TextDocumentHelper.GetTextProblem(pathFile);
+
+        if (!string.IsNullOrEmpty(textProblem))
+        {
+            (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
+            if (isFields)
+            {
+                AddFiedlsPersonValue(pathFile);
+                CreateOpenFiles();
+                await Task.Delay(3000);
+                Application.Current.Windows[0].Close();
+            }
         }
-        
-        //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
-    }    
+    }
 
     private void AddFiedlsPersonValue(string pathFile)
     {
