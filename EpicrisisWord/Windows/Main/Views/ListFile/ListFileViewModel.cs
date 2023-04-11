@@ -16,8 +16,6 @@ namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
 internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListFileMessage>
 {
-    [ObservableProperty]
-    private bool _IsEnabled = false;
     /// <summary>
     /// Коллекция для отобращение в ListView
     /// </summary>

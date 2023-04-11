@@ -8,6 +8,7 @@ using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
@@ -39,21 +40,29 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
 
     public async void Receive(CreateDocumentMessage message)
     {
-        string textProblem = TextDocumentHelper.GetTextProblem(message.Value);        
-        
-        if (!string.IsNullOrEmpty(textProblem))
+        if (PersonFormContent.HasErrors == false && DateContent.HasErrors == false)
         {
-            (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
-            if (isFields)
-            {
-                AddFiedlsPersonValue(message.Value);
-                CreateOpenFiles();
-                await System.Threading.Tasks.Task.Delay(3000);
-                System.Windows.Application.Current.Windows[0].Close();
-            }
+            string textProblem = TextDocumentHelper.GetTextProblem(message.Value);
 
-            
+            if (!string.IsNullOrEmpty(textProblem))
+            {
+                (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
+                if (isFields)
+                {
+                    AddFiedlsPersonValue(message.Value);
+                    CreateOpenFiles();
+                    await System.Threading.Tasks.Task.Delay(3000);
+                    System.Windows.Application.Current.Windows[0].Close();
+                }
+
+
+            }
         }
+        else
+        {
+            MessageBox.Show("Поля не заполнены");
+        }
+        
         //string? textProblem = await ClipoardHelper.StartMoninitorTextProblemAsync();        
     }    
 
@@ -119,15 +128,6 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         if (PersonFormContent.HasErrors == false)
         {
             Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
-        }
-
-        if (PersonFormContent.HasErrors == false && DateContent.HasErrors == false)
-        {
-            ListContent.IsEnabled = true;
-        }
-        else
-        {
-            ListContent.IsEnabled = false;
-        }
+        }        
     }
 }
