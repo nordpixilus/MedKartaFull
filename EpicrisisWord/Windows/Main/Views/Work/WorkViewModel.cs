@@ -25,24 +25,6 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     [ObservableProperty]
     private PersonFormViewModel _PersonFormContent = new();
 
-    #region Поле выбора создания документа направление
-
-    [ObservableProperty]
-    private bool _IsCheckedDirection = false;
-
-    #endregion
-
-    #region Поле выбора применения фильтра
-
-    [ObservableProperty]
-    private bool _IsCheckedFilters = true;
-    partial void OnIsCheckedFiltersChanged(bool value)
-    {
-        UpdateListFiles();
-    }
-
-    #endregion
-
     private Dictionary<string, string> fiedlsPerson = new();
 
 
@@ -60,8 +42,8 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     public void Receive(CreateDocumentMessage message)
     {
         if (!PersonFormContent.HasErrors && !DateContent.HasErrors)
-        {
-            CreateDocumentAsync(message.Value);            
+        {            
+            CreateDocumentAsync(message.Value);
         }
         else
         {
@@ -78,11 +60,27 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
             (fiedlsPerson, bool isFields) = RegexHelper.ExtractTextProblem(textProblem);
             if (isFields)
             {
+                IsCreateFileDirection();
                 AddFiedlsPersonValue(pathFile);
                 CreateOpenFiles();
                 await Task.Delay(3000);
                 Application.Current.Windows[0].Close();
             }
+        }
+    }
+
+    private void IsCreateFileDirection()
+    {
+        string sMessageBoxText = "Создать документ: Направление?";
+        string sCaption = "Создание документа.";
+        MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+        MessageBoxImage icnMessageBox = MessageBoxImage.Question;
+        MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+        switch (rsltMessageBox)
+        {
+            // Добавляем значение для создания документа направление
+            case MessageBoxResult.Yes: fiedlsPerson["check_direction"] = "true"; break;
+            case MessageBoxResult.No: fiedlsPerson["check_direction"] = "false"; break;
         }
     }
 
@@ -93,19 +91,16 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Добавляем поля с датой.
         DateContent.AddDictionaryFielsDate(ref fiedlsPerson);
         // Добавляем поле с коротким названием заболевания.
-        StringHelper.AddExtractMedication(ref fiedlsPerson);
-       
-        // Добавляем поле с рекомендацией.
+        StringHelper.AddExtractMedication(ref fiedlsPerson);       
+        // Добавляем поле с рекомендацией по лечению.
         StringHelper.AddExtractRecommendation(ref fiedlsPerson);
         // Добавляем поле с инициалами.
         RegexHelper.AddExtractIni(ref fiedlsPerson);
-        // Добавление путей к файлам
+        // Добавление путей к файлам шаблона
         StringHelper.AddPathTemplateFiles(ref fiedlsPerson);
-        // Добавляем значение создания документа направление
-        fiedlsPerson["check_direction"] = IsCheckedDirection ? "true" : "false";
-        // Добавляем путь первичному файлу
+        // Добавляем путь файлу первичного осмотра
         fiedlsPerson["primary_file"] = pathFile;
-        // Добавляем путь к файлу с файлу диагноза для печати
+        // Добавляем пути к файлам для печати
         StringHelper.AddPathNewFile(ref fiedlsPerson);
         // Добавляем новое название файла и путь к нему.
         StringHelper.AddNewNameEpicrisisFile(ref fiedlsPerson);
@@ -117,20 +112,31 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Открытие первичного осмотра
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["primary_file"]);
         // Создание и открытие файла эпикриз
-        helper.CreateEpicrisisFile();
+        helper.CreateWordFile("Epicrisis");
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewEpicrisisFile"]);
         // Создание и открытие файла диагноз
-        helper.CreateDiagnosisFile();
+        helper.CreateWordFile("Diagnosis");
         DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiagnosisFile"]);
         // Создание и открытие файла направления
         if (fiedlsPerson["check_direction"] == "true")
         {
-            // добавляем поле с заболеванием для направления
+            // Добавляем поле с заболеванием для направления
             StringHelper.AddFieldProblemDirection(ref fiedlsPerson);
-            //
+            // Добавляем поле с гинекологом
             StringHelper.AddFieldGynecolog(ref fiedlsPerson);
-            helper.CreateDirectionFile();
+
+            helper.CreateWordFile("Direction");
             DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDirectionFile"]);
+        }
+
+
+        if (fiedlsPerson["short_medicftion"] == "Диабет")
+        {
+            // Добавляем поля с датами приёма
+            StringHelper.AddFieldsDiabet(ref fiedlsPerson);
+            // Создание и открытие файла с диабетом
+            helper.CreateWordFile("Diabet");
+            DocumentHelper.OpenDocumentToPath(fiedlsPerson["pathNewDiabetFile"]);
         }
     }
 
@@ -147,8 +153,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     /// Вызов обновления списка документов
     /// </summary>
     private void UpdateListFiles()
-    {
-        string fullName = IsCheckedFilters ? PersonFormContent.FullName : string.Empty;
-        Messenger.Send(new UpdateListFileMessage(fullName));
+    {        
+        Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
     }
 }

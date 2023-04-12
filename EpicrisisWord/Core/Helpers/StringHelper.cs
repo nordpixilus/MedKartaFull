@@ -96,6 +96,9 @@ internal static class StringHelper
 
         FileInfo fileInfoDirection = new(Path.Combine("TemplatesWord", "direction.docx"));
         fiedlsPerson["pathDirectionFile"] = fileInfoDirection.FullName;
+
+        FileInfo fileInfoDiabet = new(Path.Combine("TemplatesWord", "diabet.docx"));
+        fiedlsPerson["pathDiabetFile"] = fileInfoDiabet.FullName;
     }
 
     internal static void AddPathNewFile(ref Dictionary<string, string> fiedlsPerson)
@@ -105,6 +108,9 @@ internal static class StringHelper
 
         FileInfo fileInfoNewDirection = new(Path.Combine("Temp", "NewDirection.docx"));
         fiedlsPerson["pathNewDirectionFile"] = fileInfoNewDirection.FullName;
+
+        FileInfo fileInfoNewDiabet = new(Path.Combine("Temp", "NewDiabet.docx"));
+        fiedlsPerson["pathNewDiabetFile"] = fileInfoNewDiabet.FullName;
     }
 
     internal static void AddFieldProblemDirection(ref Dictionary<string, string> fiedlsPerson)
@@ -173,5 +179,24 @@ internal static class StringHelper
         line.Append(Environment.NewLine);
 
         return line.ToString();
+    }
+    
+    internal static void AddFieldsDiabet(ref Dictionary<string, string> fiedlsPerson)
+    {
+        DateTime date_start = DateTime.ParseExact(fiedlsPerson["date_start"], "d", null);
+        DateTime date_end = DateTime.ParseExact(fiedlsPerson["date_end"], "d", null);
+        fiedlsPerson["diabet_date1"] = fiedlsPerson["date_start"];
+        fiedlsPerson["diabet_date2"] = fiedlsPerson["date_start"];
+        fiedlsPerson["diabet_date3"] = fiedlsPerson["date_start"];
+        fiedlsPerson["diabet_date4"] = fiedlsPerson["date_start"];
+
+        fiedlsPerson["diabet_date5"] = date_start.AddDays(1).ToShortDateString();
+        fiedlsPerson["diabet_date6"] = date_start.AddDays(2).ToShortDateString();
+        fiedlsPerson["diabet_date7"] = date_start.AddDays(3).ToShortDateString();
+        fiedlsPerson["diabet_date8"] = date_start.AddDays(4).ToShortDateString();
+
+        fiedlsPerson["diabet_date9"] = date_end.Subtract(TimeSpan.FromDays(3)).ToShortDateString();
+        fiedlsPerson["diabet_date10"] = date_end.Subtract(TimeSpan.FromDays(2)).ToShortDateString();
+        fiedlsPerson["diabet_date11"] = date_end.Subtract(TimeSpan.FromDays(1)).ToShortDateString();
     }
 }

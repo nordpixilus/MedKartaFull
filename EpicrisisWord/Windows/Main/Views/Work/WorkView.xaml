@@ -31,36 +31,16 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <!--Подключение формы пациента-->
         <ContentControl Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                         Content="{Binding Path=PersonFormContent}" />
-
-        <StackPanel Grid.Column="0" Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" >
-
-            <Label Content="Создать направление:" />
-
-            <CheckBox VerticalAlignment="Center"
-                      IsChecked="{Binding IsCheckedDirection, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" >
-
-            <Label Content="Фильтр по фамилии:" />
-
-            <CheckBox VerticalAlignment="Center"
-                      IsChecked="{Binding IsCheckedFilters, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-
-        </StackPanel>
-        <ContentControl Grid.Column="0" Grid.Row="2" Content="{Binding Path=DateContent}" />
-        <ContentControl Grid.Column="1" Grid.Row="2" Content="{Binding Path=ListContent}" />
+        <!--Подключение выбора даты-->
+        <ContentControl Grid.Column="0" Grid.Row="1" Content="{Binding Path=DateContent}" />
+        
+        <!--Подключение списка документов-->
+        <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding Path=ListContent}" />
     </Grid>
 </UserControl>
