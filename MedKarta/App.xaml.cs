@@ -1,17 +1,10 @@
-﻿using MedKarta.Core;
-using MedKarta.Core.Extensions.DependencyInjection;
-using MedKarta.Core.Models;
-using MedKarta.DAL.Context;
-using MedKarta.DAL.Repository;
-using MedKarta.UCL.ErrorBoard.ErrorKod;
-using MedKarta.UCL.Start;
-using MedKarta.UCL.Work;
+﻿using MedKarta.Application;
+using MedKarta.Application.DependencyInjection;
 using MedKarta.Windows.Main;
-using Microsoft.EntityFrameworkCore;
+using MedKarta.Windows.Main.Views.Home;
+using MedKarta.Windows.Main.Views.Work;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-//using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Windows;
 
@@ -20,7 +13,7 @@ namespace MedKarta
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application, IApp
+    public partial class App : System.Windows.Application, IApp
     {
         /// <summary>
         /// https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihost?view=dotnet-plat-ext-6.0
@@ -48,29 +41,19 @@ namespace MedKarta
 
         private void ConfigureServices(HostBuilderContext context, IServiceCollection services) => services
             .AddSingleton<IApp>(this)
-            .AddSingleton<PersonModel>()
-            .AddView<StartView>()
+            .AddView<HomeView>()
             .AddView<WorkView>()
-            .AddView<ErrorKodView>()
             .AddMainWindow()
-            .AddDbContext<MedKartaContext>(Options =>
-            {
-                Options.UseSqlite("Data Source=karta.db");
-                Options.UseLazyLoadingProxies(true);
-            })
-            .AddRepositoryInDB()
             ;
+
+        public (T ViewModel, object View) GetViewModel<T>() where T : class
+            => AppScope!.ServiceProvider.GetViewModel<T>();
 
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost!.StartAsync();
 
             AppScope = AppHost.Services.CreateScope();
-
-            //using (var dbContext = AppScope.ServiceProvider.GetRequiredService<MedKartaContext>())
-            //{
-            //    dbContext.Database.Migrate();
-            //}
 
             MainWindow = AppScope.ServiceProvider.GetRequiredService<MainWindow>();
 
@@ -83,16 +66,6 @@ namespace MedKarta
         {
             await AppHost!.StopAsync();
             base.OnExit(e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        (T BaseViewModel, object View) IApp.GetViewModel<T>()
-        {
-            return AppScope!.ServiceProvider.GetViewModel<T>();
         }
     }
 }

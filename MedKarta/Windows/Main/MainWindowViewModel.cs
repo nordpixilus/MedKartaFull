@@ -11,7 +11,7 @@ using System;
 
 namespace MedKarta.Windows.Main
 {
-    internal partial class MainWindowModel : ObservableRecipient, IRecipient<NavigationMessage>
+    internal partial class MainWindowViewModel : ObservableRecipient, IRecipient<NavigationMessage>
     {
         [ObservableProperty]
         private string? _Title;
@@ -19,9 +19,9 @@ namespace MedKarta.Windows.Main
         [ObservableProperty]
         private object? _ChildContent;
         private readonly IApp app;
-        private readonly ILogger<MainWindowModel> logger;
+        private readonly ILogger<MainWindowViewModel> logger;
 
-        public MainWindowModel(IApp app, ILogger<MainWindowModel> logger)
+        public MainWindowViewModel(IApp app, ILogger<MainWindowViewModel> logger)
         {
             this.app = app;
             this.logger = logger;
