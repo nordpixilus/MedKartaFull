@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MedKarta.Shared.Navigations;
-using MedKarta.Windows.Main.Views.Home;
+using MedKarta.Windows.Main.Views.Start;
 
 namespace MedKarta.Windows.Main.Views.Work
 {
@@ -14,7 +14,7 @@ namespace MedKarta.Windows.Main.Views.Work
         [RelayCommand]
         private void GoToHomeView()
         {
-            Messenger.Send(new NavigationMessage(nameof(HomeViewModel)));
+            Messenger.Send(new NavigationMessage(nameof(StartViewModel)));
             //WeakReferenceMessenger.Default.Send(new NavigationMessage(nameof(HomeViewModel)));
         }
     }

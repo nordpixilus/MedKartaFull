@@ -1,7 +1,7 @@
 ﻿using MedKarta.Application;
 using MedKarta.Application.DependencyInjection;
 using MedKarta.Windows.Main;
-using MedKarta.Windows.Main.Views.Home;
+using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +41,7 @@ namespace MedKarta
 
         private void ConfigureServices(HostBuilderContext context, IServiceCollection services) => services
             .AddSingleton<IApp>(this)
-            .AddView<HomeView>()
+            .AddView<StartView>()
             .AddView<WorkView>()
             .AddMainWindow()
             ;
