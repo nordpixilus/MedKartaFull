@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MedKarta.Application;
 using MedKarta.Shared.Navigations;
-using MedKarta.Windows.Main.Views.Home;
+using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -26,16 +26,16 @@ namespace MedKarta.Windows.Main
             this.app = app;
             this.logger = logger;
             this.IsActive = true;
-            GoToHomeView();
+            GoToStartView();
 
         }
 
         [RelayCommand]
-        private void GoToHomeView()
+        private void GoToStartView()
         {
-            ChangeChildContent<HomeViewModel>();
+            ChangeChildContent<StartViewModel>();
             Title = "Open HomeView";
-            logger.LogInformation("Переход на представление {title}", nameof(HomeViewModel));
+            logger.LogInformation("Переход на представление {title}", nameof(StartViewModel));
         }
 
         [RelayCommand]
@@ -52,7 +52,7 @@ namespace MedKarta.Windows.Main
             switch (message.Value)
             {
                 case nameof(WorkViewModel): GoToWorkView(); break;
-                case nameof(HomeViewModel): GoToHomeView(); break;
+                case nameof(StartViewModel): GoToStartView(); break;
             }
         }
 

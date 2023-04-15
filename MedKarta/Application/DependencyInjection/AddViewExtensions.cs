@@ -1,7 +1,5 @@
-﻿using MedKarta.Windows.Main.Views.Home;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Windows;
 
 namespace MedKarta.Application.DependencyInjection
 {

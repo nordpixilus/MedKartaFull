@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MedKarta.Windows.Main"
-        xmlns:home="clr-namespace:MedKarta.Windows.Main.Views.Home"
-        xmlns:work="clr-namespace:MedKarta.Windows.Main.Views.Work"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         Title="{Binding Path=Title}"
@@ -25,7 +23,7 @@
     <DockPanel>
         
         <Menu DockPanel.Dock="Top">
-            <MenuItem Command="{Binding GoToHomeViewCommand}" Header="HomeView" />
+            <MenuItem Command="{Binding GoToStartViewCommand}" Header="HomeView" />
             <MenuItem Command="{Binding GoToWorkViewCommand}" Header="WorkView" />
         </Menu>
 
