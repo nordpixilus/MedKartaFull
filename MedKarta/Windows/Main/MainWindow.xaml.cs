@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace EpicrisisWord.Windows.Main
+namespace MedKarta.Windows.Main
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
