@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MedKarta.Core.Models;
+using System;
 using System.Windows;
 
 // namespace Microsoft.Extensions.DependencyInjection;
 namespace MedKarta.Application.DependencyInjection
 {
-    public static class GetViewModelExtensions
+    internal static class GetViewModelExtensions
     {
         /// <summary>
         /// Расширение получает представление из преобразованного имени MyViewModel.
@@ -14,7 +15,7 @@ namespace MedKarta.Application.DependencyInjection
         /// <returns>Возвращает MyViewModel, MyView.</returns>
         /// <remarks>Вызов расширения разместить в блоке try, catch.</remarks>
         /// <exception cref="ArgumentNullException" />
-        public static (T ViewModel, object View) GetViewModel<T>(this IServiceProvider serviceProvider) where T : class
+        internal static (T BaseViewModel, object View) GetViewModel<T>(this IServiceProvider serviceProvider) where T : BaseViewModel
         {
             var vmType = typeof(T);
             var viewTypeNamespace = vmType.Namespace?.Replace("Model", "");

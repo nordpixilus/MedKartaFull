@@ -57,7 +57,7 @@ namespace MedKarta.Windows.Main
             }
         }
 
-        private void ChangeChildContent<T>() where T : class
+        private void ChangeChildContent<T>() where T : BaseViewModel
         {
             try
             {
