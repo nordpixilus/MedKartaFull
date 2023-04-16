@@ -1,5 +1,6 @@
 ﻿using MedKarta.Application;
 using MedKarta.Application.DependencyInjection;
+using MedKarta.Core.Models;
 using MedKarta.Windows.Main;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
@@ -46,9 +47,6 @@ namespace MedKarta
             .AddMainWindow()
             ;
 
-        public (T ViewModel, object View) GetViewModel<T>() where T : class
-            => AppScope!.ServiceProvider.GetViewModel<T>();
-
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost!.StartAsync();
@@ -66,6 +64,16 @@ namespace MedKarta
         {
             await AppHost!.StopAsync();
             base.OnExit(e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        (T BaseViewModel, object View) IApp.GetViewModel<T>()
+        {
+            return AppScope!.ServiceProvider.GetViewModel<T>();
         }
     }
 }
