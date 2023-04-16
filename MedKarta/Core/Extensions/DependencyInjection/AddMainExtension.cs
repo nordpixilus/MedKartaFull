@@ -1,7 +1,7 @@
 ﻿using MedKarta.Windows.Main;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MedKarta.Application.DependencyInjection
+namespace MedKarta.Core.Extensions.DependencyInjection
 {
     internal static class AddWindowsExtensions
     {

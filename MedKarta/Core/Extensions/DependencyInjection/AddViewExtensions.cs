@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace MedKarta.Application.DependencyInjection
+namespace MedKarta.Core.Extensions.DependencyInjection
 {
     public static class AddViewExtensions
     {

@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 
 // namespace Microsoft.Extensions.DependencyInjection;
-namespace MedKarta.Application.DependencyInjection
+namespace MedKarta.Core.Extensions.DependencyInjection
 {
     internal static class GetViewModelExtensions
     {

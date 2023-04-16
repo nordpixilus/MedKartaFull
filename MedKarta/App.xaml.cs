@@ -1,5 +1,5 @@
 ﻿using MedKarta.Application;
-using MedKarta.Application.DependencyInjection;
+using MedKarta.Core.Extensions.DependencyInjection;
 using MedKarta.Core.Models;
 using MedKarta.Windows.Main;
 using MedKarta.Windows.Main.Views.Start;
