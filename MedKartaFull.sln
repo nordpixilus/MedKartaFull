@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedKarta", "MedKarta\MedKarta.csproj", "{28676382-70C2-42E1-841A-935416A446AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedKarta", "MedKarta\MedKarta.csproj", "{28676382-70C2-42E1-841A-935416A446AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0B331955-B548-42B9-A816-2EB96708E067}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedKartaTest", "MedKartaTest\MedKartaTest.csproj", "{5912454C-1A85-479E-B9C5-65F36AC8EFE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +25,20 @@ Global
 		{28676382-70C2-42E1-841A-935416A446AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28676382-70C2-42E1-841A-935416A446AB}.Release|x64.ActiveCfg = Release|x64
 		{28676382-70C2-42E1-841A-935416A446AB}.Release|x64.Build.0 = Release|x64
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5912454C-1A85-479E-B9C5-65F36AC8EFE3} = {0B331955-B548-42B9-A816-2EB96708E067}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4EA7CFD9-35DF-4FB3-BF2F-779E97AF7648}

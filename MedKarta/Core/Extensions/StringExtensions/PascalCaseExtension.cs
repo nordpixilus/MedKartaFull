@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace MedKarta.Core.Extensions.StringExtensions;
 
@@ -16,16 +15,20 @@ public static partial class PascalCaseExtension
 
         if (!Char.IsUpper(strPascalCase, 0)) return false;
 
-        if(strPascalCase.Count(m => char.IsUpper(m)) == 1) return false;
-        
+        if(strPascalCase.Count(m => char.IsUpper(m)) == 1) return false;    
+
         return true;
     }
 
-    public static string? SplitPascalCase(this string? nameClass)
+    public static string SplitPascalCase(this string? nameClass)
     {
-        if (!nameClass.IsPascalCase()) return null;
+        if (nameClass.IsPascalCase())
+        {
+            ArgumentException.ThrowIfNullOrEmpty("Строка не соответсвует названию класса", nameof(nameClass));
+        }
 
-        return Regex.Split(nameClass!, @"(?<!^)(?=[A-Z])")[0];
+        string[] split = Regex.Split(nameClass!, @"(?<!^)(?=[A-Z])");
+        return split[1];
     }
 
     [GeneratedRegex("^[a-zA-Z]+$")]
