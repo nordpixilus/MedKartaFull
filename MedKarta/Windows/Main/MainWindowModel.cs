@@ -27,12 +27,12 @@ namespace MedKarta.Windows.Main
             this.app = app;
             this.logger = logger;
             WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
-            GoToHomeView();
+            GoToStartView();
 
         }
 
         [RelayCommand]
-        private void GoToHomeView()
+        private void GoToStartView()
         {
             ChangeChildContent<StartViewModel>();
             Title = "Open HomeView";
@@ -53,7 +53,7 @@ namespace MedKarta.Windows.Main
             switch (message.Value)
             {
                 case nameof(WorkViewModel): GoToWorkView(); break;
-                case nameof(StartViewModel): GoToHomeView(); break;
+                case nameof(StartViewModel): GoToStartView(); break;
             }
         }
 
