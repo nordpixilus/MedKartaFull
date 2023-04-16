@@ -1,7 +1,5 @@
-﻿using MedKarta.Core.Extensions.StringExtensions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 
 namespace MedKarta.Core.Extensions.DependencyInjection
 {
@@ -12,21 +10,11 @@ namespace MedKarta.Core.Extensions.DependencyInjection
             var viewType = typeof(TView);
             var viewTypeNamespace = viewType.Namespace;
             string viewTypeFullName = viewType.Name;
-
-
-            Assembly assembly = Assembly.Load("MedKarta.UCL");
-            //Type[] types = assembly.GetTypes();
-            //string? nameBase = viewTypeFullName.SplitPascalCase();
-            //Type? modelType = assembly.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{nameBase}Model"));
-
-            //Type? modelType = assembly.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{viewTypeFullName}Model"));
-
-            //if (modelType != null ) services.AddScoped(modelType);
-            Type vType = assembly.GetType(string.Format("{0}.{1}", viewTypeNamespace, viewTypeFullName))!;
-            Type viewModelType = assembly.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{viewTypeFullName}Model"))!;
-            
-            services.AddScoped(viewModelType);
-            services.AddScoped(vType);
+            //Type modelType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, "Model"))!;
+            Type viewModelType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{viewTypeFullName}Model"))!;
+            //services.AddSingleton(modelType);
+            services.AddSingleton(viewModelType);
+            services.AddSingleton(typeof(TView));
 
             return services;
         }
