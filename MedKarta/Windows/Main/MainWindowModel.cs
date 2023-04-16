@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MedKarta.Application;
+using MedKarta.Core.Models;
 using MedKarta.Shared.Navigations;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
@@ -11,7 +12,7 @@ using System;
 
 namespace MedKarta.Windows.Main
 {
-    internal partial class MainWindowModel : ObservableRecipient, IRecipient<NavigationMessage>
+    internal partial class MainWindowModel : BaseViewModel, IRecipient<NavigationMessage>
     {
         [ObservableProperty]
         private string? _Title;
@@ -25,7 +26,7 @@ namespace MedKarta.Windows.Main
         {
             this.app = app;
             this.logger = logger;
-            this.IsActive = true;
+            WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
             GoToHomeView();
 
         }
