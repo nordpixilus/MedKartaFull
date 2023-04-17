@@ -7,7 +7,6 @@ using MedKarta.Shared.Navigations;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using System;
 
 namespace MedKarta.Windows.Main
