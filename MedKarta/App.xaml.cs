@@ -1,12 +1,14 @@
 ﻿using MedKarta.Application;
 using MedKarta.Core.Extensions.DependencyInjection;
-using MedKarta.Core.Models;
+using MedKarta.Entity.Context;
 using MedKarta.Windows.Main;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MedKarta
@@ -45,6 +47,11 @@ namespace MedKarta
             .AddView<StartView>()
             .AddView<WorkView>()
             .AddMainWindow()
+            .AddDbContext<MedKartaContext>(Options =>
+            {
+                Options.UseSqlite("Data Source=karta.db");
+                Options.UseLazyLoadingProxies(true);
+            })
             ;
 
         protected override async void OnStartup(StartupEventArgs e)
@@ -52,6 +59,11 @@ namespace MedKarta
             await AppHost!.StartAsync();
 
             AppScope = AppHost.Services.CreateScope();
+            
+            using (var dbContext = AppScope.ServiceProvider.GetRequiredService<MedKartaContext>())
+            {
+                dbContext.Database.EnsureCreated();
+            }
 
             MainWindow = AppScope.ServiceProvider.GetRequiredService<MainWindow>();
 
