@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedKartaTest", "MedKartaTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedKarta.Entity", "..\DopProject\MedKarta.Entity\MedKarta.Entity.csproj", "{C3DF7106-6618-4DFB-9E03-B728D57551BB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedKarta.Interface", "..\DopProject\MedKarta.Interface\MedKarta.Interface.csproj", "{17E85912-71B9-42BF-B790-E52BD38F369A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,14 @@ Global
 		{C3DF7106-6618-4DFB-9E03-B728D57551BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3DF7106-6618-4DFB-9E03-B728D57551BB}.Release|x64.ActiveCfg = Release|x64
 		{C3DF7106-6618-4DFB-9E03-B728D57551BB}.Release|x64.Build.0 = Release|x64
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Debug|x64.ActiveCfg = Debug|x64
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Debug|x64.Build.0 = Debug|x64
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Release|x64.ActiveCfg = Release|x64
+		{17E85912-71B9-42BF-B790-E52BD38F369A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

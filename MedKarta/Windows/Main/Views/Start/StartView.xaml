@@ -9,12 +9,30 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
 
-        <Label Content="Скопировать в буфер обмена:" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-        <Label Content="Данные пациента." HorizontalAlignment="Center"/>
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-    </StackPanel>
+            <Label Content="Скопировать в буфер обмена:" />
+
+            <Label Content="Данные пациента." HorizontalAlignment="Center"/>
+
+        </StackPanel>
+
+        <DataGrid Grid.Column="1" ItemsSource="{Binding Path=People}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код" Binding="{Binding Path=Kod}" />
+                <DataGridTextColumn Header="Ф.И.О" Binding="{Binding Path=FullName}" />
+                <DataGridTextColumn Header="Шаг" Binding="{Binding Path=Step.Name}" />
+                <!--<DataGridTextColumn Header="Заболевание" Binding="{Binding Path=}"-->
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>    
 
 </UserControl>
