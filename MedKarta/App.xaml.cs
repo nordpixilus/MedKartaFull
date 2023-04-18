@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MedKarta
@@ -62,7 +61,7 @@ namespace MedKarta
             
             using (var dbContext = AppScope.ServiceProvider.GetRequiredService<MedKartaContext>())
             {
-                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
             }
 
             MainWindow = AppScope.ServiceProvider.GetRequiredService<MainWindow>();
