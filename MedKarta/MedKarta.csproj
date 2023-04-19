@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DopProject\MedKarta.DAL\MedKarta.DAL.csproj" />
-    <ProjectReference Include="..\..\DopProject\MedKarta.Entity\MedKarta.Entity.csproj" />
     <ProjectReference Include="..\..\DopProject\MedKarta.Interface\MedKarta.Interface.csproj" />
   </ItemGroup>
 
