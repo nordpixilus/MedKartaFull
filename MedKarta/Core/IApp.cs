@@ -1,7 +1,7 @@
 ﻿using MedKarta.Core.Models;
 using System;
 
-namespace MedKarta.Application
+namespace MedKarta.Core
 {
     internal interface IApp
     {

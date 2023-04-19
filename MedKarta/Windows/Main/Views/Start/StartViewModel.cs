@@ -2,6 +2,7 @@
 using MedKarta.Core.Models;
 using MedKarta.DAL.Context;
 using MedKarta.DAL.Table.User;
+using MedKarta.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,18 +12,12 @@ namespace MedKarta.Windows.Main.Views.Start;
 
 internal partial class StartViewModel : BaseViewModel
 {
-    //[ObservableProperty]
-    //private List<Person> _People;
-    //public ObservableCollection<Person>? People { get; }
-    public StartViewModel()
+    [ObservableProperty]
+    private List<Person> _People;
+    public StartViewModel(IRepository<Person> Person)
     {
-        //medKartaContext.Persons.Load();
-        //_People = medKartaContext.Persons.Local.ToObservableCollection();
-
-        //_People = medKartaContext.Persons
-        //    .Where(p => p.StepId == 2)
-        //    //.Select(p => new { p.Kod, p.FullName })
-        //    .ToList()
-        //    ;
+        _People = Person.Items
+            .Where(p => p.StepId == 1)
+            .ToList();
     }
 }

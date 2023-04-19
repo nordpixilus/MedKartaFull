@@ -24,11 +24,11 @@
 
         </StackPanel>
 
-        <DataGrid Grid.Column="1" ItemsSource="{Binding Path=People}" AutoGenerateColumns="False">
+        <DataGrid Grid.Column="1" ItemsSource="{Binding People}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код" Binding="{Binding Path=Kod}" />
-                <DataGridTextColumn Header="Ф.И.О" Binding="{Binding Path=FullName}" />
-                <DataGridTextColumn Header="Шаг" Binding="{Binding Path=Step.Name}" />
+                <DataGridTextColumn Header="Код" Binding="{Binding Kod}" />
+                <DataGridTextColumn Header="Ф.И.О" Binding="{Binding FullName}" />
+                <DataGridTextColumn Header="Шаг" Binding="{Binding Step.Name}" />
                 <!--<DataGridTextColumn Header="Заболевание" Binding="{Binding Path=}"-->
             </DataGrid.Columns>
         </DataGrid>
