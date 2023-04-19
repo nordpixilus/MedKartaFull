@@ -1,12 +1,14 @@
-﻿using MedKarta.Application;
+﻿using MedKarta.Core;
 using MedKarta.Core.Extensions.DependencyInjection;
 using MedKarta.DAL.Context;
+using MedKarta.DAL.Repository;
 using MedKarta.Windows.Main;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+//using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Windows;
 
@@ -15,7 +17,7 @@ namespace MedKarta
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : System.Windows.Application, IApp
+    public partial class App : Application, IApp
     {
         /// <summary>
         /// https://learn.microsoft.com/dotnet/api/microsoft.extensions.hosting.ihost?view=dotnet-plat-ext-6.0
@@ -51,6 +53,7 @@ namespace MedKarta
                 Options.UseSqlite("Data Source=karta.db");
                 Options.UseLazyLoadingProxies(true);
             })
+            .AddRepositoryInDB()
             ;
 
         protected override async void OnStartup(StartupEventArgs e)

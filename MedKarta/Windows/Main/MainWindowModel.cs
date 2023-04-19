@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using MedKarta.Application;
+using MedKarta.Core;
+using MedKarta.Core.Helpers;
 using MedKarta.Core.Models;
 using MedKarta.Shared.Navigations;
 using MedKarta.Windows.Main.Views.Start;
@@ -13,11 +14,21 @@ namespace MedKarta.Windows.Main
 {
     internal partial class MainWindowModel : BaseViewModel, IRecipient<NavigationMessage>
     {
+        #region Title
         [ObservableProperty]
-        private string? _Title;
+        private string? _Title = "Эпикриз";
+        #endregion
 
+        #region ChildContent
+
+        /// <summary>
+        /// Содержит программно изменяемый контент главного окна.
+        /// </summary>
         [ObservableProperty]
-        private object? _ChildContent;
+        private Object? _ChildContent;
+
+        #endregion
+
         private readonly IApp app;
         private readonly ILogger<MainWindowModel> logger;
 
@@ -26,7 +37,7 @@ namespace MedKarta.Windows.Main
             this.app = app;
             this.logger = logger;
             WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
-            GoToStartView();
+            SetFiedsPerson();
 
         }
 
@@ -34,7 +45,6 @@ namespace MedKarta.Windows.Main
         private void GoToStartView()
         {
             ChangeChildContent<StartViewModel>();
-            Title = "Open HomeView";
             logger.LogInformation("Переход на представление {title}", nameof(StartViewModel));
         }
 
@@ -42,7 +52,6 @@ namespace MedKarta.Windows.Main
         private void GoToWorkView()
         {
             ChangeChildContent<WorkViewModel>();
-            Title = "Open WorkView";
             logger.LogInformation("Переход на представление {title}", nameof(WorkViewModel));
         }
 
@@ -67,5 +76,36 @@ namespace MedKarta.Windows.Main
                 logger.LogCritical("{ex} {dop_text}", ex.Message, $"Не найдено представление для {typeof(T)}");
             }
         }
+
+        #region Логика переключения представления в главном окне.
+
+        /// <summary>
+        /// Логика переключения представления в главном окне.
+        /// </summary>
+        private void SetFiedsPerson()
+        {
+            string? fieldsText = ClipBoard.GetFieldsPersonClipBoard();
+            if (fieldsText != null)
+            {
+                //GoToWorkView(fieldsText);
+            }
+            else
+            {
+                GoToStartView();
+                SetFiedsPersonAsync();
+            }
+        }
+
+
+        private async void SetFiedsPersonAsync()
+        {
+            string? fieldsText = await ClipBoard.StartMoninitorFieldsPersonAsync();
+            if (fieldsText != null)
+            {
+                //GoToWorkView(fieldsText);
+            }
+        }
+
+        #endregion
     }
 }

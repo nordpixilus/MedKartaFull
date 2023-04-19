@@ -1,4 +1,5 @@
-﻿using MedKarta.UCL.Models;
+﻿using MedKarta.Core.Models;
+using System;
 
 namespace MedKarta.Core
 {
