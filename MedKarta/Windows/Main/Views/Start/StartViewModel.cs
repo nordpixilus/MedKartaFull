@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MedKarta.Core.Models;
-using MedKarta.Entity.Context;
-using MedKarta.Entity.Table.User;
+using MedKarta.DAL.Context;
+using MedKarta.DAL.Table.User;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

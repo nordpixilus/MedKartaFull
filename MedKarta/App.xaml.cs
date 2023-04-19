@@ -1,6 +1,6 @@
 ﻿using MedKarta.Application;
 using MedKarta.Core.Extensions.DependencyInjection;
-using MedKarta.Entity.Context;
+using MedKarta.DAL.Context;
 using MedKarta.Windows.Main;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
