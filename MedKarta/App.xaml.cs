@@ -8,6 +8,7 @@ using MedKarta.Windows.Main.Views.Work;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 //using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Windows;
@@ -61,11 +62,11 @@ namespace MedKarta
             await AppHost!.StartAsync();
 
             AppScope = AppHost.Services.CreateScope();
-            
-            using (var dbContext = AppScope.ServiceProvider.GetRequiredService<MedKartaContext>())
-            {
-                dbContext.Database.Migrate();
-            }
+
+            //using (var dbContext = AppScope.ServiceProvider.GetRequiredService<MedKartaContext>())
+            //{
+            //    dbContext.Database.Migrate();
+            //}
 
             MainWindow = AppScope.ServiceProvider.GetRequiredService<MainWindow>();
 

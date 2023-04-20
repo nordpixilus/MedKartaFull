@@ -14,12 +14,12 @@ namespace MedKarta.Core.Extensions.DependencyInjection
 
             string? nameBase = viewTypeFullName.SplitPascalCase();            
             Type? modelType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{nameBase}Model"));
-            if (modelType != null ) services.AddSingleton(modelType);
+            if (modelType != null ) services.AddScoped(modelType);
 
             Type viewModelType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, $"{viewTypeFullName}Model"))!;
             
-            services.AddSingleton(viewModelType);
-            services.AddSingleton(typeof(TView));
+            services.AddScoped(viewModelType);
+            services.AddScoped(typeof(TView));
 
             return services;
         }
