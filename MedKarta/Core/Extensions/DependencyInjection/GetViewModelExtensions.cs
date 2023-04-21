@@ -1,5 +1,7 @@
 ﻿using MedKarta.Core.Models;
+using MedKarta.UCL.Models;
 using System;
+using System.Reflection;
 using System.Windows;
 
 // namespace Microsoft.Extensions.DependencyInjection;
@@ -20,7 +22,9 @@ namespace MedKarta.Core.Extensions.DependencyInjection
             var vmType = typeof(T);
             var viewTypeNamespace = vmType.Namespace?.Replace("Model", "");
             string? viewTypeFullName = vmType?.Name.Replace("Model", "");
-            Type? viewType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, viewTypeFullName));
+            Assembly assembly = Assembly.Load("MedKarta.UCL");
+            Type? viewType = assembly.GetType(string.Format("{0}.{1}", viewTypeNamespace, viewTypeFullName));
+            //Type? viewType = Type.GetType(string.Format("{0}.{1}", viewTypeNamespace, viewTypeFullName));
             //FrameworkElement view = serviceProvider.GetService(viewType!) as FrameworkElement ?? throw new ArgumentNullException(null, nameof(viewType));
             // https://learn.microsoft.com/dotnet/api/system.argumentnullexception.throwifnull?view=net-6.0
             ArgumentNullException.ThrowIfNull(viewType, $"Для {viewTypeFullName}Model Path: {viewTypeNamespace}. Не найдено представление: {viewTypeFullName}");

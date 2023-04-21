@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DopProject\MedKarta.Core\MedKarta.Core\MedKarta.Core.csproj" />
     <ProjectReference Include="..\..\DopProject\MedKarta.DAL\MedKarta.DAL.csproj" />
     <ProjectReference Include="..\..\DopProject\MedKarta.Interface\MedKarta.Interface.csproj" />
     <ProjectReference Include="..\..\DopProject\UCL\MedKarta.UCL\MedKarta.UCL.csproj" />
@@ -46,6 +47,10 @@
     <None Update="karta.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Windows\" />
   </ItemGroup>
 
 </Project>
