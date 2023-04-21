@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MedKarta.Core;
-using MedKarta.Core.Helpers;
 using MedKarta.Core.Models;
 using MedKarta.Shared.Navigations;
+using MedKarta.Windows.Main.Views.ErrorBoard.ErrorKod;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.Extensions.Logging;
@@ -29,16 +29,66 @@ namespace MedKarta.Windows.Main
 
         #endregion
 
+        
+
         private readonly IApp app;
         private readonly ILogger<MainWindowModel> logger;
 
-        public MainWindowModel(IApp app, ILogger<MainWindowModel> logger)
+        public PersonModel personModel { get; }
+
+        public MainWindowModel(IApp app, ILogger<MainWindowModel> logger, PersonModel model)
         {
             this.app = app;
             this.logger = logger;
+            personModel = model;
+            SetView();
             WeakReferenceMessenger.Default.Register<NavigationMessage>(this);
-            SetFiedsPerson();
+            //PersonModel.
+            //SetFiedsPerson();
 
+        }
+
+        private void SetView()
+        {
+            if (!personModel.IsClipBoardText())
+            {
+                ChangeChildContent<StartViewModel>();
+            }
+            else if(!string.IsNullOrEmpty(personModel.IsErrorPersonWork()))
+            {
+                ErrorCorrectionPersonWork();
+            }
+            else if(personModel.IsPersonDB())
+            {
+                EquatePersonWorkToDB();
+            }
+            else
+            {
+                // TODO: начало нового приёма
+                ChangeChildContent<StartViewModel>();
+            }
+
+            //if (personModel.CurrentView == nameof(ErrorKodViewModel))
+            //{
+            //    ChangeChildContent<ErrorKodViewModel>();
+            //}
+            //else
+            //{
+            //    ChangeChildContent<StartViewModel>();
+            //}
+        }
+
+        private void EquatePersonWorkToDB()
+        {
+            // TODO реализовать проверку
+            //personModel.EquatePerson();
+            ChangeChildContent<StartViewModel>();
+        }
+
+        private void ErrorCorrectionPersonWork()
+        {
+            // TODO: реализовать проверку.
+            ChangeChildContent<ErrorKodViewModel>();
         }
 
         [RelayCommand]
@@ -82,29 +132,29 @@ namespace MedKarta.Windows.Main
         /// <summary>
         /// Логика переключения представления в главном окне.
         /// </summary>
-        private void SetFiedsPerson()
-        {
-            string? fieldsText = ClipBoard.GetFieldsPersonClipBoard();
-            if (fieldsText != null)
-            {
-                //GoToWorkView(fieldsText);
-            }
-            else
-            {
-                GoToStartView();
-                SetFiedsPersonAsync();
-            }
-        }
+        //private void SetFiedsPerson()
+        //{
+        //    string? fieldsText = ClipBoard.GetFieldsPersonClipBoard();
+        //    if (fieldsText != null)
+        //    {
+        //        //GoToWorkView(fieldsText);
+        //    }
+        //    else
+        //    {
+        //        GoToStartView();
+        //        SetFiedsPersonAsync();
+        //    }
+        //}
 
 
-        private async void SetFiedsPersonAsync()
-        {
-            string? fieldsText = await ClipBoard.StartMoninitorFieldsPersonAsync();
-            if (fieldsText != null)
-            {
-                //GoToWorkView(fieldsText);
-            }
-        }
+        //private async void SetFiedsPersonAsync()
+        //{
+        //    string? fieldsText = await ClipBoard.StartMoninitorFieldsPersonAsync();
+        //    if (fieldsText != null)
+        //    {
+        //        //GoToWorkView(fieldsText);
+        //    }
+        //}
 
         #endregion
     }

@@ -1,5 +1,7 @@
 ﻿using MedKarta.Core.Helpers;
-using MedKarta.UCL.ErrorBoard.ErrorKod;
+using MedKarta.DAL.Table.User.UserProperty;
+using MedKarta.Windows.Main.Views.ErrorBoard.ErrorKod;
+using System;
 using System.Collections.Generic;
 
 namespace MedKarta.Core.Models;

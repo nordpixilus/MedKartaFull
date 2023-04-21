@@ -1,8 +1,10 @@
 ﻿using MedKarta.Core;
 using MedKarta.Core.Extensions.DependencyInjection;
+using MedKarta.Core.Models;
 using MedKarta.DAL.Context;
 using MedKarta.DAL.Repository;
 using MedKarta.Windows.Main;
+using MedKarta.Windows.Main.Views.ErrorBoard.ErrorKod;
 using MedKarta.Windows.Main.Views.Start;
 using MedKarta.Windows.Main.Views.Work;
 using Microsoft.EntityFrameworkCore;
@@ -46,8 +48,10 @@ namespace MedKarta
 
         private void ConfigureServices(HostBuilderContext context, IServiceCollection services) => services
             .AddSingleton<IApp>(this)
+            .AddSingleton<PersonModel>()
             .AddView<StartView>()
             .AddView<WorkView>()
+            .AddView<ErrorKodView>()
             .AddMainWindow()
             .AddDbContext<MedKartaContext>(Options =>
             {
