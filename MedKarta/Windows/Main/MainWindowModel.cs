@@ -3,10 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MedKarta.Core;
 using MedKarta.Core.Models;
-using MedKarta.Shared.Navigations;
-using MedKarta.Windows.Main.Views.ErrorBoard.ErrorKod;
-using MedKarta.Windows.Main.Views.Start;
-using MedKarta.Windows.Main.Views.Work;
+using MedKarta.Core.Navigations;
+using MedKarta.UCL.ErrorBoard.ErrorKod;
+using MedKarta.UCL.Models;
+using MedKarta.UCL.Start;
+using MedKarta.UCL.Work;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -54,11 +55,11 @@ namespace MedKarta.Windows.Main
             {
                 ChangeChildContent<StartViewModel>();
             }
-            else if(!string.IsNullOrEmpty(personModel.IsErrorPersonWork()))
+            else if (!string.IsNullOrEmpty(personModel.IsErrorPersonWork()))
             {
                 ErrorCorrectionPersonWork();
             }
-            else if(personModel.IsPersonDB())
+            else if (personModel.IsPersonDB())
             {
                 EquatePersonWorkToDB();
             }

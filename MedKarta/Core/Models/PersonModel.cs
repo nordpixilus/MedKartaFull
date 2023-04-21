@@ -1,14 +1,7 @@
 ﻿using MedKarta.Core.Helpers;
 using MedKarta.DAL.Table.User;
 using MedKarta.Interface;
-using MedKarta.Windows.Main.Views.ErrorBoard.ErrorKod;
-using MedKarta.Windows.Main.Views.Start;
-using MedKarta.Windows.Main.Views.Work;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MedKarta.Core.Models;
 
