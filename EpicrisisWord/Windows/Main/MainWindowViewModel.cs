@@ -55,12 +55,12 @@ namespace EpicrisisWord.Windows.Main
             {
                 ChildContent = new WorkViewModel(fieldsText);
             }
-            
+
         }
 
         #endregion
 
-        #region Обработка сообщения
+        #region Обработка сообщения навигации
 
         public void Receive(NavigationMessage message)
         {
@@ -92,7 +92,7 @@ namespace EpicrisisWord.Windows.Main
             }
         }
 
-       
+
         private async void SetFiedsPersonAsync()
         {
             string? fieldsText = await ClipoardHelper.StartMoninitorFieldsPersonAsync();

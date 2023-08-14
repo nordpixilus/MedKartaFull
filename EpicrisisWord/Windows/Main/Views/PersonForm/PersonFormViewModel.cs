@@ -5,6 +5,7 @@ using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace EpicrisisWord.Windows.Main.Views.PersonForm;
 
@@ -18,12 +19,15 @@ internal partial class PersonFormViewModel : BaseViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required]
-    [RegularExpression(@"^([А-Я][а-я]+ ?){2,5}", ErrorMessage = "Invalid Social Security Number.")]
+    [RegularExpression(@"^([А-ЯЁ][а-яё]+ ?){2,5}", ErrorMessage = "Invalid Social Security Number.")]
     private string _FullName = string.Empty;
 
     partial void OnFullNameChanged(string value)
     {
-        ActionChangeField();
+        if (FullName.Count() < 5)
+        {
+            Messenger.Send(new UpdateListFileMessage(FullName));
+        }
     }
 
     #endregion    
@@ -35,11 +39,6 @@ internal partial class PersonFormViewModel : BaseViewModel
     [Required]
     private string _BirthDateFull = string.Empty;
 
-    partial void OnBirthDateFullChanged(string value)
-    {
-        ActionChangeField();
-    }
-
     #endregion
 
     #region Поле Reg Адрес регистрации    
@@ -49,24 +48,14 @@ internal partial class PersonFormViewModel : BaseViewModel
     [Required]
     private string _Reg = string.Empty;
 
-    partial void OnRegChanged(string value)
-    {
-        ActionChangeField();
-    }
-
     #endregion
 
     #region Поле Res Поле Адрес проживания    
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required]   
+    [Required]
     private string _Res = string.Empty;
-
-    partial void OnResChanged(string value)
-    {
-        ActionChangeField();
-    }
 
     #endregion    
 
@@ -80,15 +69,6 @@ internal partial class PersonFormViewModel : BaseViewModel
     }
 
     /// <summary>
-    /// Вызывается при изменении любого поля формы пачиента.
-    /// Посылает сообжение об изменении.
-    /// </summary>
-    private void ActionChangeField()
-    {
-        Messenger.Send(new ChangeFieldsPersonMessege(string.Empty));
-    }
-
-    /// <summary>
     /// Заполнение полей формы.
     /// </summary>
     /// <param name="fieldsText"></param>
@@ -97,7 +77,7 @@ internal partial class PersonFormViewModel : BaseViewModel
         // Выборка из текста нужных значений.
         (Dictionary<string, string> boardFields, bool isFields) = RegexHelper.ExtractFieldsPerson(fieldsText!);
         if (isFields)
-        {            
+        {
             FullName = boardFields["full_name"];
             BirthDateFull = StringHelper.CreateBirtDateFull(boardFields["birth_date"], boardFields["age_int"], boardFields["age_str"]);
             Reg = boardFields["reg"];
@@ -111,8 +91,8 @@ internal partial class PersonFormViewModel : BaseViewModel
     /// </summary>
     /// <param name="dict"></param>
     public void AddDictionaryFielsPerson(ref Dictionary<string, string> dict)
-    {        
-        dict["full_name"] = FullName;        
+    {
+        dict["full_name"] = FullName;
         dict["birth_date_full"] = BirthDateFull;
         dict["reg"] = Reg;
         dict["res"] = Res;

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WinWorms = System.Windows.Forms;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile
 {
@@ -23,6 +13,25 @@ namespace EpicrisisWord.Windows.Main.Views.ListFile
         public ListFileView()
         {
             InitializeComponent();
+        }
+
+        private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            WinWorms.FolderBrowserDialog dialog = new()
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+
+            WinWorms.DialogResult result = dialog.ShowDialog();
+
+            if (result == WinWorms.DialogResult.OK)
+            {
+                if (sender is ListView listView)
+                {
+                    ListFileViewModel vm = (ListFileViewModel)listView.DataContext;
+                    vm.UpdatePathWorkFolder(dialog.SelectedPath);
+                }
+            }
         }
     }
 }

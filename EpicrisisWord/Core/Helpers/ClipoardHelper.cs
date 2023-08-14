@@ -20,7 +20,7 @@ internal static class ClipoardHelper
             await Task.Delay(1000);
             fieldsText = GetFieldsPersonClipBoard();
             if (fieldsText != null)
-            {                
+            {
                 x = false;
             }
         }

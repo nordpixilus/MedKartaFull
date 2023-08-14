@@ -1,17 +1,21 @@
 ﻿using AODL.Document.Content;
 using AODL.Document.TextDocuments;
-using Word = Microsoft.Office.Interop.Word;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace EpicrisisWord.Core.Helpers;
 
 internal static class TextDocumentHelper
 {
+    static string textMessage = string.Empty;
+
     internal static string GetTextProblem(string pathFile)
     {
+        textMessage = $"1) Закрыть документ.\n\n    {Path.GetFileName(pathFile)}\n\n2) Продожить выполнени: OK";
+
         string textProblem = string.Empty;
 
         // Получение расширения файла из пути к нему.
@@ -41,8 +45,7 @@ internal static class TextDocumentHelper
             }
             catch
             {
-                MessageBox.Show($"Закрыть файл\n {Path.GetFileName(pathFile)}");
-
+                MessageBox.Show(textMessage);
                 doc.Load(pathFile);
             }
 
@@ -61,8 +64,7 @@ internal static class TextDocumentHelper
         object Revert = false;
         object ReadOnly = true;
         Word.Application app = new();
-        //object s = Word.Tasks.Count;
-        //Object fileName = dialog.FileName;
+
         try
         {
             app.Documents.Open(pathFile, ref Revert, ref ReadOnly);
@@ -74,11 +76,10 @@ internal static class TextDocumentHelper
 
             }
             app.Quit();
-
         }
         catch
         {
-            MessageBox.Show($"Закрыть Word документ. {Path.GetFileName(pathFile)}");
+            MessageBox.Show(textMessage);
         }
         return textProblem;
     }

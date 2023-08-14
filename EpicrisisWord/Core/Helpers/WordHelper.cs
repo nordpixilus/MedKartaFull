@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
-using System;
 using Word = Microsoft.Office.Interop.Word;
-using static System.Environment;
-using System.Threading;
-using Microsoft.Office.Interop.Word;
-using ICSharpCode.SharpZipLib.Core;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -78,7 +73,7 @@ internal class WordHelper
             doc?.Close();
             doc = null;
         }
-    }    
+    }
 }
 // http://nullpro.info/2012/rabotaem-s-ms-word-iz-c-chast-1-otkryvaem-shablon-ishhem-tekst-vnutri-dokumenta/
 // https://progtask.ru/rabota-s-word-pri-pomoshi-c-sharp/

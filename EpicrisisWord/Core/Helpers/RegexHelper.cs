@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -10,13 +8,13 @@ internal static class RegexHelper
     internal static (Dictionary<string, string>, bool) ExtractFieldsPerson(string textProblem)
     {
         Dictionary<string, string> fields = new();
-        
+
 
         string pattern = @"  +|(\r+\n+)+";
         Regex regex = new(pattern);
         textProblem = regex.Replace(textProblem, " ");
 
-        
+
 
         Dictionary<string, string> patterns = new()
         {
@@ -64,17 +62,17 @@ internal static class RegexHelper
     }
 
     internal static (Dictionary<string, string> fiedlsPerson, bool isFields) ExtractTextProblem(string text)
-    {       
+    {
         string pattern = @"  +|\r\n?";
         Regex regex = new(pattern);
         text = regex.Replace(text, " ");
-       
+
         string patternDoctor = @"(Врач.*)";
         Regex regexDoctor = new(patternDoctor);
         text = regexDoctor.Replace(text, "");
 
         text = text.Trim();
-       
+
         Dictionary<string, string> fiedlsPerson = new();
 
         Dictionary<string, string> patterns = new()

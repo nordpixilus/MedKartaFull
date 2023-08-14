@@ -12,11 +12,13 @@
     <Grid>
 
         <ListView ItemsSource="{Binding Path=Files}"
-                  SelectedItem="{Binding SelectedItemListViewFile, Mode=OneWayToSource}">
+                  SelectedItem="{Binding SelectedItemListViewFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Header="Список файлов" DisplayMemberBinding="{Binding Path=NameFile}" Width="450"/>
+                        <GridViewColumn Header="{Binding HeaderText}"
+                                        DisplayMemberBinding="{Binding Path=NameFile}" Width="430" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

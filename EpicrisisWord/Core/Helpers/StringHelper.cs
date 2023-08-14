@@ -1,9 +1,7 @@
-﻿using ICSharpCode.SharpZipLib.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows;
 
 namespace EpicrisisWord.Core.Helpers;
 
@@ -16,7 +14,7 @@ internal static class StringHelper
         string specialFolder = fiedlsPerson["specialFolder"];
 
         string newNameEpicrisisFile = $"{ini} Эпикриз {short_medicftion}.docx";
-        
+
         string? pathNewEpicrisisFile = Path.Combine(specialFolder, $"{newNameEpicrisisFile}");
         if (File.Exists(pathNewEpicrisisFile))
         {
@@ -63,7 +61,7 @@ internal static class StringHelper
                 fiedlsPerson["short_medicftion"] = key;
                 break;
             }
-        }        
+        }
     }
 
     internal static void AddExtractRecommendation(ref Dictionary<string, string> fiedlsPerson)
@@ -88,7 +86,7 @@ internal static class StringHelper
         DirectoryInfo dirInfoTemp = new(pathTemp);
         if (!dirInfoTemp.Exists) dirInfoTemp.Create();
 
-        FileInfo fileInfoEpicrisis =  new(Path.Combine("TemplatesWord", "epicrisis.docx"));
+        FileInfo fileInfoEpicrisis = new(Path.Combine("TemplatesWord", "epicrisis.docx"));
         fiedlsPerson["pathEpicrisisFile"] = fileInfoEpicrisis.FullName;
 
         FileInfo fileInfoDiagnosis = new(Path.Combine("TemplatesWord", "diagnosis.docx"));
@@ -143,11 +141,11 @@ internal static class StringHelper
         rengen.Append(AddUnderscore(countUnderscope));
         rengen.Append(AddUnderscore(lenStr));
         return rengen.ToString();
-    }    
+    }
 
     internal static void AddFieldGynecolog(ref Dictionary<string, string> fiedlsPerson)
     {
-        if(fiedlsPerson["gender"][..1].ToLower() == "ж")
+        if (fiedlsPerson["gender"][..1].ToLower() == "ж")
         {
             fiedlsPerson["gynecolog"] = CreateGynecolog();
         }
@@ -180,7 +178,7 @@ internal static class StringHelper
 
         return line.ToString();
     }
-    
+
     internal static void AddFieldsDiabet(ref Dictionary<string, string> fiedlsPerson)
     {
         DateTime date_start = DateTime.ParseExact(fiedlsPerson["date_start"], "d", null);

@@ -11,7 +11,7 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         FontSize="16"
-        MinWidth="1005"
+        MinWidth="1020"
         MinHeight="500"
         MaxHeight="500">
     

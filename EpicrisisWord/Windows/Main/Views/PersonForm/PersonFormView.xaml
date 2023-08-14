@@ -52,7 +52,7 @@
             <Label Content="Адрес регистрации:" />
 
             <TextBox Text="{Binding Reg, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Width="800" />
+                     Width="810" />
 
         </StackPanel>
 
@@ -61,7 +61,7 @@
             <Label Content="Адрес проживания:" />
 
             <TextBox Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Width="800" />
+                     Width="810" />
 
         </StackPanel>        
 

@@ -1,23 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using EpicrisisWord.Core.Helpers;
 using EpicrisisWord.Core.Messages;
 using EpicrisisWord.Core.Models;
-using EpicrisisWord.Core.Navigations;
-using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Documents;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EpicrisisWord.Windows.Main.Views.ListFile;
 
 internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListFileMessage>
 {
+    /// <summary>
+    /// Заголовок списка файлов.
+    /// </summary>
+    [ObservableProperty]
+    private string _HeaderText = string.Empty;
+
     /// <summary>
     /// Коллекция для отобращение в ListView
     /// </summary>
@@ -25,13 +24,13 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     private ObservableCollection<DocumentName> _Files = new();
 
     /// <summary>
-    /// Выбранный документ в ListView.
+    /// Выбранный документ в ListView. 
     /// </summary>
     [ObservableProperty]
     private DocumentName? _SelectedItemListViewFile;
 
     partial void OnSelectedItemListViewFileChanged(DocumentName? value)
-    {        
+    {
         if (value != null)
         {
             Messenger.Send(new CreateDocumentMessage(value.PathFile!));
@@ -41,15 +40,38 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
     public ListFileViewModel()
     {
         WeakReferenceMessenger.Default.Register(this);
+        HeaderText = InitHeaderText();
+    }
+
+    private static string InitHeaderText()
+    {
+        if (string.IsNullOrEmpty(Properties.Settings.Default.work_folder))
+        {
+            return "Укажите папку с файлами";
+        }
+        else
+        {
+            return "Список файлов (Изменить папку)";
+        }
+
+    }
+
+    public void UpdatePathWorkFolder(string path)
+    {
+        Properties.Settings.Default.work_folder = path;
+        Properties.Settings.Default.Save();
+        AddListPath(string.Empty);
+        HeaderText = InitHeaderText();
     }
 
     public void Receive(UpdateListFileMessage? message)
     {
-        Files.Clear();
         if (message != null)
         {
-            Files.Clear();
-            AddListPath(message.Value!);
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.work_folder))
+            {
+                AddListPath(message.Value!);
+            }
         }
     }
 
@@ -61,23 +83,36 @@ internal partial class ListFileViewModel : BaseViewModel, IRecipient<UpdateListF
         string searchWord = string.Empty;
         string nameFile;
 
+        Files.Clear();
+
+        string patternFile = $"^.*(docx|odt)$";
+        string patternType = $"^.*((Э|э)пикриз)|((С|с)татус).*$";
+        string patternName;
+
         if (!string.IsNullOrEmpty(fullName))
-        {            
-            searchWord = fullName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];                
+        {
+            searchWord = fullName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
+            patternName = $"^[^~]*{searchWord}.*$";
+        }
+        else
+        {
+            patternName = $"^[^~]*.*$";
         }
 
-        string pattern = $"^[^~]*{searchWord}(?!.*((Э|э)пикриз)|(С|с)татус).*(docx|odt)$";
-
-        string folderDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-        string[] pathFiles = Directory.GetFiles(folderDocuments);        
+        string[] pathFiles = Directory.GetFiles(Properties.Settings.Default.work_folder);
 
         foreach (string path in pathFiles)
         {
             nameFile = Path.GetFileName(path);
-            if(Regex.IsMatch(nameFile, pattern))
+            if (Regex.IsMatch(nameFile, patternFile))
             {
-                Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
+                if (!Regex.IsMatch(nameFile, patternType))
+                {
+                    if (Regex.IsMatch(nameFile, patternName))
+                    {
+                        Files.Add(new DocumentName() { PathFile = path, NameFile = nameFile });
+                    }
+                }
             }
         }
     }

@@ -9,7 +9,7 @@
     
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-        <Label Content="Скопировать в буфер обмена:" />
+        <Label Content="Скопировать из Самсона в буфер обмена:" />
 
         <Label Content="Данные пациента." HorizontalAlignment="Center"/>
 

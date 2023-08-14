@@ -15,7 +15,7 @@ internal static class DocumentHelper
             using Process myProcess = new();
 
             myProcess.StartInfo.UseShellExecute = true;
-            // You can start any process, HelloWorld is a do-nothing example.
+            // Вы можете запустить любой процесс, Hello World - это пример бездействия.
             myProcess.StartInfo.FileName = pathFile;
             //myProcess.StartInfo.CreateNoWindow = true;
             myProcess.Start();

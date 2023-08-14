@@ -6,14 +6,14 @@ using EpicrisisWord.Core.Models;
 using EpicrisisWord.Windows.Main.Views.Date;
 using EpicrisisWord.Windows.Main.Views.ListFile;
 using EpicrisisWord.Windows.Main.Views.PersonForm;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace EpicrisisWord.Windows.Main.Views.Work;
 
-internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>, IRecipient<ChangeFieldsPersonMessege>
+internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentMessage>
+
 {
     // Важна очерёдность подключений
     [ObservableProperty]
@@ -42,13 +42,14 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     public void Receive(CreateDocumentMessage message)
     {
         if (!PersonFormContent.HasErrors && !DateContent.HasErrors)
-        {            
+        {
             CreateDocumentAsync(message.Value);
         }
         else
         {
-            MessageBox.Show("Поля не заполнены");
-        }   
+            MessageBox.Show("Поля даты не заполнены");
+            ListContent.SelectedItemListViewFile = null;
+        }
     }
 
     private async void CreateDocumentAsync(string pathFile)
@@ -91,7 +92,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         // Добавляем поля с датой.
         DateContent.AddDictionaryFielsDate(ref fiedlsPerson);
         // Добавляем поле с коротким названием заболевания.
-        StringHelper.AddExtractMedication(ref fiedlsPerson);       
+        StringHelper.AddExtractMedication(ref fiedlsPerson);
         // Добавляем поле с рекомендацией по лечению.
         StringHelper.AddExtractRecommendation(ref fiedlsPerson);
         // Добавляем поле с инициалами.
@@ -144,16 +145,16 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
     /// Обработка сообщения при изменении любого поля на форме ввода личных данных.
     /// </summary>
     /// <param fullName="message"></param>
-    public void Receive(ChangeFieldsPersonMessege message)
-    {
-        UpdateListFiles();
-    }
+    //public void Receive(ChangeFieldsPersonMessege message)
+    //{
+    //    UpdateListFiles();
+    //}
 
     /// <summary>
     /// Вызов обновления списка документов
     /// </summary>
     private void UpdateListFiles()
-    {        
+    {
         Messenger.Send(new UpdateListFileMessage(PersonFormContent.FullName));
     }
 }
