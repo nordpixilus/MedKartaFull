@@ -47,7 +47,7 @@ internal partial class WorkViewModel : BaseViewModel, IRecipient<CreateDocumentM
         }
         else
         {
-            MessageBox.Show("Поля даты не заполнены");
+            MessageBox.Show("Не все поля заполнены.\n\n  Возможно даты не заполнены.");
             ListContent.SelectedItemListViewFile = null;
         }
     }
